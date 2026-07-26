@@ -1,0 +1,173 @@
+:root {
+  --bg-app: var(--bg-primary);
+  --bg-panel: var(--bg-card);
+  --border-color: var(--border-default);
+  --text-main: var(--text-primary);
+  --text-muted: var(--text-secondary);
+  --text-light: var(--text-dim);
+  --accent-blue: var(--accent);
+  --accent-blue-hover: var(--accent-light);
+  --bg-input: var(--bg-input);
+  --danger: #ef4444;
+}
+
+/* Layout */
+.app-layout {
+  display: flex;
+  height: calc(100vh - 112px); /* 72px navbar + 40px gap */
+  width: 85%;
+  margin: 112px auto 0 auto; /* Centered with top gap */
+  overflow: hidden;
+  color-scheme: dark; /* Force native datepickers and dropdowns to be dark */
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.panel {
+  background: var(--bg-panel);
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.panel-left {
+  width: 360px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-right {
+  width: 320px;
+  border-left: 1px solid var(--border-color);
+}
+
+.panel-center {
+  flex: 1;
+  background: var(--bg-app);
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  overflow: auto; /* Allow horizontal scroll if 85% width squeezes the A4 doc */
+}
+
+/* Scrollbar */
+.app-layout ::-webkit-scrollbar { width: 6px; height: 6px; }
+.app-layout ::-webkit-scrollbar-track { background: var(--bg-primary); }
+.app-layout ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+.app-layout ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+/* Typography */
+.brand-header { padding: 24px; border-bottom: 1px solid var(--border-color); }
+.brand-title { font-size: 24px; font-weight: 900; color: var(--text-main); margin: 0; }
+.brand-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+.section { padding: 24px; border-bottom: 1px solid var(--border-color); }
+.section-title { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Forms */
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; }
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg-input);
+  color: var(--text-main);
+  transition: border 0.2s;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--accent-blue); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-select option { background: var(--bg-input); color: var(--text-main); }
+.form-row { display: flex; gap: 12px; }
+.form-row .form-group { flex: 1; }
+
+/* Line Items */
+.line-item { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+.line-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.line-item-inputs { display: flex; gap: 8px; }
+.line-item-inputs .form-input { padding: 6px; font-size: 13px; }
+.btn-remove-item { background: none; border: none; color: var(--danger); cursor: pointer; font-weight: bold; padding: 4px 8px; border-radius: 4px; }
+.btn-remove-item:hover { background: rgba(239, 68, 68, 0.15); }
+
+/* Buttons */
+.btn { display: inline-block; width: 100%; padding: 12px; text-align: center; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-decoration: none; font-size: 14px; transition: all 0.2s; }
+.btn-primary { background: var(--btn-bg); color: var(--btn-text); }
+.btn-primary:hover { background: var(--btn-bg-hover); box-shadow: var(--btn-shadow-hover); }
+.btn-secondary { background: transparent; color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+.btn-secondary:hover { background: var(--accent-soft); }
+.download-container { padding: 24px; margin-top: auto; border-top: 1px solid var(--border-color); }
+
+/* Studio Panel (Right) */
+.studio-control { margin-bottom: 24px; }
+.template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.template-btn { padding: 12px; border: 1px solid var(--border-color); background: var(--bg-input); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-muted); transition: all 0.2s; }
+.template-btn.active { background: var(--btn-bg); color: var(--btn-text); border-color: var(--accent-blue); box-shadow: var(--btn-shadow); }
+
+.color-picker-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.color-picker-row label { font-size: 13px; color: var(--text-main); text-transform: capitalize; }
+.color-picker-wrapper { display: flex; align-items: center; gap: 8px; }
+.color-input-native { width: 36px; height: 36px; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; background: var(--bg-input); padding: 2px; }
+.color-text-input { width: 80px; padding: 6px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 12px; font-family: monospace; text-transform: uppercase; background: var(--bg-input); color: var(--text-main); }
+
+/* Live Preview Wrapper */
+.preview-document { 
+  width: 210mm; 
+  min-height: 297mm; 
+  background: #fff; 
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
+  position: relative;
+  overflow: hidden;
+}
+
+/* Generic Preview Template Styles (Minimal by default, overridden by inline styles) */
+.preview-template { width: 100%; height: 100%; padding: 48px; box-sizing: border-box; font-family: Arial, sans-serif; }
+.preview-header { display: flex; justify-content: space-between; margin-bottom: 40px; }
+.preview-logo { max-height: 50px; max-width: 150px; object-fit: contain; margin-bottom: 8px; }
+.preview-brand-name { font-size: 24px; font-weight: bold; margin-bottom: 4px; }
+.preview-address { font-size: 12px; color: #6b7280; white-space: pre-line; }
+.preview-title { font-size: 40px; font-weight: 300; text-align: right; }
+.preview-meta { text-align: right; font-size: 12px; color: #6b7280; margin-top: 8px; }
+.preview-bill-to { margin-bottom: 32px; }
+.preview-bill-to-label { font-size: 10px; text-transform: uppercase; color: #9ca3af; margin-bottom: 4px; }
+.preview-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+.preview-table th { text-align: left; font-size: 10px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid #000; }
+.preview-table th.right { text-align: right; }
+.preview-table td { font-size: 12px; padding: 12px 0; border-bottom: 1px solid #f3f4f6; color: #111; }
+.preview-table td.right { text-align: right; }
+.preview-totals { display: flex; justify-content: flex-end; margin-bottom: 48px; }
+.preview-totals-container { width: 33%; }
+.preview-totals-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; color: #6b7280; }
+.preview-totals-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; padding-top: 12px; margin-top: 12px; border-top: 1px solid #000; color: #111; }
+.preview-footer { position: absolute; bottom: 48px; left: 48px; right: 48px; font-size: 10px; color: #9ca3af; text-align: center; }
+
+/* Responsive Mobile Layout for Invoice Generator */
+@media (max-width: 992px) {
+  .app-layout {
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+    margin: 80px auto 32px auto;
+    overflow: visible;
+  }
+  .panel {
+    height: auto;
+    overflow: visible;
+  }
+  .panel-left, .panel-right {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .panel-center {
+    padding: 20px;
+    overflow-x: auto;
+  }
+  .preview-document {
+    margin: 0 auto;
+  }
+}

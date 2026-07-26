@@ -1,0 +1,386 @@
+  :root {
+    --hal-green: var(--accent);
+    --hal-green-dark: var(--accent);
+    --hal-navy: var(--text-primary);
+    --hal-slate: var(--text-secondary);
+    --hal-border: var(--border-default);
+    --hal-bg: var(--bg-card);
+    --hal-white: #ffffff;
+    --hal-radius: 12px;
+    --hal-radius-sm: 8px;
+    --hal-shadow:
+      0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --hal-shadow-lg: 0 10px 40px rgba(15, 23, 42, 0.12);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body {
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
+    background: var(--hal-bg);
+    color: var(--hal-navy);
+  }
+
+  /* ===== TOP BAR ===== */
+  .hal-topbar {
+    height: 64px;
+    background: var(--hal-white);
+    border-bottom: 1px solid var(--hal-border);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+  .hal-topbar-inner {
+    width: 85%;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+  }
+  .hal-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hal-brand-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--hal-green);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(255, 0, 110, 0.2);
+    animation: hal-pulse 2s infinite;
+  }
+  @keyframes hal-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 4px rgba(255, 0, 110, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(255, 0, 110, 0.1);
+    }
+  }
+  .hal-brand-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .hal-brand-accent {
+    color: var(--hal-green-dark);
+  }
+
+  .hal-topbar-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  /* ===== LAYOUT ===== */
+  .hal-layout {
+    display: flex;
+    height: 700px;
+    min-height: 70vh;
+    margin: 100px auto 64px auto;
+    box-shadow: 0 4px 14px var(--accent-glow);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .hal-form-panel {
+    width: 420px;
+    min-width: 420px;
+    background: var(--hal-white);
+    border-right: 1px solid var(--hal-border);
+    display: flex;
+    flex-direction: column;
+  }
+  .hal-form-scroll {
+    overflow-y: auto;
+    flex: 1;
+    padding: 20px;
+    padding-bottom: 40px;
+  }
+
+  .hal-preview-panel {
+    flex: 1;
+    background: var(--bg-input);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .hal-preview-sticky {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .hal-preview-bar {
+    height: 56px;
+    background: var(--hal-white);
+    border-bottom: 1px solid var(--hal-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    flex-shrink: 0;
+  }
+  .hal-preview-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--hal-slate);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .hal-preview-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .hal-preview-scroll {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ===== BUTTONS ===== */
+  .hal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--hal-radius-sm);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .hal-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .hal-btn-primary {
+    background: var(--hal-navy);
+    color: var(--hal-white);
+  }
+  .hal-btn-primary:not(:disabled):hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+    box-shadow: var(--hal-shadow-lg);
+  }
+  .hal-btn-full {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ===== ACCORDION ===== */
+  .hal-accordion {
+    border: 1px solid var(--hal-border);
+    border-radius: var(--hal-radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: var(--hal-white);
+  }
+  .hal-accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    background: var(--hal-white);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: background 0.2s;
+  }
+  .hal-accordion-header:hover {
+    background: var(--bg-card);
+  }
+  .hal-accordion-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--hal-green-dark);
+    background: rgba(255, 0, 110, 0.12);
+    padding: 4px 8px;
+    border-radius: 6px;
+    min-width: 28px;
+    text-align: center;
+  }
+  .hal-accordion-title {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--hal-navy);
+  }
+  .hal-accordion-icon {
+    color: var(--hal-slate);
+    transition: transform 0.3s ease;
+    display: flex;
+  }
+  .hal-accordion-open .hal-accordion-icon {
+    transform: rotate(45deg);
+    color: var(--hal-green-dark);
+  }
+  .hal-accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.35s ease,
+      padding 0.35s ease;
+    padding: 0 18px;
+  }
+  .hal-accordion-open .hal-accordion-body {
+    max-height: 3000px;
+    padding: 0 18px 18px;
+  }
+
+  /* ===== FORM FIELDS ===== */
+  .hal-field-group {
+    margin-bottom: 14px;
+  }
+  .hal-field-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .hal-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--hal-slate);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .hal-file-wrap {
+    position: relative;
+    border: 2px dashed var(--hal-border);
+    border-radius: var(--hal-radius-sm);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    background: var(--hal-bg);
+  }
+  .hal-file-wrap:hover,
+  .hal-file-wrap.dragover {
+    border-color: var(--hal-green);
+    background: rgba(255, 0, 110, 0.05);
+  }
+  .hal-file {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+  .hal-file-text {
+    font-size: 13px;
+    color: var(--hal-navy);
+    font-weight: 600;
+  }
+
+  /* Template Selector (Used for Scale) */
+  .hal-template-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .hal-template-card {
+    cursor: pointer;
+    text-align: center;
+  }
+  .hal-template-card input {
+    display: none;
+  }
+  .hal-template-thumb {
+    height: 70px;
+    border-radius: var(--hal-radius-sm);
+    border: 2px solid var(--hal-border);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 6px;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+    background: var(--hal-bg);
+  }
+  .hal-template-card input:checked + .hal-template-thumb {
+    border-color: var(--hal-green);
+    box-shadow: 0 0 0 3px rgba(255, 0, 110, 0.15);
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* Badges inside canvas preview */
+  .refiner-badge {
+    position: absolute;
+    top: 12px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    z-index: 20;
+    pointer-events: none;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  .badge-after {
+    left: 12px;
+    background: rgba(255, 0, 110, 0.9);
+    color: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .badge-before {
+    right: 12px;
+    background: rgba(15, 23, 42, 0.85);
+    color: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Tabs styling */
+  .refiner-tab {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--hal-slate);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .refiner-tab:hover {
+    color: var(--hal-navy);
+  }
+  .refiner-tab.active {
+    background: var(--hal-green, var(--accent)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(255, 0, 110, 0.35) !important;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }

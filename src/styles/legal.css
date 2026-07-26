@@ -1,0 +1,47 @@
+.legal-page {
+    width: 100%;
+    margin: 0 0;
+    padding: 64px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.legal-page-inner-div {
+    width: 90%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.legal-page h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.legal-date {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+.legal-page h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 32px;
+    margin-bottom: 12px;
+}
+
+.legal-page p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.legal-page a {
+    color: var(--accent);
+}
