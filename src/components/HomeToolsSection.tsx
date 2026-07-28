@@ -29,21 +29,21 @@ export default function HomeToolsSection({ tools }: { tools: Tool[] }) {
   return (
     <>
       <div className="home-tool-categories">
-        <button 
-          onClick={() => setActiveCategory('all')} 
+        <button
+          onClick={() => setActiveCategory('all')}
           className={`category-pill ${activeCategory === 'all' ? 'active' : ''}`}
         >
-          <i className="fas fa-border-all"></i> All Tools
+          All Tools
         </button>
-        
+
         {categories.map((cat) => (
-          <button 
+          <button
             key={cat}
-            onClick={() => setActiveCategory(cat)} 
+            onClick={() => setActiveCategory(cat)}
             className={`category-pill ${activeCategory === cat ? 'active' : ''}`}
             style={{ textTransform: 'capitalize' }}
           >
-            <i className={categoryIcons[cat.toLowerCase()] || 'fas fa-folder'}></i> {cat}
+            {cat}
           </button>
         ))}
       </div>
@@ -52,19 +52,19 @@ export default function HomeToolsSection({ tools }: { tools: Tool[] }) {
         {filteredTools.map((tool) => (
           <ToolCard
             key={tool.id}
-            title={tool.title}
-            description={tool.seoDescription}
+            title={tool.cardTitle || tool.title}
+            description={tool.cardExcerpt || tool.seoDescription}
             icon={tool.icon}
             tags={tool.tags}
             category={tool.category}
-            href={`/${tool.category}/${tool.slug}`}
+            href={`/all-tools/${tool.category}/${tool.slug}`}
           />
         ))}
       </ul>
 
       {filteredTools.length > 0 && (
         <div className="view-all-wrap">
-          <Link href="/tools" className="view-all-btn">
+          <Link href="/all-tools" className="view-all-btn">
             <i className="fas fa-th-large"></i>
             View All Tools
           </Link>

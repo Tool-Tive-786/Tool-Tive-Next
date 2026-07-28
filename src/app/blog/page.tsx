@@ -1,5 +1,6 @@
+import { Suspense } from 'react';
 import { getAllPosts, getAllCategories } from '@/lib/blog';
-import ArticleCard from '@/components/ArticleCard';
+import BlogPageClient from '@/components/BlogPageClient';
 import '@/styles/blog.css';
 
 export const metadata = {
@@ -12,38 +13,15 @@ export default async function BlogIndex() {
   const categories = ['all', ...(await getAllCategories())];
 
   return (
-    <section className="blog-page">
-      <h1 className="blog-heading">Blog</h1>
-      <p className="blog-sub">Browse by category or read our latest articles.</p>
-
-      <div className="filters-wrap">
-        <div className="tool-filters">
-          {categories.map(cat => (
-            <a
-              key={cat}
-              href={cat === 'all' ? '/blog' : `/blog/category/${cat}`}
-              className={`filter-btn ${cat === 'all' ? 'active' : ''}`}
-            >
-              {cat === 'all' ? 'All Articles' : cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </a>
-          ))}
-        </div>
+    <section className="blog-page-container container">
+      <div style={{ textAlign: 'center' }}>
+        <h1 className="page-heading">Blog</h1>
+        <p className="page-sub" style={{ margin: '8px auto 40px auto' }}>Browse by category or read our latest articles.</p>
       </div>
 
-      <div className="blog-content">
-        <div className="blog-grid">
-          {posts.map((post) => (
-            <ArticleCard
-              key={post.slug}
-              title={post.title}
-              description={post.description}
-              category={post.category}
-              slug={post.slug}
-              pubDate={post.pubDate}
-            />
-          ))}
-        </div>
-      </div>
+      <Suspense fallback={<div style={{ textAlign: 'center', padding: '40px' }}>Loading articles...</div>}>
+        <BlogPageClient posts={posts} categories={categories} />
+      </Suspense>
     </section>
   );
 }
