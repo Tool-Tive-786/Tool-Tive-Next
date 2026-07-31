@@ -352,7 +352,7 @@ export default function ImageCompressor() {
   const somePending = files.some(f => f.status === 'idle' || f.status === 'error');
 
   return (
-    <div className="container" style={{ paddingBottom: '80px' }}>
+    <div className="container">
 
       {/* Toast Notifications */}
       <div className="toast-container">
@@ -565,6 +565,23 @@ export default function ImageCompressor() {
 
         </div>
       </div>
+      <section className="tc-seo-content">
+        <h2>The Best Free Online Image Compressor</h2>
+        <p>If you are looking for a fast and reliable way to reduce file sizes without losing quality, you have found the perfect free online image compressor. Most tools force you to upload your personal photos to their servers, wait in long queues, and then deal with annoying watermarks. We built our image compressor differently. Your files never leave your browser, meaning everything happens locally on your own device. This guarantees complete privacy and lightning fast speeds.</p>
+
+        <h3>Compress Image to Specific Size Instantly</h3>
+        <p>One of the most frustrating things about optimizing photos is guessing the right quality settings. Our tool allows you to compress image to specific size directly. Whether you need an image under 150 KB for a website upload, or a small file for an email attachment, simply type in your exact target size. Our smart hybrid engine will automatically calculate the best compression mode, resize dimensions if necessary, and output the perfect file. It takes the guesswork out of the entire process.</p>
+
+        <h3>Why Choose Our Image Compressor</h3>
+        <p>There are countless options out there, but our image compressor stands out because of its unique features and user friendly design. Here is what makes it better:</p>
+        <ul>
+          <li><strong>100% Private Processing:</strong> No uploads, no server storage, complete security.</li>
+          <li><strong>Exact Size Targeting:</strong> Tell us the exact KB or MB you need, and we will hit it.</li>
+          <li><strong>Multiple Formats:</strong> Convert and compress into modern formats like WebP and AVIF.</li>
+          <li><strong>No Limits:</strong> Compress as many files as you want, completely free.</li>
+        </ul>
+        <p>Whether you are a developer optimizing web assets, a photographer managing portfolios, or just someone trying to send a large photo over email, this free online image compressor gives you total control.</p>
+      </section>
     </div>
   );
 }
