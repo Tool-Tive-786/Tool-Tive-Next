@@ -49,7 +49,7 @@ export default function InvoiceGeneratorPage() {
             <DocumentStudio />
 
             <div className="container" style={{ marginTop: '40px', marginBottom: '80px' }}>
-                <div className="article-content" style={{ width: '65%', margin: '0 auto' }}>
+                <div className="article-content" style={{ width: '100%', margin: '0 0' }}>
                     <h2>Why Use Our Free Invoice Generator?</h2>
                     <p>
                         Running a small business means paperwork keeps piling up, and invoices are usually first on that list. Our <strong style={{ color: 'var(--accent)' }}>free invoice generator</strong> skips the subscriptions and the messy spreadsheet templates. Open the tool, fill in your details, and your invoice is ready in minutes. Think of it as an online invoice builder built for speed, not spreadsheets.
