@@ -29,7 +29,7 @@ export const tools: Tool[] = [
     cardExcerpt: "Reduce image file sizes instantly right inside your browser without losing quality. Perfect for SEO and faster website loading.",
     tags: ["No Quality Loss", "Batch Compress", "100% Free"],
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`,
-    pubDate: "2024-05-20",
+    pubDate: "2026-08-03",
   },
   {
     id: "business-invoice-generator",
@@ -45,7 +45,7 @@ export const tools: Tool[] = [
     cardExcerpt: "Our free invoice generator creates professional invoices, quotes, and credit notes in seconds, no sign-up, no watermark.",
     tags: ["PDF Export", "No Watermark", "No Signup"],
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`,
-    pubDate: "2024-01-01",
+    pubDate: "2026-07-28",
   }
 ];
 
