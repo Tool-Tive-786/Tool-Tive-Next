@@ -1,9 +1,11 @@
 import React from "react";
 import type { Metadata } from "next";
 import { getToolBySlug } from "@/lib/tools";
-import ImageCompressor from "@/components/tools/ImageCompressor";
+import dynamic from 'next/dynamic';
 import "@/components/tools/compressor.css";
 import { Zap, ShieldCheck, DownloadCloud, Settings2, Sparkles, Layers } from "lucide-react";
+
+const ImageCompressor = dynamic(() => import("@/components/tools/ImageCompressor"), { ssr: false });
 
 export const metadata: Metadata = {
     title: "Free Image Compressor & Resizer - Reduce Image Size Online",
