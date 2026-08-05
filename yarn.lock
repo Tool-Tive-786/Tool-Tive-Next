@@ -376,6 +376,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jsquash/avif@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@jsquash/avif@npm:2.1.1"
+  dependencies:
+    wasm-feature-detect: "npm:^1.2.11"
+  checksum: 10c0/2da5cab4518964838302511d01d1e202704070af1a287e519e26a59a28a7605abf5d2d27dc14ff1f77a81b48a833ef6a6aa344b24f1bdf1fd3aed274f7067a2a
+  languageName: node
+  linkType: hard
+
+"@jsquash/jpeg@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@jsquash/jpeg@npm:1.6.0"
+  checksum: 10c0/2b6fce91d31e3ae9b5783a5ab025f66478a3ff3846e4d9a976f6c6274b3ac585068dbf950bd7adcb392b4565b52bcf4f5831232d6c62dcbdbd55216d13503b03
+  languageName: node
+  linkType: hard
+
+"@jsquash/webp@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@jsquash/webp@npm:1.5.0"
+  dependencies:
+    wasm-feature-detect: "npm:^1.2.11"
+  checksum: 10c0/f76f776ad5e70bef9286ebecad124f5fcee744aa92239bbd518e267291af760f5319d06041026ad969c3a4f0547f878f3ba48fa45c9f56cfa22d583bd54e5963
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:16.2.11":
   version: 16.2.11
   resolution: "@next/env@npm:16.2.11"
@@ -728,6 +753,13 @@ __metadata:
   version: 3.0.3
   resolution: "@types/unist@npm:3.0.3"
   checksum: 10c0/2b1e4adcab78388e088fcc3c0ae8700f76619dbcb4741d7d201f87e2cb346bfc29a89003cfea2d76c996e1061452e14fcd737e8b25aacf949c1f2d6b2bc3dd60
+  languageName: node
+  linkType: hard
+
+"@types/upng-js@npm:^2":
+  version: 2.1.5
+  resolution: "@types/upng-js@npm:2.1.5"
+  checksum: 10c0/54829eb57f2670e12bb67986b597074c0a7e6ec256b5025c5a850f9c813544eee2897762597bb4827db7b6dbf96bdc3d62fee801aef68b2513cc8d0c1bc4c29a
   languageName: node
   linkType: hard
 
@@ -2302,10 +2334,14 @@ __metadata:
   resolution: "nextjs@workspace:."
   dependencies:
     "@cloudflare/next-on-pages": "npm:^1.13.16"
+    "@jsquash/avif": "npm:^2.1.1"
+    "@jsquash/jpeg": "npm:^1.6.0"
+    "@jsquash/webp": "npm:^1.5.0"
     "@react-pdf/renderer": "npm:^4.5.1"
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
+    "@types/upng-js": "npm:^2"
     browser-image-compression: "npm:^2.0.2"
     gray-matter: "npm:^4.0.3"
     html2canvas: "npm:^1.4.1"
@@ -2318,6 +2354,7 @@ __metadata:
     remark: "npm:^15.0.1"
     remark-html: "npm:^16.0.1"
     typescript: "npm:^5"
+    upng-js: "npm:^2.1.0"
     zustand: "npm:^5.0.14"
   languageName: unknown
   linkType: soft
@@ -2393,17 +2430,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pako@npm:^1.0.5, pako@npm:~1.0.2, pako@npm:~1.0.5":
+  version: 1.0.11
+  resolution: "pako@npm:1.0.11"
+  checksum: 10c0/86dd99d8b34c3930345b8bbeb5e1cd8a05f608eeb40967b293f72fe469d0e9c88b783a8777e4cc7dc7c91ce54c5e93d88ff4b4f060e6ff18408fd21030d9ffbe
+  languageName: node
+  linkType: hard
+
 "pako@npm:^2.1.0":
   version: 2.2.0
   resolution: "pako@npm:2.2.0"
   checksum: 10c0/e5d31de1940fdd13cc4014296b0026112483d0834bce4856ca29c8af8438d030c6416986a0f6df7d5372cae18d6dd6c57f48b24a49d6c207c0a4cc66af15c07d
-  languageName: node
-  linkType: hard
-
-"pako@npm:~1.0.2, pako@npm:~1.0.5":
-  version: 1.0.11
-  resolution: "pako@npm:1.0.11"
-  checksum: 10c0/86dd99d8b34c3930345b8bbeb5e1cd8a05f608eeb40967b293f72fe469d0e9c88b783a8777e4cc7dc7c91ce54c5e93d88ff4b4f060e6ff18408fd21030d9ffbe
   languageName: node
   linkType: hard
 
@@ -3124,6 +3161,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"upng-js@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "upng-js@npm:2.1.0"
+  dependencies:
+    pako: "npm:^1.0.5"
+  checksum: 10c0/ee66db26339af1ae2bb4784680978435fab2f6010cd828502dbaecdf167e509a26b203af9e098b23c665711e3b76e1d47028f1cab233b85f6977daa50cb69784
+  languageName: node
+  linkType: hard
+
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -3175,6 +3221,13 @@ __metadata:
     string_decoder: "npm:^1.1.1"
     util-deprecate: "npm:^1.0.1"
   checksum: 10c0/cfed3833a77275584e0421e44b0c95ca2f31af7f4346c3ea35527949c2d2ed708b6490bdafec958deb94fc7a5e20bb0c66f8e9942b30109b568e7244fdcb1e73
+  languageName: node
+  linkType: hard
+
+"wasm-feature-detect@npm:^1.2.11":
+  version: 1.8.0
+  resolution: "wasm-feature-detect@npm:1.8.0"
+  checksum: 10c0/2cb43e91bbf7aa7c121bc76b3133de3ab6dc4f482acc1d2dc46c528e8adb7a51c72df5c2aacf1d219f113c04efd1706f18274d5790542aa5dd49e0644e3ee665
   languageName: node
   linkType: hard
 

@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { getToolBySlug } from "@/lib/tools";
 import ImageCompressor from "@/components/tools/ImageCompressor";
+import "@/components/tools/compressor.css";
 import { Zap, ShieldCheck, DownloadCloud, Settings2, Sparkles, Layers } from "lucide-react";
 
 export const metadata: Metadata = {

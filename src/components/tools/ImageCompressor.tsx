@@ -1,587 +1,325 @@
-"use client";
-
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import imageCompression from 'browser-image-compression';
+'use client';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import type { ChangeEvent, PointerEvent as RPointerEvent, DragEvent as RDragEvent, MouseEvent as RMouseEvent } from 'react';
 import JSZip from 'jszip';
-import { Download, UploadCloud, X, Zap, SlidersHorizontal, Image as ImageIcon, CheckCircle2, AlertCircle, ShieldCheck, DownloadCloud } from 'lucide-react';
-import '@/styles/image-compressor.css';
+import { readOrientation } from '@/lib/exif';
+import { compressOne, type Meta } from '@/lib/engine';
+// NOTE: CSS globals.css mein merge hai (.if-* namespace). Koi import nahi.
 
-// Types
-interface FileItem {
-  id: string;
-  originalFile: File;
-  compressedFile: File | null;
-  originalSize: number;
-  compressedSize: number;
-  originalUrl: string;
-  compressedUrl: string | null;
-  status: 'idle' | 'compressing' | 'done' | 'error';
-  progress: number;
-  error?: string;
-}
+interface FileItem { file: File; orientation: number; url: string; dims: { w: number; h: number }; }
+interface Result { blob: Blob; meta: Meta; origSize: number; }
+interface ProgressLike { p: number; t: string; }
+type Pair = [number, FileItem];
 
-interface ToastMessage {
-  id: number;
-  message: string;
-  type: 'success' | 'error';
-}
-
-type OutputFormat = 'original' | 'image/jpeg' | 'image/png' | 'image/webp';
+const fmtBytes = (b: number): string => { if (!b) return '0 B'; const k = 1024, s = ['B', 'KB', 'MB', 'GB']; const i = Math.floor(Math.log(b) / Math.log(k)); return (b / Math.pow(k, i)).toFixed(1) + ' ' + s[i]; };
+const pngColors = (q: number): number => Math.max(2, Math.min(256, Math.round(2 + (q / 100) * 254)));
+const isTargetValid = (str: string): boolean => /^\d+$/.test(String(str)) && +str >= 30;
+const tick = (): Promise<void> => new Promise((r) => setTimeout(r, 0));
 
 export default function ImageCompressor() {
+  const fileInput = useRef<HTMLInputElement>(null);
+  const filesRef = useRef<FileItem[]>([]);                 // synchronous truth (avoids stale index on rapid add)
+  const activeRef = useRef(0);                             // concurrent-run counter for overlay
+  const deb = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const [files, setFiles] = useState<FileItem[]>([]);
-  const [targetSize, setTargetSize] = useState<number>(100);
-  const [targetUnit, setTargetUnit] = useState<'KB' | 'MB'>('KB');
-  const [outputFormat, setOutputFormat] = useState<OutputFormat>('original');
-  const [isDragging, setIsDragging] = useState(false);
-  const [isCompressingAll, setIsCompressingAll] = useState(false);
-  const [toasts, setToasts] = useState<ToastMessage[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [results, setResults] = useState<(Result | null)[]>([]);
+  const [sel, setSel] = useState(0);
+  const [processing, setProcessing] = useState(false);
+  const [progress, setProgress] = useState<ProgressLike>({ p: 0, t: '' });
+  const [toast, setToast] = useState<{ m: string; type: string } | null>(null);
+  const [addDrag, setAddDrag] = useState(false);
 
-  // Clean up object URLs to prevent memory leaks
+  const [format, setFormat] = useState('webp');
+  const [quality, setQuality] = useState(75);
+  const [lossless, setLossless] = useState(false);
+  const [progressive, setProgressive] = useState(true);
+  const [chroma, setChroma] = useState('420');
+  const [mode, setMode] = useState<'manual' | 'auto' | 'target'>('manual');
+  const [targetStr, setTargetStr] = useState('');
+  const [forceTarget, setForceTarget] = useState(false);
+
+  const [rw, setRw] = useState(''); const [rh, setRh] = useState('');
+  const [locked, setLocked] = useState(true);
+  const [resizePreset, setResizePreset] = useState<string | null>('original');
+  const [allowUp, setAllowUp] = useState(false);
+  const [dims, setDims] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
+
+  const [view, setView] = useState<'compare' | 'original' | 'compressed'>('compare');
+  const [slider, setSlider] = useState(50);
+
+  const targetValid = mode === 'target' && isTargetValid(targetStr);
+  const notify = (m: string, type: 'info' | 'success' | 'error' | 'warning' = 'info') => { /* Toasts disabled per user request */ };
+
+  const targetDims = useCallback((): { w: number; h: number } => {
+    if (!dims.w) return { w: 0, h: 0 };
+    let w = rw ? Math.min(8192, Math.max(1, parseInt(rw) || 0)) : dims.w;
+    let h = rh ? Math.min(8192, Math.max(1, parseInt(rh) || 0)) : dims.h;
+    if (!allowUp) { w = Math.min(w, dims.w); h = Math.min(h, dims.h); }
+    return { w: Math.max(1, w), h: Math.max(1, h) };
+  }, [rw, rh, dims, allowUp]);
+
+  const beginRun = () => { activeRef.current++; setProcessing(true); };
+  const endRun = () => { activeRef.current = Math.max(0, activeRef.current - 1); if (activeRef.current === 0) setProcessing(false); };
+
+  /* core: compress the given index/item pairs (writes results by index, preserves others) */
+  const processPairs = useCallback(async (pairs: Pair[]) => {
+    if (!pairs.length) return;
+    if (mode === 'target' && !isTargetValid(targetStr)) return;   // wait for a valid number
+    beginRun();
+    const { w, h } = targetDims();
+    const settings = { width: w, height: h, quality, colors: lossless ? 0 : pngColors(quality), lossless, progressive, chroma, targetBytes: mode === 'target' ? Math.max(30, +targetStr) * 1024 : undefined, forceTarget: mode === 'target' ? forceTarget : false };
+    const kind = mode === 'auto' ? 'auto' : mode === 'target' ? 'target' : 'compress';
+    try {
+      for (const [idx, f] of pairs) {
+        setProgress({ p: 0, t: `Processing ${idx + 1}...` }); await tick();
+        let res: Result | null = null;
+        try {
+          const r = await compressOne(f.file, f.orientation, kind, format, settings, (m) => setProgress(m));
+          res = { blob: r.blob, meta: r.meta, origSize: f.file.size };
+        } catch (e) { console.error(e); }
+        setResults((prev) => { const n = [...prev]; n[idx] = res; return n; });
+      }
+      setProgress({ p: 100, t: 'Complete' });
+      if (mode === 'target') {
+        const missed = pairs.some(([idx]) => { const r = results_ref_current[idx]; return r && r.meta && r.meta.metTarget === false; });
+        if (missed) notify(`⚠️ Some images could not safely reach ${+targetStr}KB.`, 'warning');
+        else notify(`${pairs.length} image(s) compressed.`, 'success');
+      } else notify(`${pairs.length} image(s) compressed.`, 'success');
+    } finally { endRun(); }
+  }, [format, quality, lossless, progressive, chroma, mode, targetStr, targetDims, forceTarget]); // eslint-disable-line
+
+  // we need latest results inside processPairs for the missed-check without adding it to deps:
+  const results_ref_current = results;
+
+  /* settings change => reprocess ALL (files read from ref so identity doesn't depend on files) */
+  const processAll = useCallback(() => processPairs(filesRef.current.map((it, i) => [i, it] as Pair)), [processPairs]);
   useEffect(() => {
-    return () => {
-      files.forEach(f => {
-        URL.revokeObjectURL(f.originalUrl);
-        if (f.compressedUrl) URL.revokeObjectURL(f.compressedUrl);
-      });
-    };
-  }, []);
+    if (filesRef.current.length) { if (deb.current) clearTimeout(deb.current); deb.current = setTimeout(processAll, 400); }
+  }, [processAll]);
 
-  const addToast = (message: string, type: 'success' | 'error' = 'success') => {
-    const id = Date.now();
-    setToasts(prev => [...prev, { id, message, type }]);
-    setTimeout(() => {
-      setToasts(prev => prev.filter(t => t.id !== id));
-    }, 3000);
-  };
-
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-  }, []);
-
-  const processFiles = (newFiles: File[]) => {
-    const validImageTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
-    const addedFiles: FileItem[] = [];
-
-    newFiles.forEach(file => {
-      if (!validImageTypes.includes(file.type)) {
-        addToast(`Unsupported format: ${file.name}`, 'error');
-        return;
-      }
-
-      // Limit to 50MB
-      if (file.size > 50 * 1024 * 1024) {
-        addToast(`File too large (max 50MB): ${file.name}`, 'error');
-        return;
-      }
-
-      addedFiles.push({
-        id: Math.random().toString(36).substring(7),
-        originalFile: file,
-        compressedFile: null,
-        originalSize: file.size,
-        compressedSize: 0,
-        originalUrl: URL.createObjectURL(file),
-        compressedUrl: null,
-        status: 'idle',
-        progress: 0
-      });
-    });
-
-    if (addedFiles.length > 0) {
-      setFiles(prev => [...prev, ...addedFiles]);
+  /* load = APPEND (first load: prev=[] so it's a set). Only NEW items are processed. */
+  const loadFiles = async (list: FileList | null) => {
+    if (!list) return;
+    const arr = Array.from(list).filter((f) => f.type.startsWith('image/'));
+    if (!arr.length) return notify('No valid image selected.', 'error');
+    const loaded: FileItem[] = [];
+    for (const f of arr) {
+      const orientation = await readOrientation(f);
+      const url = URL.createObjectURL(f);
+      const d = await new Promise<{ w: number; h: number }>((r) => { const i = new Image(); i.onload = () => r({ w: i.naturalWidth, h: i.naturalHeight }); i.src = url; });
+      loaded.push({ file: f, orientation, url, dims: d });
     }
-    setIsDragging(false);
+    const prev = filesRef.current;
+    const next = [...prev, ...loaded];
+    filesRef.current = next;                 // synchronous update (rapid double-add safe)
+    setFiles(next);
+    setResults((r) => [...r, ...new Array(loaded.length).fill(null)]);
+    setSel(prev.length);                     // jump to first newly added
+    setDims(loaded[0].dims);
+    if (prev.length === 0) { setRw(''); setRh(''); setResizePreset('original'); }   // fresh only on first load
+    notify(prev.length === 0 ? `Loaded ${loaded.length} image(s).` : `＋ ${loaded.length} image(s) added.`, 'success');
+    processPairs(loaded.map((it, k) => [prev.length + k, it] as Pair));   // compress ONLY the new ones
   };
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      processFiles(Array.from(e.dataTransfer.files));
-    }
-  }, []);
+  const resetAll = () => { filesRef.current = []; setFiles([]); setResults([]); setSel(0); };
 
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      processFiles(Array.from(e.target.files));
-    }
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
+  const onFormat = (f: string) => { setFormat(f); setForceTarget(false); };
+  const onQualityChange = (v: number) => { setQuality(v); setLossless(false); if (mode === 'auto') setMode('manual'); setForceTarget(false); };
 
-  const getCompressionOptions = (fileType: string) => {
-    // Calculate target size in MB
-    let maxSizeMB = targetSize;
-    if (targetUnit === 'KB') {
-      maxSizeMB = targetSize / 1024;
-    }
+  const onRw = (v: string) => { setRw(v); if (locked && dims.w) { const r = dims.w / dims.h; setRh(v ? String(Math.round((parseInt(v) || 0) / r)) : ''); } setResizePreset(null); };
+  const onRh = (v: string) => { setRh(v); if (locked && dims.h) { const r = dims.w / dims.h; setRw(v ? String(Math.round((parseInt(v) || 0) * r)) : ''); } setResizePreset(null); };
+  const applyResizePreset = (pct: number) => { if (!dims.w) return; setRw(String(Math.round(dims.w * pct / 100))); setRh(String(Math.round(dims.h * pct / 100))); setResizePreset(String(pct)); };
+  const clearResize = () => { setRw(''); setRh(''); setResizePreset('original'); };
 
-    const options: any = {
-      useWebWorker: true,
-      maxSizeMB: maxSizeMB > 0 ? maxSizeMB : 1, // fallback to 1MB if invalid
-      alwaysKeepResolution: true, // Force the library to NEVER scale down dimensions
-      initialQuality: 0.85, // Starts at a high quality and intelligently steps down to hit the maxSizeMB
-    };
+  const ext = format === 'jpeg' ? 'jpg' : format;
+  const downloadOne = (i: number) => { const r = results[i]; if (!r) return; const a = document.createElement('a'); a.href = URL.createObjectURL(r.blob); a.download = files[i].file.name.replace(/\.[^.]+$/, '') + `_compressed.${ext}`; a.click(); };
+  const downloadZip = async () => { const zip = new JSZip(); results.forEach((r, i) => { if (r) zip.file(files[i].file.name.replace(/\.[^.]+$/, '') + `.${ext}`, r.blob); }); const blob = await zip.generateAsync({ type: 'blob' }, (m) => setProgress({ p: m.percent, t: 'Zipping...' })); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'imageforge_compressed.zip'; a.click(); notify('ZIP downloaded.', 'success'); };
+  const copyOne = async (i: number) => { const r = results[i]; if (!r) return; try { await navigator.clipboard.write([new ClipboardItem({ [r.blob.type]: r.blob })]); notify('Copied!', 'success'); } catch { notify('Copy unsupported.', 'warning'); } };
+  const pickMore = () => fileInput.current?.click();
 
-    if (outputFormat !== 'original') {
-      options.fileType = outputFormat;
-    }
-
-    return options;
-  };
-
-  const compressSingleImage = async (fileId: string) => {
-    const fileItem = files.find(f => f.id === fileId);
-    if (!fileItem || fileItem.status === 'compressing') return;
-
-    setFiles(prev => prev.map(f => f.id === fileId ? { ...f, status: 'compressing', progress: 5 } : f));
-
-    try {
-      let targetBytes = targetSize;
-      if (targetUnit === 'KB') {
-        targetBytes *= 1024;
-      } else {
-        targetBytes *= 1024 * 1024;
-      }
-
-      let currentTargetMB = targetBytes / (1024 * 1024);
-      let currentQuality = 0.85;
-      let finalBlob: Blob | null = null;
-      let attempts = 0;
-      let maxAttempts = 6; // slightly more attempts
-
-      // Strict Enforcement Loop: If the library returns a file larger than the target, 
-      // we systematically lower the internal target passed to the library to force it smaller.
-      while (attempts < maxAttempts) {
-        const options = {
-          ...getCompressionOptions(fileItem.originalFile.type),
-          maxSizeMB: currentTargetMB,
-          initialQuality: currentQuality, // override with our aggressive quality drop
-          onProgress: (p: number) => {
-            // Fake a smoother progress bar across attempts
-            const overallProgress = Math.floor((attempts / maxAttempts) * 100) + Math.floor(p / maxAttempts);
-            setFiles(prev => prev.map(f => f.id === fileId ? { ...f, progress: overallProgress } : f));
-          }
-        };
-
-        const compressedBlob = await imageCompression(fileItem.originalFile, options);
-        finalBlob = compressedBlob;
-
-        // If we successfully hit the strict target (<= requested bytes), stop!
-        if (compressedBlob.size <= targetBytes) {
-          break;
-        }
-
-        // It overshot the target! 
-        // 1. Lower the internal threshold aggressively.
-        // 2. Brutally drop the starting quality (down to a minimum of 0.01) to force extreme compression.
-        currentTargetMB = currentTargetMB * 0.70;
-        currentQuality = Math.max(0.01, currentQuality - 0.20);
-        attempts++;
-      }
-
-      if (!finalBlob) throw new Error("Compression failed completely");
-
-      // Check if we hit the physical floor (impossible to compress further without resizing)
-      const isPhysicalLimitReached = finalBlob.size > targetBytes;
-
-      // Determine final extension based on the actual output type
-      let finalType = finalBlob.type;
-      let finalExt = fileItem.originalFile.name.split('.').pop() || 'jpg';
-
-      if (outputFormat !== 'original') {
-        if (outputFormat === 'image/jpeg') finalExt = 'jpg';
-        if (outputFormat === 'image/png') finalExt = 'png';
-        if (outputFormat === 'image/webp') finalExt = 'webp';
-      } else {
-        if (finalType === 'image/jpeg') finalExt = 'jpg';
-        if (finalType === 'image/png') finalExt = 'png';
-        if (finalType === 'image/webp') finalExt = 'webp';
-      }
-
-      // Reconstruct filename with new extension if changed
-      const nameParts = fileItem.originalFile.name.split('.');
-      nameParts.pop(); // remove old ext
-      const baseName = nameParts.join('.');
-      const newFilename = `${baseName}.${finalExt}`;
-
-      const compressedUrl = URL.createObjectURL(finalBlob);
-      const compressedFile = new File([finalBlob], newFilename, {
-        type: finalBlob.type,
-        lastModified: Date.now(),
-      });
-
-      // If output format is original, and compressed size is somehow larger, we could theoretically revert,
-      // but since the user requested a TARGET size, we should still return the compressed one if it's converted format.
-      // We will only revert to original if they wanted Original format AND it didn't save space.
-      if (outputFormat === 'original' && finalBlob.size >= fileItem.originalSize * 0.98) {
-        setFiles(prev => prev.map(f => f.id === fileId ? {
-          ...f,
-          status: 'done',
-          progress: 100,
-          compressedFile: fileItem.originalFile,
-          compressedSize: fileItem.originalSize,
-          compressedUrl: fileItem.originalUrl,
-          error: 'Already optimized'
-        } : f));
-        return;
-      }
-
-      setFiles(prev => prev.map(f => f.id === fileId ? {
-        ...f,
-        status: 'done',
-        progress: 100,
-        compressedFile,
-        compressedSize: compressedFile.size,
-        compressedUrl,
-        error: isPhysicalLimitReached ? 'Lowest possible size for this resolution' : undefined
-      } : f));
-
-    } catch (error: any) {
-      console.error(error);
-      setFiles(prev => prev.map(f => f.id === fileId ? {
-        ...f,
-        status: 'error',
-        error: error.message || 'Compression failed',
-        progress: 0
-      } : f));
-    }
-  };
-
-  const compressAll = async () => {
-    setIsCompressingAll(true);
-    const uncompressed = files.filter(f => f.status === 'idle' || f.status === 'error');
-
-    // Process in small batches (e.g., 3 at a time) so we don't overwhelm the browser
-    for (let i = 0; i < uncompressed.length; i += 3) {
-      const batch = uncompressed.slice(i, i + 3);
-      await Promise.all(batch.map(f => compressSingleImage(f.id)));
-    }
-
-    setIsCompressingAll(false);
-    addToast('Batch compression finished!', 'success');
-  };
-
-  const removeFile = (id: string) => {
-    setFiles(prev => {
-      const filtered = prev.filter(f => f.id !== id);
-      const removed = prev.find(f => f.id === id);
-      if (removed) {
-        URL.revokeObjectURL(removed.originalUrl);
-        if (removed.compressedUrl) URL.revokeObjectURL(removed.compressedUrl);
-      }
-      return filtered;
-    });
-  };
-
-  const clearAll = () => {
-    files.forEach(f => {
-      URL.revokeObjectURL(f.originalUrl);
-      if (f.compressedUrl) URL.revokeObjectURL(f.compressedUrl);
-    });
-    setFiles([]);
-  };
-
-  const downloadFile = (fileItem: FileItem) => {
-    if (!fileItem.compressedFile || !fileItem.compressedUrl) return;
-    const a = document.createElement('a');
-    a.href = fileItem.compressedUrl;
-
-    // Add -compressed to filename
-    const nameParts = fileItem.compressedFile.name.split('.');
-    const ext = nameParts.pop();
-    const baseName = nameParts.join('.');
-    a.download = `${baseName}-compressed.${ext}`;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const downloadZip = async () => {
-    const doneFiles = files.filter(f => f.status === 'done' && f.compressedFile);
-    if (doneFiles.length === 0) return;
-
-    try {
-      const zip = new JSZip();
-      doneFiles.forEach(f => {
-        if (f.compressedFile) {
-          zip.file(f.compressedFile.name, f.compressedFile);
-        }
-      });
-
-      const content = await zip.generateAsync({ type: 'blob' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(content);
-      a.download = 'tooltive-compressed-images.zip';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(a.href);
-    } catch (error) {
-      addToast('Failed to create ZIP', 'error');
-    }
-  };
-
-  const formatBytes = (bytes: number) => {
-    if (bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
-
-  const calculateSavings = (original: number, compressed: number) => {
-    if (!compressed || original === 0) return 0;
-    const savings = ((original - compressed) / original) * 100;
-    return savings > 0 ? savings.toFixed(1) : 0;
-  };
-
-  const totalOriginal = files.reduce((acc, f) => acc + f.originalSize, 0);
-  const totalCompressed = files.reduce((acc, f) => acc + (f.compressedSize || f.originalSize), 0);
-  const totalSavings = calculateSavings(totalOriginal, totalCompressed);
-
-  const allDone = files.length > 0 && files.every(f => f.status === 'done');
-  const somePending = files.some(f => f.status === 'idle' || f.status === 'error');
+  const cur = results[sel] ?? null;
+  const curFile = files[sel];
+  const savings = cur ? ((1 - cur.blob.size / cur.origSize) * 100) : 0;
+  const { w: ow, h: oh } = targetDims();
+  const userVal = format === 'png' ? pngColors(quality) : quality;
+  const autoPicked = (mode === 'auto' || targetValid) && cur?.meta?.param != null;
+  const adjusted = targetValid && cur?.meta?.param != null && cur.meta.param !== userVal;
+  const sliderDim = (mode === 'auto') || lossless;
+  const pngPhotoStuck = format === 'png' && !lossless && mode === 'manual' && !!cur && cur.meta?.isPhoto === true && savings < 5;
+  const photoClamped = format === 'png' && mode === 'target' && cur?.meta?.isPhoto === true && pngColors(quality) < 240;
 
   return (
-    <div className="container">
+    <div className="if-root">
+      {toast && <div className={`if-toast ${toast.type}`}>{toast.m}</div>}
 
-      {/* Toast Notifications */}
-      <div className="toast-container">
-        {toasts.map(t => (
-          <div key={t.id} className={`toast ${t.type}`}>
-            {t.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
-            {t.message}
-          </div>
-        ))}
-      </div>
-
-      <div className="compressor-container">
-
-        {/* Sidebar Settings */}
-        <div className="compressor-sidebar">
-          <div style={{ position: 'sticky', top: '24px' }}>
-            <div className="settings-group">
-              <h3 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Target File Size
-              </h3>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '16px', lineHeight: 1.5 }}>
-                We will aggressively optimize to hit this size while keeping the highest possible visual quality.
-              </p>
-
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <input
-                  type="number"
-                  value={targetSize}
-                  onChange={(e) => setTargetSize(Number(e.target.value))}
-                  min="1"
-                  style={{
-                    flexGrow: 1,
-                    minWidth: 0,
-                    width: '100%',
-                    background: 'var(--bg-input)',
-                    border: '1px solid var(--border-default)',
-                    borderRadius: 'var(--radius-md)',
-                    padding: '10px 12px',
-                    color: 'var(--text-primary)',
-                    fontSize: '15px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
-                />
-                <select
-                  value={targetUnit}
-                  onChange={(e) => setTargetUnit(e.target.value as 'KB' | 'MB')}
-                  style={{
-                    flexShrink: 0,
-                    width: '75px',
-                    background: 'var(--bg-input)',
-                    border: '1px solid var(--border-default)',
-                    borderRadius: 'var(--radius-md)',
-                    padding: '10px',
-                    color: 'var(--text-primary)',
-                    fontSize: '15px',
-                    cursor: 'pointer',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
-                >
-                  <option value="KB">KB</option>
-                  <option value="MB">MB</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="settings-group" style={{ marginBottom: 0 }}>
-              <h3 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Output Format
-              </h3>
-              <select
-                value={outputFormat}
-                onChange={(e) => setOutputFormat(e.target.value as any)}
-                style={{
-                  width: '100%',
-                  background: 'var(--bg-input)',
-                  border: '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '10px 12px',
-                  color: 'var(--text-primary)',
-                  fontSize: '15px',
-                  cursor: 'pointer',
-                  outline: 'none'
-                }}
-              >
-                <option value="original">Keep Original</option>
-                <option value="image/jpeg">Convert to JPG</option>
-                <option value="image/png">Convert to PNG</option>
-                <option value="image/webp">Convert to WebP</option>
-              </select>
-            </div>
-          </div>
+      {!files.length && (
+        <div className="if-upload" onClick={pickMore} onDragOver={(e: RDragEvent) => e.preventDefault()} onDrop={(e: RDragEvent) => { e.preventDefault(); loadFiles(e.dataTransfer.files); }}>
+          <div className="if-upload-icon">📁</div>
+          <h2>Drop images here (single or batch)</h2>
+          <p>or click to browse • Ctrl+V paste • 100% in-browser • private</p>
+          <div className="if-tags">{['JPG', 'PNG', 'WebP', 'AVIF', 'GIF', 'BMP'].map((t) => <span key={t}>{t}</span>)}</div>
         </div>
+      )}
+      <input ref={fileInput} type="file" accept="image/*" multiple hidden
+        onChange={(e: ChangeEvent<HTMLInputElement>) => { loadFiles(e.target.files); e.currentTarget.value = ''; }} />
 
-        {/* Main Workspace */}
-        <div className="compressor-main">
-
-          {/* Actions Bar */}
-          {files.length > 0 && (
-            <div className="actions-bar">
-              <div className="total-stats">
-                <div>Images: <span>{files.length}</span></div>
-                <div>Original: <span>{formatBytes(totalOriginal)}</span></div>
-                {totalCompressed > 0 && Number(totalSavings) > 0 && (
-                  <div style={{ color: '#34d399' }}>Saved: <span>{totalSavings}%</span></div>
-                )}
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <button className="btn-secondary" onClick={clearAll} disabled={isCompressingAll}>
-                  Clear All
-                </button>
-                {somePending ? (
-                  <button className="btn-primary" onClick={compressAll} disabled={isCompressingAll}>
-                    {isCompressingAll ? 'Compressing...' : 'Compress All'}
-                  </button>
-                ) : (
-                  <button className="btn-primary" onClick={downloadZip}>
-                    Download All (ZIP)
-                  </button>
-                )}
+      {files.length > 0 && (
+        <div className="if-editor">
+          <div className="if-preview">
+            <div className="if-preview-head">
+              <div className="if-tabs">{(['compare', 'original', 'compressed'] as const).map((v) => <button key={v} className={view === v ? 'on' : ''} onClick={() => setView(v)}>{v}</button>)}</div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button className="if-btn if-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={pickMore}>＋ Add</button>
+                <button className="if-btn if-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={resetAll}>✕ New</button>
               </div>
             </div>
-          )}
 
-          {/* Upload Zone */}
-          <div
-            className={`dropzone ${isDragging ? 'active' : ''}`}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-              multiple
-              accept="image/jpeg, image/png, image/webp, image/gif, image/svg+xml"
-              onChange={handleFileInput}
-            />
-            <UploadCloud className="dropzone-icon" />
-            <h3 className="dropzone-text">Drag & Drop Images Here</h3>
-            <p className="dropzone-subtext">or click to browse from your device</p>
-            <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '12px' }}>
-              Supports JPG, PNG, WebP, GIF (Max 50MB per file)
-            </p>
+            {view === 'compare' && cur && curFile && (
+              <div className="if-compare">
+                <span className="if-lbl l-o">Original</span><span className="if-lbl l-c">Compressed</span>
+                <img src={curFile.url} alt="orig" className="if-img-o" />
+                <img src={URL.createObjectURL(cur.blob)} alt="comp" className="if-img-c" style={{ clipPath: `inset(0 0 0 ${slider}%)` }} />
+                <div className="if-slider" style={{ left: slider + '%' }}
+                  onPointerDown={(e: RPointerEvent<HTMLDivElement>) => {
+                    const track = e.currentTarget.parentElement; if (!track) return;
+                    const update = (clientX: number) => { const r = track.getBoundingClientRect(); if (!r.width) return; setSlider(Math.max(2, Math.min(98, ((clientX - r.left) / r.width) * 100))); };
+                    const move = (ev: globalThis.PointerEvent) => update(ev.clientX);
+                    const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+                    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up); update(e.clientX);
+                  }} />
+              </div>
+            )}
+            {view === 'original' && curFile && <div className="if-single"><img src={curFile.url} alt="o" /></div>}
+            {view === 'compressed' && cur && <div className="if-single"><img src={URL.createObjectURL(cur.blob)} alt="c" /></div>}
+
+            {processing && <div className="if-overlay"><div className="if-spin" /><div>{progress.t || 'Processing...'}</div><div className="if-bar"><i style={{ width: progress.p + '%' }} /></div></div>}
           </div>
 
-          {/* File List */}
-          {files.length > 0 && (
-            <div className="image-list">
-              {files.map(file => (
-                <div key={file.id} className="image-item">
-                  <div className="image-preview-wrap">
-                    <img src={file.originalUrl} alt="preview" className="image-preview" />
-                  </div>
+          <div className="if-panel">
+            <div className="if-card">
+              <div className="if-ct">🎨 Output Format</div>
+              <div className="if-fmt">{([['webp', 'WebP', 'Best balance'], ['avif', 'AVIF', 'Smallest'], ['jpeg', 'JPEG', 'Universal'], ['png', 'PNG', 'Lossless/Lossy']] as const).map(([k, n, d]) => (<div key={k} className={format === k ? 'on' : ''} onClick={() => onFormat(k)}><b>{n}</b><small>{d}</small></div>))}</div>
+            </div>
 
-                  <div className="image-info">
-                    <div className="image-name">{file.originalFile.name}</div>
+            <div className="if-card">
+              <div className="if-ct">⚙️ Quality Control</div>
+              <div className={`if-slide ${sliderDim ? 'dim' : ''}`}>
+                <div className="if-sl">
+                  <span>{format === 'png' ? 'Quality (palette)' : 'Quality'}</span>
+                  <input type="number" min={0} max={100} value={quality} className="if-qnum"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => { const raw = e.target.value; if (raw === '') return; let v = +raw; if (Number.isNaN(v)) return; v = Math.max(0, Math.min(100, v)); onQualityChange(v); }} />
+                </div>
+                <input type="range" min={0} max={100} value={quality} onChange={(e: ChangeEvent<HTMLInputElement>) => onQualityChange(+e.target.value)} />
+              </div>
+              {sliderDim && <div className="if-png-note" style={{ color: '#00cec9' }}>🔒 {lossless ? 'Lossless' : 'Auto'} active — move slider to return to manual.</div>}
+              {photoClamped && <div className="if-png-note" style={{ color: '#fdcb6e' }}>🛡️ This is a <b>photo</b> — quality is limited to safe floor (≈240 colors) to prevent posterization. <b>WebP</b> is best for photos.</div>}
+              {format === 'png' && <label className="if-check"><input type="checkbox" checked={lossless} onChange={(e: ChangeEvent<HTMLInputElement>) => { setLossless(e.target.checked); if (e.target.checked) setMode('manual'); }} /> Lossless</label>}
 
-                    <div className="image-stats">
-                      <span>{formatBytes(file.originalSize)}</span>
-                      {file.status === 'compressing' && (
-                        <span style={{ color: 'var(--accent)' }}>Compressing...</span>
-                      )}
-                      {file.status === 'done' && (
-                        <>
-                          <span>→</span>
-                          <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{formatBytes(file.compressedSize)}</span>
-                          {Number(calculateSavings(file.originalSize, file.compressedSize)) > 0 ? (
-                            <span className="stat-badge savings">-{calculateSavings(file.originalSize, file.compressedSize)}%</span>
-                          ) : (
-                            <span className="stat-badge">{file.error || '0%'}</span>
-                          )}
-                        </>
-                      )}
-                      {file.status === 'error' && (
-                        <span className="stat-badge error">{file.error}</span>
-                      )}
-                    </div>
+              <button type="button" className={`if-auto-link ${mode === 'auto' ? 'on' : ''}`} onClick={() => { setMode(mode === 'auto' ? 'manual' : 'auto'); setLossless(false); }}>
+                🚀 {mode === 'auto' ? 'Auto mode active — click to return to manual' : 'Auto-pick best quality'}
+              </button>
 
-                    {file.status === 'compressing' && (
-                      <div className="progress-container">
-                        <div className="progress-bar" style={{ width: `${file.progress}%` }}></div>
-                      </div>
-                    )}
-                  </div>
+              <label className="if-check target" style={{ marginTop: 10 }}>
+                <input type="checkbox" checked={mode === 'target'} onChange={(e: ChangeEvent<HTMLInputElement>) => { setMode(e.target.checked ? 'target' : 'manual'); setLossless(false); setForceTarget(false); }} />
+                🎯 Target size (max):
+                <input type="number" value={targetStr} placeholder="30+" onChange={(e: ChangeEvent<HTMLInputElement>) => { setTargetStr(e.target.value); setMode('target'); setLossless(false); setForceTarget(false); }} onClick={(e: RMouseEvent) => e.stopPropagation()} /> KB
+              </label>
+              {mode === 'target' && targetStr === '' && <div className="if-target-hint">🎯 Enter Target KB (minimum 30).</div>}
+              {mode === 'target' && targetStr !== '' && !targetValid && <div className="if-target-err">⚠️ Enter a value above 30 KB.</div>}
 
-                  <div className="image-actions">
-                    {file.status === 'idle' && (
-                      <button className="btn-secondary" onClick={(e) => { e.stopPropagation(); compressSingleImage(file.id); }}>
-                        Compress
-                      </button>
-                    )}
-                    {file.status === 'done' && file.compressedUrl && (
-                      <button className="btn-icon" style={{ width: 'auto', padding: '0 12px', fontSize: '12px' }} title="Download" onClick={(e) => { e.stopPropagation(); downloadFile(file); }}>
-                        Download
-                      </button>
-                    )}
-                    <button className="btn-icon danger" style={{ width: 'auto', padding: '0 12px', fontSize: '12px' }} title="Remove" onClick={(e) => { e.stopPropagation(); removeFile(file.id); }}>
-                      Remove
-                    </button>
+
+              {format === 'jpeg' && (
+                <div className="if-pro">
+                  <label className="if-check"><input type="checkbox" checked={progressive} onChange={(e: ChangeEvent<HTMLInputElement>) => setProgressive(e.target.checked)} /> Progressive</label>
+                  <div className="if-sl"><span>Chroma</span><select value={chroma} onChange={(e: ChangeEvent<HTMLSelectElement>) => setChroma(e.target.value)}><option value="420">4:2:0 (smaller)</option><option value="444">4:4:4 (sharp text)</option></select></div>
+                </div>
+              )}
+            </div>
+
+            <div className="if-card">
+              <div className="if-ct">📐 Resize <small>(optional)</small></div>
+              <div className="if-row">
+                {([100, 75, 50, 25] as const).map((p) => <button key={p} className={`if-chip ${resizePreset === String(p) ? 'on' : ''}`} onClick={() => applyResizePreset(p)}>{p}%</button>)}
+                <button className={`if-chip ${resizePreset === 'original' ? 'on' : ''}`} onClick={clearResize}>Orig</button>
+              </div>
+              <div className="if-resize">
+                <div><label>Width</label><input type="number" value={rw} placeholder={dims.w ? String(dims.w) : 'Auto'} onChange={(e: ChangeEvent<HTMLInputElement>) => onRw(e.target.value)} /></div>
+                <button className={`if-lock ${locked ? 'on' : ''}`} onClick={() => setLocked(!locked)}>{locked ? '🔒' : '🔓'}</button>
+                <div><label>Height</label><input type="number" value={rh} placeholder={dims.h ? String(dims.h) : 'Auto'} onChange={(e: ChangeEvent<HTMLInputElement>) => onRh(e.target.value)} /></div>
+              </div>
+              <div className="if-eff">Output: <b>{ow} × {oh}</b>{!rw && !rh && <span className="if-orig">· original</span>}</div>
+              <label className="if-check"><input type="checkbox" checked={allowUp} onChange={(e: ChangeEvent<HTMLInputElement>) => setAllowUp(e.target.checked)} /> Allow upscaling</label>
+            </div>
+
+            <div className="if-card">
+              <div className="if-ct">📊 Results {cur && <span className="if-engine">[{cur.meta?.engine}]</span>}</div>
+              <div className="if-stats">
+                <div><b className="o">{cur ? fmtBytes(cur.origSize) : '-'}</b><small>Original</small></div>
+                <div><b className="c">{cur ? fmtBytes(cur.blob.size) : '-'}</b><small>Compressed</small></div>
+                <div><b className="s">{cur ? (savings > 0 ? `-${savings.toFixed(1)}%` : `+${Math.abs(savings).toFixed(1)}%`) : '-'}</b><small>Saved</small></div>
+                <div><b className="d">{cur ? `${cur.meta?.w}×${cur.meta?.h}` : '-'}</b><small>Dims</small></div>
+              </div>
+              <div className="if-bar"><i style={{ width: Math.max(0, Math.min(100, savings)) + '%' }} /></div>
+
+              {pngPhotoStuck && (
+                <div className="if-warn">
+                  🖼️ This looks like a <b>photo</b>. PNG is inefficient for photos. Please use <b>WebP/AVIF</b>.
+                  <div style={{ display: 'flex', gap: 6, marginTop: 8 }}><button type="button" className="if-chip on" style={{ flex: '0 0 auto' }} onClick={() => onFormat('webp')}>💡 Switch to WebP</button></div>
+                </div>
+              )}
+              {targetValid && cur?.meta?.metTarget === false && (
+                <div className="if-warn">
+                  ⚠️ <b>{+targetStr}KB</b> is not possible without quality loss. Best safe size: <b>{fmtBytes(cur.blob.size)}</b>.
+                  <div style={{ display: 'flex', gap: 6, marginTop: 8, flexWrap: 'wrap' }}>
+                    {format === 'png' && <button type="button" className="if-chip on" style={{ flex: '0 0 auto' }} onClick={() => onFormat('webp')}>💡 Try WebP</button>}
+                    <button type="button" className="if-chip on" style={{ flex: '0 0 auto' }} onClick={() => applyResizePreset(50)}>📐 Try 50% size</button>
+                    <button type="button" className="if-chip" style={{ flex: '0 0 auto' }} onClick={() => setForceTarget(true)}>⚠️ Force Target</button>
                   </div>
                 </div>
-              ))}
+              )}
+              {/* Success message removed as requested */}
+              {targetValid && cur?.meta?.forced === true && cur?.meta?.metTarget === true && (
+                <div className="if-warn">
+                  ⚠️ <b>Forced to {+targetStr}KB</b> (Quality reduced to {cur.meta?.param}{format === 'png' ? ' colors' : '%'})
+                  <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
+                    <button type="button" className="if-chip on" style={{ flex: '0 0 auto' }} onClick={() => setForceTarget(false)}>↩️ Revert to safe size</button>
+                  </div>
+                </div>
+              )}
+              {targetValid && cur?.meta?.forced === true && cur?.meta?.metTarget === false && (
+                <div className="if-warn">⚠️ Target <b>{+targetStr}KB</b> is unreachable. Smallest possible size is <b>{fmtBytes(cur.blob.size)}</b>.</div>
+              )}
+            </div>
+
+            <div className="if-card">
+              <div className="if-ct">💾 Export</div>
+              <button className="if-btn if-accent if-big" disabled={!cur} onClick={() => downloadOne(sel)}>⬇️ Download</button>
+              <button className="if-btn if-ghost" disabled={!cur} onClick={() => copyOne(sel)}>📋 Copy</button>
+              {files.length > 1 && <button className="if-btn if-accent" onClick={downloadZip} disabled={processing}>📦 Download All (ZIP)</button>}
+            </div>
+          </div>
+
+          {/* BATCH + ADD-MORE (visible from 1 file so the add path is always discoverable) */}
+          {files.length >= 1 && (
+            <div className="if-batch">
+              <div className="if-ct">🗂️ Queue ({files.length})</div>
+              <button type="button" className={`if-btn if-ghost ${addDrag ? 'drag' : ''}`} style={{ width: '100%', marginBottom: 12, borderStyle: 'dashed' }} onClick={pickMore}
+                onDragOver={(e: RDragEvent) => e.preventDefault()} onDragEnter={() => setAddDrag(true)} onDragLeave={() => setAddDrag(false)}
+                onDrop={(e: RDragEvent) => { e.preventDefault(); setAddDrag(false); loadFiles(e.dataTransfer.files); }}>
+                ＋ Add more images
+              </button>
+              {files.map((f, i) => { const r = results[i]; const sv = r ? ((1 - r.blob.size / r.origSize) * 100) : 0; return (
+                <div key={i} className={`if-brow ${sel === i ? 'on' : ''}`} onClick={() => setSel(i)}>
+                  <span className="if-bname">{sel === i ? '▸ ' : ''}{f.file.name}</span>
+                  <span className="if-bsize">{fmtBytes(f.file.size)} → {r ? fmtBytes(r.blob.size) : '…'}</span>
+                  <span className={`if-bsv ${sv > 0 ? 'pos' : 'neg'}`}>{r ? (sv > 0 ? `-${sv.toFixed(0)}%` : `+${Math.abs(sv).toFixed(0)}%`) : ''}</span>
+                  <button className="if-bdl" onClick={(e: RMouseEvent) => { e.stopPropagation(); downloadOne(i); }} disabled={!r}>⬇️</button>
+                </div>); })}
             </div>
           )}
-
         </div>
-      </div>
-      <section className="tc-seo-content">
-        <h2>The Best Free Online Image Compressor</h2>
-        <p>If you are looking for a fast and reliable way to reduce file sizes without losing quality, you have found the perfect free online image compressor. Most tools force you to upload your personal photos to their servers, wait in long queues, and then deal with annoying watermarks. We built our image compressor differently. Your files never leave your browser, meaning everything happens locally on your own device. This guarantees complete privacy and lightning fast speeds.</p>
-
-        <h3>Compress Image to Specific Size Instantly</h3>
-        <p>One of the most frustrating things about optimizing photos is guessing the right quality settings. Our tool allows you to compress image to specific size directly. Whether you need an image under 150 KB for a website upload, or a small file for an email attachment, simply type in your exact target size. Our smart hybrid engine will automatically calculate the best compression mode, resize dimensions if necessary, and output the perfect file. It takes the guesswork out of the entire process.</p>
-
-        <h3>Why Choose Our Image Compressor</h3>
-        <p>There are countless options out there, but our image compressor stands out because of its unique features and user friendly design. Here is what makes it better:</p>
-        <ul>
-          <li><strong>100% Private Processing:</strong> No uploads, no server storage, complete security.</li>
-          <li><strong>Exact Size Targeting:</strong> Tell us the exact KB or MB you need, and we will hit it.</li>
-          <li><strong>Multiple Formats:</strong> Convert and compress into modern formats like WebP and AVIF.</li>
-          <li><strong>No Limits:</strong> Compress as many files as you want, completely free.</li>
-        </ul>
-        <p>Whether you are a developer optimizing web assets, a photographer managing portfolios, or just someone trying to send a large photo over email, this free online image compressor gives you total control.</p>
-      </section>
+      )}
     </div>
   );
 }
