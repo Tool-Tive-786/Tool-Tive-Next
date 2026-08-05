@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  serverExternalPackages: ['@react-pdf/renderer', 'html2canvas', 'jspdf', 'browser-image-compression'],
 };
 
 export default nextConfig;
