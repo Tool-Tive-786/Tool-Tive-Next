@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "@/styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: '--font-sans' });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: '--font-space' });
@@ -46,6 +47,7 @@ export default function RootLayout({
           <div className="shape shape-3"></div>
         </div>
         <Header />
+        <Breadcrumb />
         <main>{children}</main>
         <Footer />
       </body>
