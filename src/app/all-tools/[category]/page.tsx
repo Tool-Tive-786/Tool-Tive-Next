@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${resolvedParams.category.charAt(0).toUpperCase() + resolvedParams.category.slice(1)} Tools`,
     description: `Free online ${resolvedParams.category} tools.`,
+    alternates: { canonical: `/all-tools/${resolvedParams.category}` },
   };
 }
 

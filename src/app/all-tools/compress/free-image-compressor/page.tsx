@@ -17,7 +17,8 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Free Image Compressor & Resizer - Reduce Image Size Online",
         description: "Compress your JPG, PNG, and WebP images by up to 90% without losing quality. Bulk upload, drag & drop, and instantly download optimized images for SEO.",
-    }
+    },
+    alternates: { canonical: '/all-tools/compress/free-image-compressor' },
 };
 
 export default function ImageCompressorPage() {

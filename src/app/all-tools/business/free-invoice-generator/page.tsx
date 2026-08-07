@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Free Invoice Generator | Create Professional Invoices Instantly',
     description: 'Use our Free Invoice Generator to create professional invoices, quotes, and credit notes. Choose a template, add your information, and download as a PDF instantly.',
     keywords: 'Free Invoice Generator, Invoice Maker, Create Invoice Online, Free PDF Invoices, Quote Generator, Credit Note Generator, Business Invoice Template, Online Invoice Builder, How to make an invoice for free, Free invoice generator without watermark, Custom invoice templates',
+    alternates: { canonical: '/all-tools/business/free-invoice-generator' },
 };
 
 const invoiceFaqs = [

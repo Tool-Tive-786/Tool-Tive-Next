@@ -6,6 +6,7 @@ import '@/styles/tools.css';
 export const metadata = {
     title: 'All Tools',
     description: 'Browse all free online tools available on ToolTive.',
+    alternates: { canonical: '/all-tools' },
 };
 
 export default function ToolsIndex() {

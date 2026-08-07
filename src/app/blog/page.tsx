@@ -6,6 +6,7 @@ import '@/styles/blog.css';
 export const metadata = {
   title: 'Blog',
   description: 'Free online tools, guides, and articles for business and creatives.',
+  alternates: { canonical: '/blog' },
 };
 
 export default async function BlogIndex() {

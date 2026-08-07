@@ -51,7 +51,7 @@ export default function Breadcrumb() {
       aria-label="breadcrumb"
       className="container"
       style={{
-        display: 'none',
+        display: 'block',
         paddingTop: "24px",
         paddingBottom: "8px",
       }}

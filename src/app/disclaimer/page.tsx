@@ -3,6 +3,7 @@ import '@/styles/legal.css';
 export const metadata = {
   title: 'Disclaimer',
   description: 'ToolTive Disclaimer.',
+  alternates: { canonical: '/disclaimer' },
 };
 
 export default function Disclaimer() {

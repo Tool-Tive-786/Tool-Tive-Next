@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: post.title,
     description: post.description,
+    alternates: { canonical: `/blog/${resolvedParams.category}/${resolvedParams.slug}` },
   };
 }
 
@@ -43,8 +44,33 @@ export default async function BlogPostPage({ params }: Props) {
     year: 'numeric'
   });
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.description,
+    "image": "https://tooltive.com/hero-section.webp",
+    "datePublished": new Date(post.pubDate).toISOString(),
+    "author": {
+      "@type": "Organization",
+      "name": "ToolTive Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ToolTive",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tooltive.com/favicon.svg"
+      }
+    }
+  };
+
   return (
     <div className="container blog-page-container">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="blog-layout">
         {/* Main Content (65%) */}
         <article className="blog-article">

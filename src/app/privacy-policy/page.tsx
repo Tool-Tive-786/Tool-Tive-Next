@@ -3,6 +3,7 @@ import '@/styles/legal.css';
 export const metadata = {
   title: 'Privacy Policy',
   description: 'ToolTive Privacy Policy — how we handle your data.',
+  alternates: { canonical: '/privacy-policy' },
 };
 
 export default function PrivacyPolicy() {

@@ -16,7 +16,8 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Free Online Image to PDF Converter - ToolTive",
         description: "Use our Free Online Image to PDF Converter to merge multiple JPG, PNG, and WebP files into a single PDF document. Fast, secure, and 100% free.",
-    }
+    },
+    alternates: { canonical: '/all-tools/pdf/free-online-image-to-pdf-converter' },
 };
 
 export default function ImagesToPdfPage() {

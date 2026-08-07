@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllTools } from '@/lib/tools';
 import { getAllPosts } from '@/lib/blog';
@@ -7,6 +8,12 @@ import HomeToolsSection from '@/components/HomeToolsSection';
 import FaqSection from '@/components/FaqSection';
 import '@/styles/home.css';
 import '@/styles/tools.css';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default async function Home() {
   const tools = getAllTools();
