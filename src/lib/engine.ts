@@ -104,11 +104,12 @@ function qualityOk(format: string, val: number, s: number, cp: number, Cx: numbe
 async function wasmRaster(format: string, imageData: ImageData, p: CompSettings): Promise<Blob> {
   if (typeof window === 'undefined') throw new Error('no-wasm-ssr');
   const cdn = 'https://cdn.jsdelivr.net/npm';
-  const mod: any = format === 'jpeg' 
-    ? await import(/* webpackIgnore: true */ `${cdn}/@jsquash/jpeg/+esm`) 
-    : format === 'webp' 
-    ? await import(/* webpackIgnore: true */ `${cdn}/@jsquash/webp/+esm`) 
-    : await import(/* webpackIgnore: true */ `${cdn}/@jsquash/avif/+esm`);
+  // @ts-ignore
+  const mod: any = format === 'jpeg'
+    ? await import(/* webpackIgnore: true */ `${cdn}/@jsquash/jpeg/+esm`)
+    : format === 'webp'
+      ? await import(/* webpackIgnore: true */ `${cdn}/@jsquash/webp/+esm`)
+      : await import(/* webpackIgnore: true */ `${cdn}/@jsquash/avif/+esm`);
   let opts: any;
   if (format === 'jpeg') {
     if (!p.progressive && p.quality < 25) throw new Error("Avoid baseline JPEG WASM crash at low quality");
@@ -124,6 +125,7 @@ async function encodeRaster(format: string, imageData: ImageData, toBlob: ToBlob
   catch { try { return { blob: await toBlob(MIME[format], p.quality / 100), engine: 'browser' }; } catch { return { blob: await toBlob(format === 'avif' ? MIME.webp : MIME[format], p.quality / 100), engine: 'browser-fallback' }; } }
 }
 async function encodePng(imageData: ImageData, p: CompSettings): Promise<{ blob: Blob; engine: string }> {
+  // @ts-ignore
   const { default: UPNG } = await import(/* webpackIgnore: true */ 'https://cdn.jsdelivr.net/npm/upng-js/+esm');
   const rgba = new Uint8Array(imageData.data.buffer.slice(0));
   const out = UPNG.encode([rgba.buffer], imageData.width, imageData.height, p.lossless ? 0 : (p.colors || 256));
@@ -160,7 +162,7 @@ const mkP = (format: string, s: CompSettings, val: number): CompSettings => form
 
 async function measure(format: string, proxy: Drawn, val: number, s: CompSettings, Cx: number) {
   const p = mkP(format, s, val);
-  const enc = format === 'png' ? encodePng(proxy.imageData, p) : await encodeRaster(format, proxy.imageData, proxy.toBlob, p);
+  const enc = format === 'png' ? await encodePng(proxy.imageData, p) : await encodeRaster(format, proxy.imageData, proxy.toBlob, p);
   const dec = await toImageData(enc.blob, proxy.imageData.width, proxy.imageData.height);
   return { val, size: enc.blob.size, ok: qualityOk(format, val, ssim(proxy.imageData, dec), cpsnr(rgbMSE(proxy.imageData, dec)), Cx) };
 }

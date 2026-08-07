@@ -13,9 +13,6 @@ const nextConfig: NextConfig = {
     'jspdf', 
     'upng-js'
   ],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   turbopack: {},
 };
 
