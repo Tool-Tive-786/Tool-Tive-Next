@@ -12,9 +12,7 @@ export default function Header() {
   const tools = getAllTools();
   const categories = useMemo(() => {
     return Array.from(new Set(tools.map(t => t.category)));
-  }, [tools]);
-
-  useEffect(() => {
+  }, [tools]); useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -39,7 +37,7 @@ export default function Header() {
             <div className="dropdown-menu">
               {categories.map(cat => (
                 <Link key={cat} href={`/all-tools/${cat}`} className="dropdown-item" style={{ textTransform: 'capitalize' }}>
-                  {cat}
+                  {cat === 'pdf' ? 'PDF' : cat}
                 </Link>
               ))}
               <Link href="/all-tools" className="dropdown-item" style={{ borderTop: '1px solid var(--border-default)', marginTop: '4px', paddingTop: '10px' }}>All Tools</Link>
@@ -62,7 +60,7 @@ export default function Header() {
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
           {categories.map(cat => (
             <Link key={cat} href={`/all-tools/${cat}`} onClick={() => setMobileMenuOpen(false)} style={{ textTransform: 'capitalize' }}>
-              {cat} Tools
+              {cat === 'pdf' ? 'PDF' : cat} Tools
             </Link>
           ))}
           <Link href="/all-tools" onClick={() => setMobileMenuOpen(false)}>All Tools</Link>
