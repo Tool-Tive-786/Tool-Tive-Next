@@ -51,6 +51,7 @@ export default function Breadcrumb() {
       aria-label="breadcrumb"
       className="container"
       style={{
+        display: 'none',
         paddingTop: "24px",
         paddingBottom: "8px",
       }}
@@ -60,7 +61,7 @@ export default function Breadcrumb() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      
+
       {/* Visual Breadcrumb UI */}
       <ol
         style={{
@@ -85,7 +86,7 @@ export default function Breadcrumb() {
             Home
           </Link>
         </li>
-        
+
         {breadcrumbItems.map((item, index) => {
           const isLast = index === breadcrumbItems.length - 1;
 

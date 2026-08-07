@@ -1,11 +1,7 @@
 // Server Component for SEO purposes
 import { Metadata } from 'next';
-import dynamic from 'next/dynamic';
+import DocumentStudioNoSSR from '@/components/tools/invoice/DocumentStudioNoSSR';
 import FaqSection from '@/components/FaqSection';
-
-const DocumentStudio = dynamic(() => import('@/components/tools/invoice/DocumentStudio'), {
-  ssr: false,
-});
 
 export const metadata: Metadata = {
     title: 'Free Invoice Generator | Create Professional Invoices Instantly',
@@ -50,7 +46,7 @@ export default function InvoiceGeneratorPage() {
                 </h1>
             </div>
 
-            <DocumentStudio />
+            <DocumentStudioNoSSR />
 
             <div className="container" style={{ marginTop: '40px', marginBottom: '80px' }}>
                 <div className="article-content" style={{ width: '100%', margin: '0 0' }}>
