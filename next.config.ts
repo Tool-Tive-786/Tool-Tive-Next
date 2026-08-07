@@ -8,7 +8,23 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  serverExternalPackages: ['@react-pdf/renderer', 'html2canvas', 'jspdf', 'browser-image-compression'],
+  serverExternalPackages: [
+    '@react-pdf/renderer', 
+    'html2canvas', 
+    'jspdf', 
+    '@jsquash/jpeg',
+    '@jsquash/webp',
+    '@jsquash/avif',
+    'upng-js'
+  ],
+  webpack: (config) => {
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+      layers: true,
+    };
+    return config;
+  },
 };
 
 export default nextConfig;

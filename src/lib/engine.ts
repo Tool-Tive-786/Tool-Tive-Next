@@ -105,10 +105,10 @@ async function wasmRaster(format: string, imageData: ImageData, p: CompSettings)
   if (typeof window === 'undefined') throw new Error('no-wasm-ssr');
   const mod: any = format === 'jpeg' ? await import('@jsquash/jpeg') : format === 'webp' ? await import('@jsquash/webp') : await import('@jsquash/avif');
   let opts: any;
-  if (format === 'jpeg') { 
+  if (format === 'jpeg') {
     if (!p.progressive && p.quality < 25) throw new Error("Avoid baseline JPEG WASM crash at low quality");
-    opts = { quality: p.quality, baseline: !p.progressive, progressive: !!p.progressive, optimize_coding: true, mozjpeg: true }; 
-    if (p.chroma && p.chroma !== '420') opts.chroma_sub_sampling = p.chroma; 
+    opts = { quality: p.quality, baseline: !p.progressive, progressive: !!p.progressive, optimize_coding: true, mozjpeg: true };
+    if (p.chroma && p.chroma !== '420') opts.chroma_sub_sampling = p.chroma;
   }
   else opts = { quality: p.quality };
   const buf: ArrayBuffer = await mod.encode(imageData, opts);
@@ -214,7 +214,7 @@ async function targetSearch(format: string, source: AnySource, tw: number, th: n
   return { blob: chosen.blob, w: tw, h: th, engine: chosen.engine, param: chosen.val, mode: 'target', metTarget, targetBytes, qualitySafe: true, forced: false, isPhoto };
 }
 
-export async function compressOne(file: Blob, orientation: number, kind: string, format: string, settings: CompSettings, onProgress: OnProgress = () => {}): Promise<{ blob: Blob; meta: Meta }> {
+export async function compressOne(file: Blob, orientation: number, kind: string, format: string, settings: CompSettings, onProgress: OnProgress = () => { }): Promise<{ blob: Blob; meta: Meta }> {
   onProgress({ p: 4, t: 'Decoding image...' }); await tick();
   const bitmap = await createImageBitmap(file);
   const oriented = applyOrientation(bitmap, orientation);
