@@ -4,7 +4,7 @@
             Engine lowers quality (never above user's) until target fits,
             but NEVER below the photo-safe floor (picture protected).
    AUTO   = engine picks best safe quality (slider ignored). */
-import UPNG from 'upng-js';
+
 
 const ENGINE_VERSION = 'v7-quality-target-2026';
 if (typeof console !== 'undefined') console.log('%c[ImageForge engine] ' + ENGINE_VERSION, 'color:#00cec9;font-weight:bold');
@@ -103,7 +103,12 @@ function qualityOk(format: string, val: number, s: number, cp: number, Cx: numbe
 
 async function wasmRaster(format: string, imageData: ImageData, p: CompSettings): Promise<Blob> {
   if (typeof window === 'undefined') throw new Error('no-wasm-ssr');
-  const mod: any = format === 'jpeg' ? await import('@jsquash/jpeg') : format === 'webp' ? await import('@jsquash/webp') : await import('@jsquash/avif');
+  const cdn = 'https://cdn.jsdelivr.net/npm';
+  const mod: any = format === 'jpeg' 
+    ? await import(/* webpackIgnore: true */ `${cdn}/@jsquash/jpeg/+esm`) 
+    : format === 'webp' 
+    ? await import(/* webpackIgnore: true */ `${cdn}/@jsquash/webp/+esm`) 
+    : await import(/* webpackIgnore: true */ `${cdn}/@jsquash/avif/+esm`);
   let opts: any;
   if (format === 'jpeg') {
     if (!p.progressive && p.quality < 25) throw new Error("Avoid baseline JPEG WASM crash at low quality");
@@ -118,14 +123,15 @@ async function encodeRaster(format: string, imageData: ImageData, toBlob: ToBlob
   try { return { blob: await wasmRaster(format, imageData, p), engine: 'wasm' }; }
   catch { try { return { blob: await toBlob(MIME[format], p.quality / 100), engine: 'browser' }; } catch { return { blob: await toBlob(format === 'avif' ? MIME.webp : MIME[format], p.quality / 100), engine: 'browser-fallback' }; } }
 }
-function encodePng(imageData: ImageData, p: CompSettings): { blob: Blob; engine: string } {
+async function encodePng(imageData: ImageData, p: CompSettings): Promise<{ blob: Blob; engine: string }> {
+  const { default: UPNG } = await import(/* webpackIgnore: true */ 'https://cdn.jsdelivr.net/npm/upng-js/+esm');
   const rgba = new Uint8Array(imageData.data.buffer.slice(0));
   const out = UPNG.encode([rgba.buffer], imageData.width, imageData.height, p.lossless ? 0 : (p.colors || 256));
   return { blob: new Blob([out], { type: MIME.png }), engine: 'upng' };
 }
 async function encodeAt(format: string, source: AnySource, tw: number, th: number, p: CompSettings): Promise<{ blob: Blob; w: number; h: number; engine: string }> {
   const { imageData, toBlob } = drawTarget(source, tw, th, format === 'jpeg');
-  if (format === 'png') { const r = encodePng(imageData, p); return { blob: r.blob, engine: r.engine, w: tw, h: th }; }
+  if (format === 'png') { const r = await encodePng(imageData, p); return { blob: r.blob, engine: r.engine, w: tw, h: th }; }
   const r = await encodeRaster(format, imageData, toBlob, p); return { blob: r.blob, engine: r.engine, w: tw, h: th };
 }
 
