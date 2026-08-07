@@ -56,6 +56,7 @@ export default function Footer() {
             <ul>
               <li><Link href="/all-tools/business/free-invoice-generator">Invoice Generator</Link></li>
               <li><Link href="/all-tools/compress/free-image-compressor">Image Compressor</Link></li>
+              <li><Link href="/all-tools/pdf/free-online-image-to-pdf-converter">Image to PDF Converter</Link></li>
               {/* <li><Link href="/all-tools">QR Code Maker</Link></li> */}
               {/* <li><Link href="/all-tools">Grammar Checker</Link></li> */}
             </ul>

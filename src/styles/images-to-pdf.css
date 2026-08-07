@@ -1,0 +1,422 @@
+.ipdf-root {
+    --p: var(--accent, #f59e0b);
+    --a: var(--accent-light, #fbbf24);
+    --bg: var(--bg-primary, #0a0908);
+    --card: var(--bg-card, #181412);
+    --inp: var(--bg-input, #141210);
+    --bd: var(--border-default, #2a2621);
+    --bd-hover: var(--border-hover, #3d362e);
+    --t: var(--text-primary, #fafaf9);
+    --t2: var(--text-secondary, #c4b5a0);
+    --m: var(--text-muted, #8c7e6a);
+    --no: #ef4444;
+    color: var(--t);
+    font-family: var(--font-sans, -apple-system, Segoe UI, Roboto, sans-serif);
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 80px;
+}
+
+.ipdf-layout {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+@media (max-width: 1024px) {
+    .ipdf-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ipdf-panel {
+    background: var(--card);
+    border: 1px solid var(--bd);
+    border-radius: var(--radius-lg, 16px);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.3s;
+}
+
+.ipdf-panel:hover {
+    border-color: var(--bd-hover);
+}
+
+.ipdf-upload-zone {
+    border: 2px dashed var(--bd);
+    border-radius: var(--radius-lg, 16px);
+    padding: 60px 24px;
+    text-align: center;
+    background: var(--inp);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.ipdf-upload-zone:hover {
+    border-color: var(--p);
+    background: var(--bg-elevated);
+}
+
+.ipdf-upload-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.ipdf-icon-wrap {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    background: var(--btn-bg, linear-gradient(135deg, var(--p), var(--a)));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--btn-text, #0a0908);
+    box-shadow: var(--btn-shadow);
+    transition: transform 0.3s;
+}
+
+.ipdf-upload-zone:hover .ipdf-icon-wrap {
+    transform: scale(1.05);
+}
+
+.ipdf-upload-zone h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--t);
+}
+
+.ipdf-upload-zone p {
+    color: var(--t2);
+    font-size: 15px;
+}
+
+.ipdf-formats {
+    margin-top: 24px;
+    background: var(--inp);
+    padding: 16px;
+    border-radius: var(--radius-md, 12px);
+    border: 1px solid var(--bd);
+    font-size: 14px;
+    color: var(--t2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ipdf-formats svg {
+    color: var(--p);
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.ipdf-formats b {
+    color: var(--t);
+    font-weight: 600;
+}
+
+.ipdf-controls {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px;
+    background: var(--inp);
+    border-radius: var(--radius-md, 12px);
+    border: 1px solid var(--bd);
+    margin-bottom: 32px;
+}
+
+.ipdf-inputs {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+}
+
+.ipdf-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.ipdf-input-group label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--t2);
+    letter-spacing: 0.05em;
+}
+
+.ipdf-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ipdf-input-wrap input {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--card);
+    border: 1px solid var(--bd);
+    border-radius: var(--radius-md, 8px);
+    color: var(--t);
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.ipdf-input-wrap input:focus {
+    border-color: var(--p);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.ipdf-input-suf {
+    position: absolute;
+    right: 14px;
+    color: var(--m);
+    font-size: 14px;
+    pointer-events: none;
+    font-weight: 500;
+}
+
+.ipdf-btn {
+    padding: 14px 28px;
+    background: var(--btn-bg, linear-gradient(135deg, var(--p), var(--a)));
+    color: var(--btn-text, #0a0908);
+    border: none;
+    border-radius: var(--radius-md, 8px);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--btn-shadow);
+    transition: all 0.2s;
+    height: 48px;
+    white-space: nowrap;
+}
+
+.ipdf-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+.ipdf-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.ipdf-grid-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--bd);
+}
+
+.ipdf-grid-header h3 {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    color: var(--t);
+}
+
+.ipdf-badge {
+    background: var(--accent-soft);
+    border: 1px solid var(--border-accent);
+    color: var(--p);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.ipdf-clear-btn {
+    background: transparent;
+    border: none;
+    color: var(--no);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.ipdf-clear-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.ipdf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+    max-height: 540px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.ipdf-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ipdf-grid::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-radius: 3px;
+}
+
+.ipdf-grid::-webkit-scrollbar-thumb {
+    background: var(--bd);
+    border-radius: 3px;
+}
+
+.ipdf-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--bd-hover);
+}
+
+.ipdf-item {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--inp);
+    border: 1px solid var(--bd);
+    border-radius: var(--radius-md, 12px);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+}
+
+.ipdf-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: all 0.4s ease;
+}
+
+.ipdf-item:hover {
+    border-color: var(--p);
+    box-shadow: var(--shadow-glow);
+}
+
+.ipdf-item:hover img {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.ipdf-item-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(239, 68, 68, 0.9);
+    color: #fff;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+
+.ipdf-item:hover .ipdf-item-remove {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.ipdf-item-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 9, 8, 0.85);
+    padding: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--t);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s;
+    transform: translateY(100%);
+}
+
+.ipdf-item:hover .ipdf-item-name {
+    transform: translateY(0);
+}
+
+.ipdf-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 400px;
+    border: 2px dashed var(--bd);
+    border-radius: var(--radius-lg, 16px);
+    background: var(--inp);
+    color: var(--t2);
+    text-align: center;
+    padding: 32px;
+}
+
+.ipdf-empty svg {
+    width: 56px;
+    height: 56px;
+    color: var(--m);
+    margin-bottom: 16px;
+}
+
+.ipdf-empty h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--t);
+    margin-bottom: 8px;
+}
+
+.ipdf-empty p {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--m);
+    max-width: 300px;
+}
+
+.ipdf-spinner {
+    animation: ipdf-spin 1s linear infinite;
+}
+
+@keyframes ipdf-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .ipdf-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ipdf-inputs {
+        flex-direction: column;
+    }
+}
