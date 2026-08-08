@@ -77,4 +77,4 @@ Yes, upload it and it's placed automatically at the top of your invoice.
 **Is my data safe?**  
 Yes. Invoice generation happens entirely in your browser — nothing is sent to or stored on our servers.
 
-**Ready to get paid faster?** [Create your free invoice now →](/business/invoice-generator)
+**Ready to get paid faster?** [Create your free invoice now →](/all-tools/business/free-invoice-generator)

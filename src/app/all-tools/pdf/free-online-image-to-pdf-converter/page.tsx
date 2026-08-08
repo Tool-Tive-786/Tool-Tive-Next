@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { getToolBySlug } from "@/lib/tools";
 import ImagesToPdf from "@/components/tools/ImagesToPdf";
+import FaqSection from "@/components/FaqSection";
 
 export const metadata: Metadata = {
     title: "Free Online Image to PDF Converter - ToolTive",
@@ -27,53 +28,39 @@ export default function ImagesToPdfPage() {
         return <div>Tool not found</div>;
     }
 
-    // Schema.org JSON-LD for Software Application and FAQ
+    // Schema.org JSON-LD for SoftwareApplication (FAQ schema is handled by FaqSection)
     const jsonLd = {
         "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "SoftwareApplication",
-                "name": tool.title,
-                "operatingSystem": "All",
-                "applicationCategory": "UtilitiesApplication",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "USD"
-                },
-                "description": tool.seoDescription
-            },
-            {
-                "@type": "FAQPage",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "name": "Are my images uploaded to a server?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "No. Our Free Online Image to PDF Converter works entirely in your web browser. Your images are never uploaded to any servers, ensuring 100% privacy and security."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Which image formats can I convert to PDF?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "We support all standard web image formats including JPG, JPEG, PNG, WebP, GIF, and SVG."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Can I split my images into multiple PDFs?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes! You can specify exactly how many PDFs you want to generate. The tool will automatically and evenly distribute your images across the specified number of PDF files and download them as a ZIP."
-                        }
-                    }
-                ]
-            }
-        ]
+        "@type": "SoftwareApplication",
+        "name": tool.title,
+        "url": "https://tooltive.com/all-tools/pdf/free-online-image-to-pdf-converter",
+        "operatingSystem": "All",
+        "applicationCategory": "UtilitiesApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": tool.seoDescription
     };
+
+    const pdfFaqs = [
+        {
+            question: "Are my images uploaded to a server?",
+            answer: <>No. Our Free Online Image to PDF Converter works entirely in your web browser. Your images are <strong>never uploaded</strong> to any servers, ensuring 100% privacy and security.</>,
+            schemaAnswer: "No. Our Free Online Image to PDF Converter works entirely in your web browser. Your images are never uploaded to any servers, ensuring 100% privacy and security."
+        },
+        {
+            question: "Which image formats can I convert to PDF?",
+            answer: <>We support all standard web image formats including <strong>JPG, JPEG, PNG, WebP, GIF, and SVG</strong>.</>,
+            schemaAnswer: "We support all standard web image formats including JPG, JPEG, PNG, WebP, GIF, and SVG."
+        },
+        {
+            question: "Can I split my images into multiple PDFs?",
+            answer: <>Yes! You can specify exactly how many PDFs you want to generate. The tool will automatically and evenly distribute your images across the specified number of PDF files and <strong>download them as a ZIP</strong>.</>,
+            schemaAnswer: "Yes! You can specify exactly how many PDFs you want to generate. The tool will automatically and evenly distribute your images across the specified number of PDF files and download them as a ZIP."
+        }
+    ];
 
     return (
         <main>
@@ -98,6 +85,13 @@ export default function ImagesToPdfPage() {
 
             {/* The Core Tool */}
             <ImagesToPdf />
+
+            <FaqSection
+                faqs={pdfFaqs}
+                title={<>Frequently Asked <span className="highlight">Questions.</span></>}
+                description="Everything you need to know about our free image to PDF converter and how it keeps your files secure."
+                label="FAQ"
+            />
 
         </main>
     );
