@@ -2,6 +2,8 @@
 import { Metadata } from 'next';
 import DocumentStudioNoSSR from '@/components/tools/invoice/DocumentStudioNoSSR';
 import FaqSection from '@/components/FaqSection';
+import '@/styles/toolscontent.css';
+import { getToolBySlug } from '@/lib/tools';
 
 export const metadata: Metadata = {
     title: 'Free Invoice Generator | Create Professional Invoices Instantly',
@@ -39,6 +41,8 @@ const invoiceFaqs = [
 ];
 
 export default function InvoiceGeneratorPage() {
+    const tool = getToolBySlug('free-invoice-generator')!;
+
     const invoiceJsonLd = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
@@ -55,37 +59,43 @@ export default function InvoiceGeneratorPage() {
     };
 
     return (
-        <main>
+        <main className="tools-page">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(invoiceJsonLd) }}
             />
 
-            <div style={{ width: '90%', maxWidth: '1280px', margin: '0 auto', padding: '110px 16px 0', textAlign: 'center', marginBottom: '-60px' }}>
-                <h1 className="page-heading">
-                    Free Invoice Generator
-                </h1>
-            </div>
+            {/* Hero Section */}
+            <section className="hero-section" style={{ padding: '0 0 20px', textAlign: 'center' }}>
+                <div className="container">
+                    <h1 className="page-heading" style={{ marginBottom: '16px' }}>
+                        {tool.h1Base} <span>{tool.h1Accent}</span>
+                    </h1>
+                    <p className="tool-intro">
+                        Say goodbye to clunky spreadsheet templates and paid invoicing software. Our free invoice generator gives small business owners, freelancers, and contractors a powerful tool to create professional, ready-to-send invoices in seconds. Instantly customize your brand colors, calculate taxes and discounts, and download your final document as a pristine PDF—all without signing up or dealing with watermarks.
+                    </p>
+                </div>
+            </section>
 
             <DocumentStudioNoSSR />
 
-            <div className="container" style={{ marginTop: '40px', marginBottom: '80px' }}>
-                <div className="article-content" style={{ width: '100%', margin: '0 0' }}>
-                    <h2>Why Use Our Free Invoice Generator?</h2>
+            <div className="container tool-seo-section">
+                <div className="tool-seo-content">
+                    <h2>Why Use Our <span>Free Invoice Generator?</span></h2>
                     <p>
-                        Running a small business means paperwork keeps piling up, and invoices are usually first on that list. Our <strong style={{ color: 'var(--accent)' }}>free invoice generator</strong> skips the subscriptions and the messy spreadsheet templates. Open the tool, fill in your details, and your invoice is ready in minutes. Think of it as an online invoice builder built for speed, not spreadsheets.
+                        Running a small business means paperwork keeps piling up, and invoices are usually first on that list. Our <strong>free invoice generator</strong> skips the subscriptions and the messy spreadsheet templates. Open the tool, fill in your details, and your invoice is ready in minutes. Think of it as an online invoice builder built for speed, not spreadsheets.
                     </p>
                     <p>
-                        There's no sign-up screen in your way. No watermark stamped across your document either. <strong style={{ color: 'var(--accent)' }}>Create invoice online</strong> as many times as you need, and it stays free every single time.
+                        There's no sign-up screen in your way. No watermark stamped across your document either. <strong>Create invoice online</strong> as many times as you need, and it stays free every single time.
                     </p>
 
-                    <h2>Everything You Need in One Invoice Maker</h2>
+                    <h2>Everything You Need in One <span>Invoice Maker</span></h2>
                     <p>Most free tools hand you a plain form and stop there. This one goes further.</p>
                     <ul>
-                        <li><strong style={{ color: 'var(--accent)' }}>Instant PDF Export:</strong> Download free PDF invoices the moment you're done, ready to email or print.</li>
-                        <li><strong style={{ color: 'var(--accent)' }}>Multiple Templates:</strong> Choose from Minimal, Bold, Classic, or Creative layouts depending on how you want your business to look.</li>
-                        <li><strong style={{ color: 'var(--accent)' }}>Custom Branding:</strong> Add your logo and pick an accent colour that matches your brand. Small detail, but it makes a document look like it came from a real company.</li>
-                        <li><strong style={{ color: 'var(--accent)' }}>Multi-Purpose:</strong> The same tool doubles as a quote generator and a credit note generator. Switch the document type with one click and keep the details you already typed.</li>
+                        <li><strong>Instant PDF Export:</strong> Download free PDF invoices the moment you're done, ready to email or print.</li>
+                        <li><strong>Multiple Templates:</strong> Choose from Minimal, Bold, Classic, or Creative layouts depending on how you want your business to look.</li>
+                        <li><strong>Custom Branding:</strong> Add your logo and pick an accent colour that matches your brand. Small detail, but it makes a document look like it came from a real company.</li>
+                        <li><strong>Multi-Purpose:</strong> The same tool doubles as a quote generator and a credit note generator. Switch the document type with one click and keep the details you already typed.</li>
                     </ul>
 
                     <h3>How to Make an Invoice for Free</h3>
@@ -94,7 +104,7 @@ export default function InvoiceGeneratorPage() {
                         <li>Enter your business name, address, and upload your logo.</li>
                         <li>Add your client's details, then list your items along with any taxes or discounts.</li>
                         <li>Pick the template and colour that fits your brand.</li>
-                        <li>Click <strong style={{ color: 'var(--accent)' }}>Download PDF</strong>, and it saves straight to your device.</li>
+                        <li>Click <strong>Download PDF</strong>, and it saves straight to your device.</li>
                     </ol>
                     <p>That's the entire process. No account, no waiting on email confirmations, no catch.</p>
                 </div>

@@ -105,9 +105,6 @@ export default function Footer() {
           <div className="footer-copy">
             &copy; 2026 ToolTive. All rights reserved.
           </div>
-          <div className="footer-love">
-            Made with <i className="fas fa-heart"></i> by ToolTive Team
-          </div>
         </div>
       </div>
     </footer>

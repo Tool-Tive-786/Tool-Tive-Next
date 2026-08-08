@@ -52,8 +52,11 @@ export default function Breadcrumb() {
       className="container"
       style={{
         display: 'block',
-        paddingTop: "24px",
-        paddingBottom: "8px",
+        position: 'absolute',
+        top: '105px',
+        left: 0,
+        right: 0,
+        zIndex: 10,
       }}
     >
       {/* Schema Injection */}
