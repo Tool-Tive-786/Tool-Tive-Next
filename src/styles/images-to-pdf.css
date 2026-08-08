@@ -12,7 +12,7 @@
     --no: #ef4444;
     color: var(--t);
     font-family: var(--font-sans, -apple-system, Segoe UI, Roboto, sans-serif);
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     margin-bottom: 80px;
 }

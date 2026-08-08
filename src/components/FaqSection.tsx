@@ -91,7 +91,7 @@ export default function FaqSection({
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
             />
 
-            <div className="faq-container">
+            <div className="container faq-container">
                 <header className="faq-header">
                     <div className="faq-label">
                         {label}

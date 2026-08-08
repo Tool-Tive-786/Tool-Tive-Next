@@ -51,9 +51,9 @@ export const tools: Tool[] = [
     id: "business-invoice-generator",
     category: "business",
     slug: "free-invoice-generator",
-    title: "Online Free Invoice Generator by ToolTive",
-    h1Base: "Online Free Invoice Generator",
-    h1Accent: "by ToolTive",
+    title: "Online Free Invoice Generator",
+    h1Base: "Free Online",
+    h1Accent: "Invoice Generator.",
     seoTitle: "Free Invoice Generator – Create Invoices Online | ToolTive",
     seoDescription:
       "Generate free invoices online instantly. Professional templates, discount calculations, and export to PDF or Word. No signup required.",

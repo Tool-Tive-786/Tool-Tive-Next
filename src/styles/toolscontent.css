@@ -1,0 +1,95 @@
+/* =============================================
+   Tools SEO Content Wrapper
+   ============================================= */
+
+.tool-seo-section {
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+
+.tool-seo-content {
+    width: 65%;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+}
+
+.tool-seo-content > * + * {
+    margin-top: 1.25em;
+}
+
+.tool-seo-content h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 48px;
+    margin-bottom: 24px;
+    letter-spacing: -0.015em;
+}
+
+.tool-seo-content h2 span,
+.tool-seo-content h3 span {
+    color: var(--accent);
+}
+
+.tool-seo-content h3 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+.tool-seo-content p {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+}
+
+.tool-seo-content strong {
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.tool-seo-content ul,
+.tool-seo-content ol {
+    padding-left: 20px;
+}
+
+.tool-seo-content li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.tool-seo-content li::marker {
+    color: var(--text-secondary);
+}
+
+.tool-seo-content ol > li::marker {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.tool-seo-content a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+.tool-seo-content a:hover {
+    text-decoration-thickness: 2px;
+}
+
+/* Hero Section SEO Intro */
+.tool-intro {
+    text-align: left;
+    width: 65%;
+    margin: 0 auto 32px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}

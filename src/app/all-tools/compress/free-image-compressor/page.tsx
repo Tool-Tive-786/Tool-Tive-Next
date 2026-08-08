@@ -64,20 +64,20 @@ export default function ImageCompressorPage() {
     ];
 
     return (
-        <main>
+        <main className="tools-page">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
             {/* Hero Section */}
-            <section className="hero-section" style={{ padding: '120px 0 40px', textAlign: 'center' }}>
+            <section className="hero-section" style={{ padding: '0 0 40px', textAlign: 'center' }}>
                 <div className="container">
                     <h1 className="page-heading" style={{ marginBottom: '16px' }}>
                         {tool.h1Base} <span>{tool.h1Accent}</span>
                     </h1>
-                    <p className="page-sub" style={{ margin: '0 auto 32px' }}>
-                        {tool.cardExcerpt}
+                    <p className="tool-intro">
+                        Large image files can slow down your website and eat up storage space. Our free image compressor is built to solve exactly that. Effortlessly reduce the file size of your JPG, PNG, SVG, and WebP images by up to 90% without any visible loss in quality. It's the perfect online tool for web developers, designers, and bloggers who want to optimize their images for faster loading speeds and better SEO performance.
                     </p>
 
                     <div style={{ marginBottom: '40px' }}></div>

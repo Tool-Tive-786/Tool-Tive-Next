@@ -89,7 +89,8 @@
 .faq-header p {
     font-size: 17px;
     color: var(--text-secondary);
-    max-width: 520px;
+    width: 65%;
+    text-align: left;
     margin: 0 auto;
     line-height: 1.7;
 }
