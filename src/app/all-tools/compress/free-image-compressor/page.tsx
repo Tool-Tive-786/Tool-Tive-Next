@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { getToolBySlug } from "@/lib/tools";
 import ImageCompressorNoSSR from "@/components/tools/ImageCompressorNoSSR";
+import FaqSection from "@/components/FaqSection";
 import "@/components/tools/compressor.css";
 
 export const metadata: Metadata = {
@@ -28,53 +29,39 @@ export default function ImageCompressorPage() {
         return <div>Tool not found</div>;
     }
 
-    // Schema.org JSON-LD for Software Application and FAQ
+    // Schema.org JSON-LD for SoftwareApplication (FAQ schema is handled by FaqSection)
     const jsonLd = {
         "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "SoftwareApplication",
-                "name": tool.title,
-                "operatingSystem": "All",
-                "applicationCategory": "MultimediaApplication",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "USD"
-                },
-                "description": tool.seoDescription
-            },
-            {
-                "@type": "FAQPage",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "name": "Are my images uploaded to a server?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "No. Our Image Compressor works entirely in your web browser. Your images are never uploaded to our servers, ensuring 100% privacy and security."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Which image formats are supported?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "We support all major formats including JPG, JPEG, PNG, WebP, GIF, and SVG."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Is there a limit to how many images I can compress?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "You can compress as many images as you want! For best performance, we recommend uploading in batches of 20-50 images at a time (Max 50MB per file)."
-                        }
-                    }
-                ]
-            }
-        ]
+        "@type": "SoftwareApplication",
+        "name": tool.title,
+        "url": "https://tooltive.com/all-tools/compress/free-image-compressor",
+        "operatingSystem": "All",
+        "applicationCategory": "MultimediaApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": tool.seoDescription
     };
+
+    const compressorFaqs = [
+        {
+            question: "Are my images uploaded to a server?",
+            answer: <>No. Our Image Compressor works entirely in your web browser. Your images are <strong>never uploaded</strong> to our servers, ensuring 100% privacy and security.</>,
+            schemaAnswer: "No. Our Image Compressor works entirely in your web browser. Your images are never uploaded to our servers, ensuring 100% privacy and security."
+        },
+        {
+            question: "Which image formats are supported?",
+            answer: <>We support all major formats including <strong>JPG, JPEG, PNG, WebP, GIF, and SVG</strong>.</>,
+            schemaAnswer: "We support all major formats including JPG, JPEG, PNG, WebP, GIF, and SVG."
+        },
+        {
+            question: "Is there a limit to how many images I can compress?",
+            answer: <>You can compress as many images as you want! For best performance, we recommend uploading in batches of <strong>20-50 images</strong> at a time (Max 50MB per file).</>,
+            schemaAnswer: "You can compress as many images as you want! For best performance, we recommend uploading in batches of 20-50 images at a time (Max 50MB per file)."
+        }
+    ];
 
     return (
         <main>
@@ -99,6 +86,13 @@ export default function ImageCompressorPage() {
 
             {/* The Core Tool */}
             <ImageCompressorNoSSR />
+
+            <FaqSection
+                faqs={compressorFaqs}
+                title={<>Frequently Asked <span className="highlight">Questions.</span></>}
+                description="Everything you need to know about our free image compressor and how it keeps your files secure."
+                label="FAQ"
+            />
 
         </main>
     );

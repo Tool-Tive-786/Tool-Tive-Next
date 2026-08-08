@@ -19,6 +19,17 @@ export async function generateMetadata({ params }: Props) {
     title: post.title,
     description: post.description,
     alternates: { canonical: `/blog/${resolvedParams.category}/${resolvedParams.slug}` },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: 'article',
+      publishedTime: new Date(post.pubDate).toISOString(),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+    },
   };
 }
 
@@ -44,13 +55,21 @@ export default async function BlogPostPage({ params }: Props) {
     year: 'numeric'
   });
 
+  const canonicalUrl = `https://tooltive.com/blog/${post.category}/${post.slug}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.description,
     "image": "https://tooltive.com/hero-section.webp",
+    "url": canonicalUrl,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    },
     "datePublished": new Date(post.pubDate).toISOString(),
+    "dateModified": new Date(post.pubDate).toISOString(),
     "author": {
       "@type": "Organization",
       "name": "ToolTive Team"
@@ -60,7 +79,7 @@ export default async function BlogPostPage({ params }: Props) {
       "name": "ToolTive",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://tooltive.com/favicon.svg"
+        "url": "https://tooltive.com/tooltive-logo.webp"
       }
     }
   };

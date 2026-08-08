@@ -56,7 +56,7 @@ export default function ArticleCard({ title, description, category, slug, pubDat
             </div>
             <footer className="blog-card-footer">
                 <div className="blog-author" itemProp="author" itemScope itemType="https://schema.org/Person">
-                    <div className="author-avatar" itemProp="name">{authorInitial}</div>
+                    <div className="author-avatar">{authorInitial}</div>
                     <div className="author-info">
                         <span className="author-name" itemProp="name">{authorName}</span>
                         <span className="author-role">{authorRole}</span>

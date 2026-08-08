@@ -39,8 +39,28 @@ const invoiceFaqs = [
 ];
 
 export default function InvoiceGeneratorPage() {
+    const invoiceJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Free Invoice Generator",
+        "url": "https://tooltive.com/all-tools/business/free-invoice-generator",
+        "operatingSystem": "All",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": "Generate free invoices online instantly. Professional templates, discount calculations, and export to PDF or Word. No signup required."
+    };
+
     return (
         <main>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(invoiceJsonLd) }}
+            />
+
             <div style={{ width: '90%', maxWidth: '1280px', margin: '0 auto', padding: '110px 16px 0', textAlign: 'center', marginBottom: '-60px' }}>
                 <h1 className="page-heading">
                     Free Invoice Generator

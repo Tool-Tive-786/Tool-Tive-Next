@@ -2,7 +2,7 @@ import '@/styles/contact.css';
 import ContactForm from '@/components/ContactForm';
 
 export const metadata = {
-  title: 'Contact Us | ToolTive',
+  title: 'Contact Us',
   description: 'Get in touch with the ToolTive team for support, feature requests, or inquiries.',
   alternates: { canonical: '/contact' },
 };
