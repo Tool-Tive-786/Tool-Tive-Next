@@ -54,6 +54,14 @@ export default function RootLayout({
             gtag('config', 'G-877CM9ZVF7');
           `}
         </Script>
+
+        {/* Google AdSense - Site Verification */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9227549190577691"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={`${inter.className} ${spaceGrotesk.variable}`} suppressHydrationWarning>
         <div className="floating-shapes">
