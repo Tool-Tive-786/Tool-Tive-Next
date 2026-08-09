@@ -81,9 +81,10 @@ export default function PrivacyPolicy() {
           <p>ToolTive does not currently use third-party chat widgets, social-login systems, advertising networks other than those that may be introduced through its monetization setup, or external APIs to process user files.</p>
           <p>The third-party services used by ToolTive may change as the website develops. When such services materially affect user data or privacy, this Privacy Policy will be updated as appropriate.</p>
 
-          <h2 id="cloudflare">7. Cloudflare</h2>
+          <h2 id="cloudflare">7. Cloudflare & Security</h2>
           <p>ToolTive is hosted and delivered through Cloudflare Pages.</p>
           <p>Cloudflare provides infrastructure and security services that may involve processing technical information associated with requests to ToolTive, including information used for network delivery, security, abuse prevention, and reliability.</p>
+          <p>We use <strong>Cloudflare Turnstile</strong> to protect our forms (such as the contact form and newsletter subscription) from spam and automated abuse. Turnstile securely verifies that a visitor is a real human without requiring them to solve interactive puzzles. This process may involve analyzing technical information such as browser details and interaction patterns.</p>
           <p>Cloudflare may use security and network technologies to detect and mitigate malicious traffic, attacks, automated abuse, and other threats.</p>
           <p>ToolTive also uses Cloudflare's content delivery infrastructure to help deliver website resources efficiently.</p>
           <p>For information about Cloudflare's handling of personal data and privacy practices, users should review Cloudflare's current privacy documentation.</p>

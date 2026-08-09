@@ -2,8 +2,12 @@
 
 import Link from 'next/link';
 import '@/styles/footer.css';
+import { useState } from 'react';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function Footer() {
+  const [token, setToken] = useState("");
+
   return (
     <footer className="footer">
       <div className="footer-bg-glow"></div>
@@ -15,10 +19,21 @@ export default function Footer() {
             <h4>Stay in the loop</h4>
             <p>Get notified when we launch new tools and features.</p>
           </div>
-          <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Enter your email..." required />
-            <button type="submit">Subscribe</button>
-          </form>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+            <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder="Enter your email..." required />
+              <button type="submit" disabled={!token}>Subscribe</button>
+            </form>
+            <div style={{ transform: 'scale(0.8)', transformOrigin: 'right top' }}>
+              <Turnstile 
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                onSuccess={(token) => setToken(token)}
+                onError={() => setToken("")}
+                onExpire={() => setToken("")}
+                options={{ appearance: 'interaction-only' }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Footer Top - Main Grid */}

@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function ContactForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [token, setToken] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -66,7 +68,16 @@ export default function ContactForm() {
                     <textarea id="message" className="form-control" placeholder="How can we help you?" required></textarea>
                 </div>
 
-                <button type="submit" className="btn-primary submit-btn" disabled={isSubmitting}>
+                <div className="form-group" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                    <Turnstile 
+                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                        onSuccess={(token) => setToken(token)}
+                        onError={() => setToken("")}
+                        onExpire={() => setToken("")}
+                    />
+                </div>
+
+                <button type="submit" className="btn-primary submit-btn" disabled={isSubmitting || !token}>
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
             </form>
