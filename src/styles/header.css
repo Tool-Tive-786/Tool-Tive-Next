@@ -241,6 +241,12 @@
     }
 }
 
+@media (max-width: 768px) {
+    .navbar-inner {
+        width: 100%;
+    }
+}
+
 .mobile-menu {
     position: absolute;
     top: 100%;

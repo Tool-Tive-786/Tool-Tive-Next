@@ -337,11 +337,20 @@
    ============================================ */
 @media (max-width: 768px) {
     .faq-section {
-        padding: 60px 20px;
+        padding: 60px 16px;
+    }
+
+    .faq-container {
+        width: 100%;
     }
 
     .faq-header h2 {
         font-size: 30px;
+    }
+
+    .faq-header p {
+        width: 100%;
+        text-align: center;
     }
 
     .faq-question {

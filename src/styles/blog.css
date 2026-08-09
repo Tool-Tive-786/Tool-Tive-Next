@@ -5,7 +5,7 @@
 
 @media (max-width: 768px) {
   .blog-page-container {
-    padding-top: 100px;
+    padding-top: 20px;
     padding-bottom: 40px;
   }
 }
@@ -205,4 +205,17 @@
 
 .blog-content {
   margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .blog-page {
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 20px;
+  }
+
+  .blog-heading {
+    font-size: 26px;
+  }
 }
