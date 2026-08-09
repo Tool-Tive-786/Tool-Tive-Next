@@ -70,7 +70,7 @@ export default function Footer() {
               <li><Link href="/terms-of-service">Terms of Service</Link></li>
               <li><Link href="/cookie-policy">Cookie Policy</Link></li>
               <li><Link href="/disclaimer">Disclaimer</Link></li>
-              <li><Link href="/dmca">DMCA</Link></li>
+              <li><Link href="/dmca">DMCA Policy</Link></li>
             </ul>
           </div>
 
@@ -90,12 +90,7 @@ export default function Footer() {
                   Contact Us
                 </Link>
               </li>
-              <li>
-                <span className="contact-item">
-                  <i className="fas fa-globe"></i>
-                  tooltive.com
-                </span>
-              </li>
+
             </ul>
           </div>
         </div>

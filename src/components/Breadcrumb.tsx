@@ -16,10 +16,14 @@ export default function Breadcrumb() {
   // Breadcrumb items create karna
   const breadcrumbItems = segments.map((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;
-    // Hyphens ko hata kar words capitalize karna (e.g., pdf-to-word -> Pdf To Word)
-    const label = segment
+    let label = segment
       .replace(/-/g, " ")
       .replace(/\b\w/g, (char) => char.toUpperCase());
+
+    // Capitalize specific abbreviations correctly
+    if (segment.toLowerCase() === 'dmca') {
+      label = 'DMCA';
+    }
 
     return { label, href };
   });
