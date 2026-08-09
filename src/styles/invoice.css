@@ -150,8 +150,11 @@
   .app-layout {
     flex-direction: column;
     height: auto;
-    width: 90%;
-    margin: 80px auto 32px auto;
+    width: 100%;
+    margin: 80px 0 0 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
     overflow: visible;
   }
   .panel {

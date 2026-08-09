@@ -598,7 +598,8 @@
     }
 
     .hero-content {
-        width: 90%;
+        width: 100%;
+        padding: 0 16px;
     }
 
     .hero h1 {
@@ -641,7 +642,8 @@
     }
 
     .hero-content {
-        width: 95%;
+        width: 100%;
+        padding: 0 16px;
     }
 
     .hero h1 {

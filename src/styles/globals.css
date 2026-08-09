@@ -111,10 +111,27 @@ body {
 
 /* ---------- Layout Container ---------- */
 .container {
-  width: 90%;
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .breadcrumb-nav {
+    position: relative !important;
+    top: auto !important;
+    padding-top: 80px !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 24px !important;
+    font-size: 12px !important;
+  }
 }
 
 a {

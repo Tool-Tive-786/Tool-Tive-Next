@@ -196,4 +196,5 @@
 }
 @media (max-width: 768px) {
   .if-compare, .if-single { height: 360px; }
+  .if-root { width: 100%; padding: 16px; }
 }

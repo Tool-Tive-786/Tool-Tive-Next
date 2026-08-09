@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import Script from "next/script";
 import "@/styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -39,6 +40,20 @@ export default function RootLayout({
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        
+        {/* Google Analytics - Loaded safely using Next.js Script */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-877CM9ZVF7"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-877CM9ZVF7');
+          `}
+        </Script>
       </head>
       <body className={`${inter.className} ${spaceGrotesk.variable}`} suppressHydrationWarning>
         <div className="floating-shapes">

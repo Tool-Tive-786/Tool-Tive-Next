@@ -53,7 +53,7 @@ export default function Breadcrumb() {
   return (
     <nav
       aria-label="breadcrumb"
-      className="container"
+      className="container breadcrumb-nav"
       style={{
         display: 'block',
         position: 'absolute',

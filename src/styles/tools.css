@@ -320,6 +320,20 @@
     }
 }
 
+@media (max-width: 768px) {
+    .tools-page {
+        padding-top: 20px;
+    }
+
+    .page-heading {
+        font-size: 28px;
+    }
+
+    .page-sub {
+        max-width: 100%;
+    }
+}
+
 /* View All Button */
 .view-all-wrap {
     text-align: center;
