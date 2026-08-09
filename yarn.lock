@@ -376,6 +376,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@marsidev/react-turnstile@npm:^1.5.5":
+  version: 1.5.5
+  resolution: "@marsidev/react-turnstile@npm:1.5.5"
+  peerDependencies:
+    react: ^17.0.2 || ^18.0.0 || ^19.0
+    react-dom: ^17.0.2 || ^18.0.0 || ^19.0
+  checksum: 10c0/656ad7e6de32dc279d9f26dca2e748ae18a9264b81cc3747bdb474ea24d6a5393bbd41e3dad7861325b1ff77bee3957b758f87110f40224297f189b2b736588e
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:16.2.11":
   version: 16.2.11
   resolution: "@next/env@npm:16.2.11"
@@ -1902,6 +1912,7 @@ __metadata:
   resolution: "nextjs@workspace:."
   dependencies:
     "@cloudflare/next-on-pages": "npm:^1.13.16"
+    "@marsidev/react-turnstile": "npm:^1.5.5"
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
