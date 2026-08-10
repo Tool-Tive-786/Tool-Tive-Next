@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://tooltive.com'),
   title: {
     template: "%s · ToolTive",
-    default: "ToolTive — Free utilities for professionals and creatives.",
+    default: "ToolTive",
   },
   description: "ToolTive — Free utilities for professionals and creatives. No signups, no hassle.",
   openGraph: {
@@ -38,7 +38,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         
         {/* Google Analytics - Loaded safely using Next.js Script */}
@@ -54,14 +53,12 @@ export default function RootLayout({
             gtag('config', 'G-877CM9ZVF7');
           `}
         </Script>
-
         {/* Google AdSense - Site Verification */}
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9227549190577691"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+          />
       </head>
       <body className={`${inter.className} ${spaceGrotesk.variable}`} suppressHydrationWarning>
         <div className="floating-shapes">

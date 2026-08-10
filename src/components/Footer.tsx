@@ -4,6 +4,7 @@ import Link from 'next/link';
 import '@/styles/footer.css';
 import { useState } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
+import LogoIcon from './LogoIcon';
 
 export default function Footer() {
   const [token, setToken] = useState("");
@@ -41,9 +42,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="footer-brand">
             <Link href="/" className="footer-logo">
-              {/* <div className="footer-logo-icon">
-                <i className="fas fa-bolt"></i>
-              </div> */}
+              <LogoIcon className="footer-logo-icon" />
               Tool <span>Tive.</span>
             </Link>
             <p className="footer-desc">

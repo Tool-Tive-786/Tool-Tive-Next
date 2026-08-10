@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import '@/styles/header.css';
 import { getAllTools } from '@/lib/tools';
+import LogoIcon from './LogoIcon';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,7 +25,7 @@ export default function Header() {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar">
       <div className="navbar-inner">
         <Link href="/" className="logo">
-          {/* <div className="logo-icon"></div> */}
+          <LogoIcon className="logo-icon" />
           Tool<span>Tive.</span>
         </Link>
 
