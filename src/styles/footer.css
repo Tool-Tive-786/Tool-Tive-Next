@@ -68,24 +68,18 @@
     letter-spacing: -0.5px;
 }
 
-/* .footer-logo-icon {
-    width: 42px;
-    height: 42px;
-    background: var(--btn-bg);
-    border-radius: var(--radius-md);
+.footer-logo-icon {
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--btn-text);
-    font-size: 20px;
-    box-shadow: var(--btn-shadow);
     transition: all var(--transition-base, 0.3s);
 }
 
 .footer-logo:hover .footer-logo-icon {
     transform: rotate(-10deg) scale(1.1);
-    box-shadow: var(--btn-shadow-hover);
-} */
+}
 
 .footer-logo span {
     color: var(--accent);
