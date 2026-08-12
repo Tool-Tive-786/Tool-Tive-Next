@@ -84,10 +84,10 @@
 /* Tool Card */
 .tool-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
+    border: 2px solid var(--border-subtle);
+    border-radius: 0;
     padding: 0;
-    transition: all var(--transition-base);
+    transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -97,43 +97,10 @@
     color: inherit;
 }
 
-/* Top accent line */
-.tool-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0;
-    transition: opacity var(--transition-base);
-}
-
-/* Glow orb on hover */
-.tool-card::after {
-    content: '';
-    position: absolute;
-    top: -30%;
-    right: -15%;
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity var(--transition-base);
-    pointer-events: none;
-}
-
 .tool-card:hover {
-    background: var(--bg-card-hover);
     border-color: var(--border-hover);
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
-}
-
-.tool-card:hover::before,
-.tool-card:hover::after {
-    opacity: 1;
+    transform: translateY(-4px);
+    box-shadow: 7px 7px 0 rgba(245, 158, 11, 0.35);
 }
 
 .tool-card-body {

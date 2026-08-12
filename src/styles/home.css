@@ -902,10 +902,10 @@
    ============================================ */
 .blog-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
+    border: 2px solid var(--border-subtle);
+    border-radius: 0;
     overflow: hidden;
-    transition: all var(--transition-base);
+    transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -914,44 +914,10 @@
     color: inherit;
 }
 
-/* Top accent line */
-.blog-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0;
-    transition: opacity var(--transition-base);
-    z-index: 2;
-}
-
-/* Glow orb */
-.blog-card::after {
-    content: '';
-    position: absolute;
-    top: -30%;
-    right: -20%;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity var(--transition-base);
-    pointer-events: none;
-}
-
 .blog-card:hover {
-    background: var(--bg-card-hover);
     border-color: var(--border-hover);
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
-}
-
-.blog-card:hover::before,
-.blog-card:hover::after {
-    opacity: 1;
+    transform: translateY(-4px);
+    box-shadow: 7px 7px 0 rgba(245, 158, 11, 0.35);
 }
 
 /* ---------- Image Area ---------- */
