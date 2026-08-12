@@ -123,12 +123,12 @@ export default function FaqSection({
                                         }
                                     }}
                                 >
-                                    <span itemProp="name">{faq.question}</span>
-                                    <span className="faq-toggle" aria-hidden="true" style={{ fontSize: '18px', fontWeight: 600 }}>
-                                        {isActive ? '-' : '+'}
+                                    <span className="faq-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                                    <span itemProp="name" className="faq-title">{faq.question}</span>
+                                    <span className="faq-toggle" aria-hidden="true">
+                                        +
                                     </span>
                                 </button>
-                                <div className="faq-divider"></div>
                                 <div
                                     className="faq-answer"
                                     id={`faq-answer-${index}`}

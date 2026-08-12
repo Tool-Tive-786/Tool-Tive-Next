@@ -64,21 +64,19 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Free Tools Column */}
+          {/* Company Column */}
           <div className="footer-col">
-            <h4>Free Tools</h4>
+            <h4>Company</h4>
             <ul>
-              <li><Link href="/all-tools/business/free-invoice-generator">Invoice Generator</Link></li>
-              <li><Link href="/all-tools/compress/free-image-compressor">Image Compressor</Link></li>
-              <li><Link href="/all-tools/pdf/free-online-image-to-pdf-converter">Image to PDF Converter</Link></li>
-              {/* <li><Link href="/all-tools">QR Code Maker</Link></li> */}
-              {/* <li><Link href="/all-tools">Grammar Checker</Link></li> */}
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/all-tools">All Tools</Link></li>
+              <li><Link href="/blog">Blog</Link></li>
             </ul>
           </div>
 
           {/* Legal Column */}
           <div className="footer-col">
-            <h4>Legal & Policies</h4>
+            <h4>Legal</h4>
             <ul>
               <li><Link href="/privacy-policy">Privacy Policy</Link></li>
               <li><Link href="/terms-of-service">Terms of Service</Link></li>

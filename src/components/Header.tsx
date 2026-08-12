@@ -31,6 +31,7 @@ export default function Header() {
 
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
+          <li><Link href="/about">About</Link></li>
           <li className="dropdown">
             <button className="dropdown-trigger">
               Tools
@@ -59,6 +60,7 @@ export default function Header() {
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-menu-inner">
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+          <Link href="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
           {categories.map(cat => (
             <Link key={cat} href={`/all-tools/${cat}`} onClick={() => setMobileMenuOpen(false)} style={{ textTransform: 'capitalize' }}>
               {cat === 'pdf' ? 'PDF' : cat} Tools

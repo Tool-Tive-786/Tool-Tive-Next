@@ -53,9 +53,16 @@
 /* Table of Contents */
 .toc-box {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-subtle);
+  border-radius: 0;
   padding: 24px;
+  transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.toc-box:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: 7px 7px 0 rgba(245, 158, 11, 0.35);
 }
 
 .toc-title {
