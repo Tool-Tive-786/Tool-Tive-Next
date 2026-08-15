@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import { getToolBySlug } from "@/lib/tools";
 import ImagesToPdf from "@/components/tools/ImagesToPdf";
 import FaqSection from "@/components/FaqSection";
-import "@/styles/toolscontent.css";
+import ToolHeroSection from "@/components/tool-content/ToolHeroSection";
+import ToolContentLayout from "@/components/tool-content/ToolContentLayout";
+import { ToolContentConfig } from "@/components/tool-content/ToolContentTypes";
 
 export const metadata: Metadata = {
     title: "Free Online Image to PDF Converter - ToolTive",
@@ -78,6 +80,80 @@ export default function ImagesToPdfPage() {
         }
     ];
 
+    const pdfContentConfig: ToolContentConfig = {
+        categoryLabel: 'PDF Tools',
+        intro: {
+            heading: tool.h1Base,
+            headingAccent: tool.h1Accent,
+            description: "Are you looking for a fast, secure, and hassle-free way to turn your images into a PDF document? Our free online image to PDF converter allows you to instantly combine JPG, PNG, WebP, and other image formats into a single, high-quality PDF. Whether you are compiling receipts, sharing a design portfolio, or submitting homework, your images are processed directly in your browser and are not uploaded to a server."
+        },
+        valueProps: [
+            { icon: 'fas fa-shield-alt', title: '100% Secure', description: 'Processed locally in your browser.' },
+            { icon: 'fas fa-images', title: 'Up to 100 Images', description: 'Batch convert effortlessly.' },
+            { icon: 'fas fa-file-archive', title: 'Auto-ZIP Packaging', description: 'Downloads split PDFs as a ZIP.' },
+            { icon: 'fas fa-bolt', title: 'Fast Processing', description: 'Instant conversion with no wait times.' }
+        ],
+        whyUse: {
+            eyebrow: 'Why Use',
+            heading: 'Why Use Our Free Online Image to PDF Converter?',
+            description: "If you need to turn a batch of photos or scanned pages into a proper document, this free online image to pdf converter does exactly that. Upload your JPEGs, PNGs, or other image files, and the tool arranges them into a clean, ready-to-share PDF.",
+            points: [
+                { title: 'No Account Required', description: "There's no account to create and no watermark added to your finished file. The whole process runs directly in your browser." },
+                { title: 'Built for Everyone', description: "Students submitting assignments, businesses compiling documents, or designers putting together a quick set of visuals." },
+                { title: 'Smart Splitting', description: "If you're converting a large batch, you can split your images evenly across several PDFs instead of one long document." }
+            ]
+        },
+        features: {
+            eyebrow: 'Features',
+            heading: 'Key Features of the Image to PDF Converter',
+            description: "Everything you need to compile images into a professional document.",
+            items: [
+                { title: 'Merge Up to 100 Images', description: 'Combine as many as 100 image files into a single PDF in one pass.' },
+                { title: 'Intelligent Splitting', description: 'Divide your batch and the tool works out how many images go into each file.' },
+                { title: 'Automatic ZIP Packaging', description: 'When split into multiple PDFs, they are bundled into a single ZIP file.' },
+                { title: 'Clean Page Fitting', description: 'Every image is automatically scaled and centred on an A4 portrait page.' },
+                { title: 'Custom File Naming', description: 'Set your own output file name before downloading.' },
+                { title: 'Live Progress and Preview', description: 'A preview grid shows uploaded images before conversion, allowing you to remove any.' }
+            ]
+        },
+        howTo: {
+            eyebrow: 'Step by Step',
+            heading: 'How to Use the Image to PDF Converter',
+            description: "Convert multiple images to PDF without installing any software, entirely offline in your browser.",
+            steps: [
+                { title: 'Add Images', description: 'Drag and drop your images into the upload area or select them from your device.' },
+                { title: 'Review and Adjust', description: 'Review the preview grid and remove any image you don’t want to include.' },
+                { title: 'Choose Split Options', description: 'Leave it at one to merge everything, or enter a number to split your images evenly.' },
+                { title: 'Name Your File', description: 'Enter a custom file name for your output.' },
+                { title: 'Convert and Download', description: 'Start the conversion and download your PDF or ZIP file.' }
+            ]
+        },
+        goodToKnow: [
+            { label: 'Supported Formats', value: 'JPG, PNG, WebP, GIF, SVG' },
+            { label: 'Max Batch Size', value: '100 Images' },
+            { label: 'Export', value: 'PDF / ZIP' },
+            { label: 'Processing', value: 'Browser-Based' }
+        ],
+        privacy: {
+            title: 'Browser-based processing',
+            description: "For this tool, processing takes place locally in your browser. Your private images and files are not uploaded to ToolTive's servers."
+        },
+        relatedTools: [
+            {
+                href: '/all-tools/compress/free-image-compressor',
+                title: 'Image Compressor',
+                description: 'Reduce image file sizes without losing quality.',
+                icon: 'fas fa-compress-arrows-alt'
+            },
+            {
+                href: '/all-tools/business/free-invoice-generator',
+                title: 'Free Invoice Generator',
+                description: 'Create professional invoices, quotes, and credit notes directly in your browser.',
+                icon: 'fas fa-file-invoice-dollar'
+            }
+        ]
+    };
+
     return (
         <main className="tools-page">
             <script
@@ -85,81 +161,20 @@ export default function ImagesToPdfPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
-            {/* Hero Section */}
-            <section className="hero-section" style={{ padding: '0 0 40px', textAlign: 'center' }}>
-                <div className="container">
-                    <h1 className="page-heading" style={{ marginBottom: '16px' }}>
-                        {tool.h1Base} <span>{tool.h1Accent}</span>
-                    </h1>
-                    <p className="tool-intro">
-                        Are you looking for a fast, secure, and hassle-free way to turn your images into a PDF document? Our free online image to PDF converter allows you to instantly combine JPG, PNG, WebP, and other image formats into a single, high-quality PDF. Whether you are compiling receipts, sharing a design portfolio, or submitting homework, your images are processed directly in your browser and are not uploaded to a server.
-                    </p>
+            <ToolHeroSection
+                categoryLabel={pdfContentConfig.categoryLabel}
+                heading={pdfContentConfig.intro.heading}
+                headingAccent={pdfContentConfig.intro.headingAccent}
+                description={pdfContentConfig.intro.description}
+                featuredImage="/tooltive-pictures/tooltive-all-tools-pdf-free-online-image-to-pdf-converter.webp"
+                featuredImageAlt="ToolTive free online image to PDF converter with image upload and PDF preview"
+            />
 
-                    <div style={{ marginBottom: '40px' }}></div>
-                </div>
-            </section>
-
-            {/* The Core Tool */}
             <div className="container">
                 <ImagesToPdf />
             </div>
 
-            <div className="container tool-seo-section">
-                <div className="tool-seo-content">
-                    <h2>Why Use Our Free Online <span>Image to PDF Converter?</span></h2>
-                    <p>
-                        If you need to turn a batch of photos or scanned pages into a proper document, this <strong>free online image to pdf converter</strong> does exactly that. Upload your JPEGs, PNGs, or other image files, and the tool arranges them into a clean, ready-to-share PDF.
-                    </p>
-                    <p>
-                        There's no account to create and no watermark added to your finished file. The whole process runs directly in your browser, and your images are not uploaded to a server.
-                    </p>
-                    <p>
-                        It's built for anyone who needs a PDF from a stack of images — students submitting assignments, businesses compiling documents, or designers putting together a quick set of visuals.
-                    </p>
-                    
-                    <blockquote>
-                        <strong>Pro Tip for Smaller PDFs:</strong> If you are converting high-resolution photos, your final PDF document might become too large to send via email. To prevent this, we recommend using our <a href="/all-tools/compress/free-image-compressor">free image compressor</a> to reduce the file size of your pictures without losing quality <em>before</em> converting them into a PDF.
-                    </blockquote>
-
-                    <h2>Key Features of the <span>Image to PDF Converter</span></h2>
-                    <ul>
-                        <li><strong>Merge Up to 100 Images:</strong> Combine as many as 100 image files into a single PDF in one pass, without switching between separate tools.</li>
-                        <li><strong>Intelligent Splitting:</strong> Instead of one large PDF, you can split your images evenly across several PDFs. Enter a number, and the tool divides your batch and works out how many images go into each file.</li>
-                        <li><strong>Automatic ZIP Packaging:</strong> When you split into multiple PDFs, they're bundled into a single ZIP file, so you download everything in one click instead of one file at a time.</li>
-                        <li><strong>Clean Page Fitting:</strong> Every image is automatically scaled and centred on an A4 portrait page, with a small margin so nothing touches the edge or looks stretched out of shape.</li>
-                        <li><strong>Custom File Naming:</strong> Set your own output file name before downloading, instead of getting a generic, auto-generated one.</li>
-                        <li><strong>Live Progress and Preview:</strong> A preview grid shows your uploaded images before conversion, and you can remove any image you don't want included. A progress indicator shows how the conversion is coming along.</li>
-                    </ul>
-
-                    <h2>How to Use the <span>Image to PDF Converter</span></h2>
-                    <ol>
-                        <li>Add your images by dragging and dropping them into the upload area, or selecting them from your device.</li>
-                        <li>Review the preview grid and remove any image you don't want to include.</li>
-                        <li>Choose how many PDFs to create. Leave it at one to merge everything, or enter a number to split your images evenly across several files.</li>
-                        <li>Enter a file name for your output.</li>
-                        <li>Start the conversion and download your PDF, or your ZIP file if you chose to split into multiple PDFs.</li>
-                    </ol>
-                    <p>
-                        This makes it possible to <strong>convert multiple images to PDF</strong> without installing any software, and the whole thing happens offline in your browser rather than on a remote server.
-                    </p>
-
-                    <h2>Who Can Use This <span>Image to PDF Converter?</span></h2>
-                    <p>
-                        Students can turn scanned or photographed homework pages into a single PDF for submission. Businesses and office workers can compile receipts, forms, or product photos into shareable documents.
-                    </p>
-                    <p>
-                        Designers can assemble image-based mockups or references into one file, and general users can turn any set of photos — screenshots, documents, ID scans — into a PDF without extra software.
-                    </p>
-
-                    <h3>Splitting a Large Batch Into <span>Multiple PDFs</span></h3>
-                    <p>
-                        If you're converting a large number of images, one long PDF isn't always practical. Say you upload 50 images and set the split value to 5 — the tool divides them evenly, 10 images per PDF, and generates five separate files.
-                    </p>
-                    <p>
-                        Once all five PDFs are created, they're packaged together into one ZIP archive, so you only need a single download instead of saving each file one at a time. This is useful when you're organising images by group, chapter, or category and want each set kept in its own document.
-                    </p>
-                </div>
-            </div>
+            <ToolContentLayout config={pdfContentConfig} />
 
             <FaqSection
                 faqs={pdfFaqs}
@@ -167,7 +182,6 @@ export default function ImagesToPdfPage() {
                 description="Everything you need to know about our free image to PDF converter and how it keeps your files secure."
                 label="FAQ"
             />
-
         </main>
     );
 }
