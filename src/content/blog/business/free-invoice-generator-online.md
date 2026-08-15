@@ -1,7 +1,7 @@
 ---
 title: "Free Invoice Generator Online | Create Professional Invoices"
 description: "Create professional invoices online with ToolTive's free invoice generator. Add business details, taxes, discounts, logos and payment information, then export your invoice as PDF or Word."
-pubDate: 2026-07-24
+pubDate: 2026-08-15
 category: "business"
 image: "/tooltive-card-images/free-invoice-generator-online-tooltive.webp"
 tags: ["Invoice Generator", "Free Tools", "PDF Export", "Word Export"]
