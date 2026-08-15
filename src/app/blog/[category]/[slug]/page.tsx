@@ -18,6 +18,10 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: post.title,
     description: post.description,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: { canonical: `/blog/${resolvedParams.category}/${resolvedParams.slug}` },
     openGraph: {
       title: post.title,
@@ -93,10 +97,12 @@ export default async function BlogPostPage({ params }: Props) {
       <div className="blog-layout">
         {/* Main Content (65%) */}
         <article className="blog-article">
-          <div className="category-label">{post.category.replace(/-/g, ' ')}</div>
-          <h1 className="article-title">{post.title}</h1>
-          <div className="article-meta">
-            {formattedDate} • ToolTive Team
+          <h1 className="article-title" style={{ marginTop: 0 }}>{post.title}</h1>
+          
+          <div className="article-meta" style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginTop: '16px', marginBottom: '32px' }}>
+            <span className="category-label" style={{ padding: '4px 10px', background: 'rgba(245, 158, 11, 0.1)', borderRadius: '4px', border: '1px solid rgba(245, 158, 11, 0.2)', margin: 0 }}>
+              {post.category.replace(/-/g, ' ')}
+            </span>
           </div>
 
           <div

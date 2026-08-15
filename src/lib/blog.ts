@@ -15,6 +15,7 @@ export interface BlogPost {
   tags: string[];
   contentHtml: string;
   draft?: boolean;
+  image?: string;
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -55,7 +56,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const matterResult = matter(fileContents);
     
     const processedContent = await remark()
-      .use(html)
+      .use(html, { sanitize: false })
       .process(matterResult.content);
     const contentHtml = processedContent.toString();
     
@@ -67,6 +68,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       pubDate: matterResult.data.pubDate,
       tags: matterResult.data.tags || [],
       draft: matterResult.data.draft || false,
+      image: matterResult.data.image || null,
       contentHtml,
     };
   } catch (error) {

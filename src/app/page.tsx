@@ -63,6 +63,7 @@ export default async function Home() {
                 category={post.category}
                 slug={post.slug}
                 pubDate={post.pubDate}
+                image={post.image}
               />
             ))}
           </div>
