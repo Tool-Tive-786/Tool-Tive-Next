@@ -6,9 +6,10 @@ interface ArticleCardProps {
     category: string;
     slug: string;
     pubDate: string;
+    image?: string;
 }
 
-export default function ArticleCard({ title, description, category, slug, pubDate }: ArticleCardProps) {
+export default function ArticleCard({ title, description, category, slug, pubDate, image }: ArticleCardProps) {
     const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
@@ -41,7 +42,11 @@ export default function ArticleCard({ title, description, category, slug, pubDat
     return (
         <Link href={`/blog/${category}/${slug}`} className="blog-card" itemProp="blogPost" itemScope itemType="https://schema.org/BlogPosting">
             <div className="blog-image-wrap">
-                <i className={`${iconClass} blog-image-placeholder`} aria-hidden="true"></i>
+                {image ? (
+                    <img src={image} alt={title} className="blog-card-image" style={{ width: '100%', height: 'auto', borderRadius: '8px', display: 'block' }} />
+                ) : (
+                    <i className={`${iconClass} blog-image-placeholder`} aria-hidden="true"></i>
+                )}
                 <span className="blog-category" itemProp="articleSection">{formattedCategory}</span>
             </div>
             <div className="blog-card-body">
