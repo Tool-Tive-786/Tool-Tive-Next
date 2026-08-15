@@ -8,7 +8,7 @@ tags: ["Invoice Generator", "Free Tools", "PDF Export", "Word Export"]
 ---
 Manually building invoices in Word or Excel wastes time you don't have. You can create a professional document directly with [ToolTive's free invoice generator](/all-tools/business/free-invoice-generator) — no signup, no software installs, and no unnecessary setup. Whether you need a quick PDF or a customizable document, this free invoice maker helps you get paid faster.
 
-<img src="/tooltive-pictures/tooltive-free-invoice-generator.png" alt="ToolTive free invoice generator with customizable templates and live invoice preview" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
+<img src="/tooltive-pictures/tooltive-free-invoice-generator.PNG" alt="ToolTive free invoice generator with customizable templates and live invoice preview" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
 
 ## What Is an Online Invoice Generator?
 
@@ -20,7 +20,7 @@ An online invoice generator replaces static templates. You simply fill in your b
 - **No Account Required** — open the tool and start building immediately.
 - **5 Professional Templates** — choose from Minimal, Bold, Gradient, Classic, and Stub styles, with a real-time live preview as you type.
 
-<img src="/tooltive-pictures/tooltive-invoice-templates.png" alt="Invoice templates available in ToolTive's free invoice generator" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
+<img src="/tooltive-pictures/tooltive-invoice-templates.PNG" alt="Invoice templates available in ToolTive's free invoice generator" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
 
 - **Logo and Branding** — upload your company branding, signature/stamp, and pick your own brand color (hex or RGB).
 - **9 Currencies** — supported options include USD, PKR, EUR, GBP, AED, INR, CAD, AUD, and SAR.
@@ -49,7 +49,7 @@ Pick your invoice currency, add an overall discount, tax rate, and shipping cost
 ### Customize Your Invoice
 Choose a template, adjust your brand color, and add supported branding details to match your invoice to your business.
 
-<img src="/tooltive-pictures/tooltive-invoice-customization.png" alt="Invoice customization options in ToolTive's online invoice generator" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
+<img src="/tooltive-pictures/tooltive-invoice-customization.PNG" alt="Invoice customization options in ToolTive's online invoice generator" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
 
 ### Download Your Invoice
 When your invoice is ready, review the final details and download the completed document as a PDF.
