@@ -115,18 +115,34 @@ export default async function BlogPostPage({ params }: Props) {
         <aside className="blog-sidebar">
           <div className="toc-box">
             <h3 className="toc-title">Table of Contents</h3>
-            <ul className="toc-list">
-              <li><a href="#">Why Use Our Free Invoice Generator?</a></li>
-              <li><a href="#">Everything You Need in One Invoice Maker</a></li>
-              <li>
-                <a href="#">How to Make an Invoice for Free</a>
-                <ul className="toc-sublist">
-                  <li><a href="#">Step 1: Details</a></li>
-                  <li><a href="#">Step 2: Pricing</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Frequently Asked Questions</a></li>
-            </ul>
+            {post.toc && post.toc.length > 0 ? (
+              <ul className="toc-list">
+                {post.toc.filter(item => item.level === 2).map((h2) => {
+                  const h2Index = post.toc!.indexOf(h2);
+                  const nextH2Index = post.toc!.findIndex((item, i) => i > h2Index && item.level === 2);
+                  const children = post.toc!.filter((item, i) => 
+                    i > h2Index && 
+                    (nextH2Index === -1 || i < nextH2Index) && 
+                    item.level === 3
+                  );
+
+                  return (
+                    <li key={h2.id}>
+                      <a href={`#${h2.id}`}>{h2.text}</a>
+                      {children.length > 0 && (
+                        <ul className="toc-sublist">
+                          {children.map(h3 => (
+                            <li key={h3.id}><a href={`#${h3.id}`}>{h3.text}</a></li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>No sections available.</p>
+            )}
           </div>
 
           {/* Sample Promo / Widget */}

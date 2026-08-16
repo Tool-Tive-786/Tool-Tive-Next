@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import gfm from 'remark-gfm';
 
 const contentDir = path.join(process.cwd(), 'src', 'content', 'blog');
 
@@ -16,6 +17,7 @@ export interface BlogPost {
   contentHtml: string;
   draft?: boolean;
   image?: string;
+  toc?: { id: string; text: string; level: number }[];
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -56,9 +58,20 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const matterResult = matter(fileContents);
     
     const processedContent = await remark()
+      .use(gfm)
       .use(html, { sanitize: false })
       .process(matterResult.content);
-    const contentHtml = processedContent.toString();
+      
+    let contentHtml = processedContent.toString();
+    const toc: { id: string; text: string; level: number }[] = [];
+    
+    contentHtml = contentHtml.replace(/<(h[23])>(.*?)<\/\1>/gi, (match, tag, innerHtml) => {
+      const cleanText = innerHtml.replace(/<[^>]*>/g, '').trim();
+      const id = cleanText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      const level = parseInt(tag[1], 10);
+      toc.push({ id, text: cleanText, level });
+      return `<${tag} id="${id}">${innerHtml}</${tag}>`;
+    });
     
     return {
       slug,
@@ -70,6 +83,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       draft: matterResult.data.draft || false,
       image: matterResult.data.image || null,
       contentHtml,
+      toc,
     };
   } catch (error) {
     console.error('Error getting post:', error);
