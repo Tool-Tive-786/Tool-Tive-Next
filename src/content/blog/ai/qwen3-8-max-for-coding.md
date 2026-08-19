@@ -54,6 +54,8 @@ Refactoring is a high-risk activity that requires a model to understand the inte
 
 For debugging, the model's ability to ingest massive logs and cross-reference them against a wide codebase makes it a powerful diagnostic tool. However, it is vital to note that human oversight remains necessary. While it can identify structural issues and propose fixes, developers must still review the logic to ensure the AI has not misunderstood a subtle domain-specific requirement.
 
+![Qwen3.8-Max debugging and refactoring code in a real development workflow](/tooltive-pictures/qwen3-8-max-debugging-refactoring.webp)
+
 ### Agent and Tool Workflows
 
 The most significant leap for Qwen3.8-Max is its optimization for autonomous, agentic workflows. Developers increasingly rely on agent harnesses (like Cursor, Cline, or custom LangChain setups) where the model uses tools to read files, run terminal commands, and edit code autonomously.
