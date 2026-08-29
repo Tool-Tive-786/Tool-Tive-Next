@@ -2,13 +2,15 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2rem 16px;
 }
 
 @media (min-width: 768px) {
   .schema-generator-container {
+    width: 90%;
     flex-direction: row;
     align-items: flex-start;
   }
