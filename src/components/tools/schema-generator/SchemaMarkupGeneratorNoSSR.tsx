@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 
 const SchemaMarkupGenerator = dynamic(
-  () => import('./SchemaMarkupGenerator').then((mod) => mod.default),
+  () => import('@/components/tools/schema-generator/SchemaMarkupGenerator'),
   { ssr: false }
 );
 
