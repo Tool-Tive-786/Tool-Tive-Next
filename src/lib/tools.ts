@@ -78,6 +78,22 @@ export const tools: Tool[] = [
     tags: ["JSON-LD", "SEO Tool", "100% Free"],
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
     pubDate: "2026-08-29",
+  },
+  {
+    id: "free-xml-sitemap-generator",
+    category: "seo",
+    slug: "free-xml-sitemap-generator",
+    title: "Free XML Sitemap Generator",
+    h1Base: "Free XML Sitemap",
+    h1Accent: "Generator.",
+    seoTitle: "Free XML Sitemap Generator | ToolTive",
+    seoDescription:
+      "Generate and validate XML sitemaps for your website instantly. Supports URL lists, website crawling, and structural SEO validation without limits.",
+    cardTitle: "XML Sitemap Generator",
+    cardExcerpt: "Generate, crawl, and validate XML sitemaps with up to 50k URLs and automatic splitting.",
+    tags: ["XML", "Crawler", "100% Free"],
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
+    pubDate: "2026-08-30",
   }
 ];
 
