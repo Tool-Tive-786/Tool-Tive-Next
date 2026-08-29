@@ -146,7 +146,7 @@ export const faqSchema: SchemaDefinition = {
     return {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: questions.filter(q => q.question && q.answer).map((q: any) => ({
+      mainEntity: questions.filter((q: any) => q.question && q.answer).map((q: any) => ({
         '@type': 'Question',
         name: q.question,
         acceptedAnswer: {
