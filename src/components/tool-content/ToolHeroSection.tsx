@@ -26,18 +26,11 @@ export default function ToolHeroSection({
                 </h1>
                 <p className="tc-hero-desc">{description}</p>
             </div>
-
-            <div className="tc-hero-image">
-                {featuredImage && (
-                    <img
-                        src={featuredImage}
-                        alt={featuredImageAlt || ''}
-                        loading="eager"
-                        width={480}
-                        height={360}
-                    />
-                )}
-            </div>
+            {/* 
+                Hero image rendering removed as per centered hero design update. 
+                featuredImage props are preserved to avoid breaking parent components 
+                or SEO metadata flows.
+            */}
         </section>
     );
 }
