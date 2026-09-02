@@ -94,6 +94,22 @@ export const tools: Tool[] = [
     tags: ["XML", "Crawler", "100% Free"],
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
     pubDate: "2026-08-30",
+  },
+  {
+    id: "free-profit-margin-calculator",
+    category: "business",
+    slug: "free-profit-margin-calculator",
+    title: "Free Profit Margin Calculator",
+    h1Base: "Free",
+    h1Accent: "Profit Margin Calculator.",
+    seoTitle: "Free Profit Margin Calculator | ToolTive",
+    seoDescription:
+      "Calculate profit margin, markup, profit per sale, and target selling price. Add shipping, fees, discounts, and other costs with this free calculator.",
+    cardTitle: "Profit Margin Calculator",
+    cardExcerpt: "Calculate profit margin, markup, and required selling price with optional fees and discounts.",
+    tags: ["Calculate Margin", "Target Pricing", "100% Free"],
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>`,
+    pubDate: "2026-09-02",
   }
 ];
 
