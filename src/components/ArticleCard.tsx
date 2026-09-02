@@ -7,9 +7,11 @@ interface ArticleCardProps {
     slug: string;
     pubDate: string;
     image?: string;
+    imageAlt?: string;
+    imageTitle?: string;
 }
 
-export default function ArticleCard({ title, description, category, slug, pubDate, image }: ArticleCardProps) {
+export default function ArticleCard({ title, description, category, slug, pubDate, image, imageAlt, imageTitle }: ArticleCardProps) {
     const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
@@ -43,7 +45,7 @@ export default function ArticleCard({ title, description, category, slug, pubDat
         <Link href={`/blog/${category}/${slug}`} className="blog-card" itemProp="blogPost" itemScope itemType="https://schema.org/BlogPosting">
             <div className="blog-image-wrap">
                 {image ? (
-                    <img src={image} alt={title} className="blog-card-image" style={{ width: '100%', height: 'auto', borderRadius: '8px', display: 'block' }} />
+                    <img src={image} alt={imageAlt || title} title={imageTitle || title} className="blog-card-image" style={{ width: '100%', height: 'auto', borderRadius: '8px', display: 'block' }} />
                 ) : (
                     <i className={`${iconClass} blog-image-placeholder`} aria-hidden="true"></i>
                 )}

@@ -123,14 +123,104 @@ body {
   }
 }
 
+/* =============================================
+   Breadcrumb Navigation
+   ============================================= */
+.breadcrumb-nav {
+  display: block;
+  position: absolute;
+  top: 96px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.breadcrumb-list {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 16px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+  background: rgba(30, 26, 22, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  transition: border-color var(--transition-base), background-color var(--transition-base);
+}
+
+.breadcrumb-list:hover {
+  border-color: rgba(245, 158, 11, 0.25);
+  background: rgba(35, 30, 26, 0.85);
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumb-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumb-link:hover {
+  color: var(--text-primary);
+}
+
+.breadcrumb-home-icon {
+  font-size: 11px;
+  opacity: 0.75;
+  transition: opacity var(--transition-base);
+}
+
+.breadcrumb-link:hover .breadcrumb-home-icon {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.breadcrumb-separator {
+  color: var(--text-muted);
+  font-size: 11px;
+  opacity: 0.5;
+  user-select: none;
+}
+
+.breadcrumb-current {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
 @media (max-width: 768px) {
   .breadcrumb-nav {
     position: relative !important;
     top: auto !important;
-    padding-top: 80px !important;
+    padding-top: 86px !important;
     padding-bottom: 0 !important;
-    margin-bottom: 24px !important;
-    font-size: 12px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .breadcrumb-list {
+    display: flex;
+    width: 100%;
+    padding: 7px 12px;
+    font-size: 12px;
+    gap: 6px;
+    border-radius: 6px;
   }
 }
 

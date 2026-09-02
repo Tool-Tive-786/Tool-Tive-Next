@@ -7,6 +7,11 @@ import gfm from 'remark-gfm';
 
 const contentDir = path.join(process.cwd(), 'src', 'content', 'blog');
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPost {
   slug: string;
   category: string;
@@ -17,7 +22,86 @@ export interface BlogPost {
   contentHtml: string;
   draft?: boolean;
   image?: string;
+  imageAlt?: string;
+  imageTitle?: string;
+  imageCaption?: string;
+  imageDescription?: string;
   toc?: { id: string; text: string; level: number }[];
+  faqs?: FAQItem[];
+}
+
+export function extractFaqsFromMarkdown(markdown: string): FAQItem[] {
+  if (!markdown) return [];
+
+  // Locate the FAQ section heading: ## Frequently Asked Questions, ## FAQs, ## FAQ
+  const faqHeadingRegex = /^##\s+(?:Frequently Asked Questions|FAQs?)(.*)$/im;
+  const match = faqHeadingRegex.exec(markdown);
+  if (!match) return [];
+
+  const startIndex = match.index + match[0].length;
+  const remainingText = markdown.slice(startIndex);
+  // Ends at the next H2 section (## ...) or EOF
+  const nextH2Match = /^##\s+/m.exec(remainingText);
+  const faqContent = nextH2Match ? remainingText.slice(0, nextH2Match.index) : remainingText;
+
+  const faqs: FAQItem[] = [];
+
+  const cleanMarkdown = (text: string): string => {
+    return text
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Convert [text](url) -> text
+      .replace(/[*_`]/g, '') // Strip markdown formatting symbols
+      .replace(/\s+/g, ' ') // Collapse whitespace
+      .trim();
+  };
+
+  const lines = faqContent.split('\n');
+  let currentQuestion = '';
+  let currentAnswerParts: string[] = [];
+
+  const flushFaq = () => {
+    if (currentQuestion && currentAnswerParts.length > 0) {
+      const rawAnswer = currentAnswerParts.join(' ').trim();
+      const cleanAns = cleanMarkdown(rawAnswer);
+      const cleanQues = cleanMarkdown(currentQuestion);
+      if (cleanAns.length > 0 && cleanQues.length > 0) {
+        faqs.push({
+          question: cleanQues,
+          answer: cleanAns,
+        });
+      }
+    }
+    currentQuestion = '';
+    currentAnswerParts = [];
+  };
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    // Matches ### Question?
+    const h3Match = trimmed.match(/^###\s+(.+)$/);
+    // Matches **Question?** with optional inline answer
+    const boldMatch = trimmed.match(/^\*\*([^*]+)\*\*(.*)$/);
+
+    if (h3Match) {
+      flushFaq();
+      currentQuestion = h3Match[1].trim();
+    } else if (boldMatch) {
+      flushFaq();
+      currentQuestion = boldMatch[1].trim();
+      const inlineAnswer = boldMatch[2].trim();
+      if (inlineAnswer) {
+        currentAnswerParts.push(inlineAnswer);
+      }
+    } else {
+      if (currentQuestion) {
+        currentAnswerParts.push(trimmed);
+      }
+    }
+  }
+
+  flushFaq();
+  return faqs;
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -73,6 +157,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       return `<${tag} id="${id}">${innerHtml}</${tag}>`;
     });
     
+    const faqs = extractFaqsFromMarkdown(matterResult.content);
+
     return {
       slug,
       category,
@@ -82,8 +168,13 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       tags: matterResult.data.tags || [],
       draft: matterResult.data.draft || false,
       image: matterResult.data.image || null,
+      imageAlt: matterResult.data.imageAlt || null,
+      imageTitle: matterResult.data.imageTitle || null,
+      imageCaption: matterResult.data.imageCaption || null,
+      imageDescription: matterResult.data.imageDescription || null,
       contentHtml,
       toc,
+      faqs,
     };
   } catch (error) {
     console.error('Error getting post:', error);

@@ -54,14 +54,6 @@ export default function Breadcrumb() {
     <nav
       aria-label="breadcrumb"
       className="container breadcrumb-nav"
-      style={{
-        display: 'block',
-        position: 'absolute',
-        top: '105px',
-        left: 0,
-        right: 0,
-        zIndex: 10,
-      }}
     >
       {/* Schema Injection */}
       <script
@@ -70,27 +62,11 @@ export default function Breadcrumb() {
       />
 
       {/* Visual Breadcrumb UI */}
-      <ol
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          listStyle: "none",
-          margin: 0,
-          padding: 0,
-          fontSize: "14px",
-          color: "var(--text-secondary)",
-          flexWrap: "wrap",
-        }}
-      >
-        <li>
-          <Link
-            href="/"
-            style={{ color: "var(--text-secondary)", textDecoration: "none", transition: "color 0.2s" }}
-            onMouseOver={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseOut={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
-          >
-            Home
+      <ol className="breadcrumb-list">
+        <li className="breadcrumb-item">
+          <Link href="/" className="breadcrumb-link">
+            <i className="fas fa-home breadcrumb-home-icon" aria-hidden="true"></i>
+            <span>Home</span>
           </Link>
         </li>
 
@@ -98,25 +74,14 @@ export default function Breadcrumb() {
           const isLast = index === breadcrumbItems.length - 1;
 
           return (
-            <li
-              key={item.href}
-              style={{ display: "flex", alignItems: "center", gap: "8px" }}
-            >
-              <span style={{ color: "var(--text-muted)", fontSize: "12px" }}>/</span>
+            <li key={item.href} className="breadcrumb-item">
+              <span className="breadcrumb-separator" aria-hidden="true">/</span>
               {isLast ? (
-                <span
-                  style={{ color: "var(--accent)", fontWeight: "600" }}
-                  aria-current="page"
-                >
+                <span className="breadcrumb-current" aria-current="page">
                   {item.label}
                 </span>
               ) : (
-                <Link
-                  href={item.href}
-                  style={{ color: "var(--text-secondary)", textDecoration: "none", transition: "color 0.2s" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
-                >
+                <Link href={item.href} className="breadcrumb-link">
                   {item.label}
                 </Link>
               )}
