@@ -61,12 +61,16 @@ export default async function BlogPostPage({ params }: Props) {
 
   const canonicalUrl = `https://tooltive.com/blog/${post.category}/${post.slug}`;
 
+  const postImageUrl = post.image
+    ? (post.image.startsWith('http') ? post.image : `https://tooltive.com${post.image}`)
+    : "https://tooltive.com/hero-section.webp";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.description,
-    "image": "https://tooltive.com/hero-section.webp",
+    "image": postImageUrl,
     "url": canonicalUrl,
     "mainEntityOfPage": {
       "@type": "WebPage",
@@ -88,12 +92,31 @@ export default async function BlogPostPage({ params }: Props) {
     }
   };
 
+  const faqJsonLd = post.faqs && post.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": post.faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  } : null;
+
   return (
     <div className="container blog-page-container">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <div className="blog-layout">
         {/* Main Content (65%) */}
         <article className="blog-article">

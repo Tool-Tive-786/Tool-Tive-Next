@@ -53,6 +53,8 @@ export default function BlogPageClient({ posts, categories }: { posts: BlogPost[
                             slug={post.slug}
                             pubDate={post.pubDate}
                             image={post.image}
+                            imageAlt={post.imageAlt}
+                            imageTitle={post.imageTitle}
                         />
                     ))}
                 </div>
