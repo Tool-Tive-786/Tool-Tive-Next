@@ -9,8 +9,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: [
     'html2canvas', 
     'jspdf', 
-    'upng-js',
-    'exceljs'
+    'upng-js'
   ],
   async headers() {
     return [

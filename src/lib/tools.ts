@@ -16,21 +16,6 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
-    id: "free-pdf-table-extractor",
-    category: "pdf",
-    slug: "free-pdf-table-extractor",
-    title: "Free PDF Table Extractor & Editor",
-    h1Base: "Free PDF",
-    h1Accent: "Table Extractor & Editor.",
-    seoTitle: "Free PDF Table Extractor & Editor | ToolTive",
-    seoDescription: "Extract tables from PDF, review and edit the data in a spreadsheet-style editor, then export clean tables to Excel or CSV for free.",
-    cardTitle: "PDF Table Extractor",
-    cardExcerpt: "Extract tables from PDF, review and edit the data, and export to Excel or CSV.",
-    tags: ["Extract Table", "Export Excel/CSV", "100% Free"],
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 13h6"></path><path d="M9 17h6"></path><path d="M9 9h1"></path></svg>`,
-    pubDate: "2026-08-30",
-  },
-  {
     id: "images-to-pdf",
     category: "pdf",
     slug: "free-online-image-to-pdf-converter",
@@ -109,6 +94,22 @@ export const tools: Tool[] = [
     tags: ["XML", "Crawler", "100% Free"],
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
     pubDate: "2026-08-30",
+  },
+  {
+    id: "free-profit-margin-calculator",
+    category: "business",
+    slug: "free-profit-margin-calculator",
+    title: "Free Profit Margin Calculator",
+    h1Base: "Free",
+    h1Accent: "Profit Margin Calculator.",
+    seoTitle: "Free Profit Margin Calculator | ToolTive",
+    seoDescription:
+      "Calculate profit margin, markup, profit per sale, and target selling price. Add shipping, fees, discounts, and other costs with this free calculator.",
+    cardTitle: "Profit Margin Calculator",
+    cardExcerpt: "Calculate profit margin, markup, and required selling price with optional fees and discounts.",
+    tags: ["Calculate Margin", "Target Pricing", "100% Free"],
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>`,
+    pubDate: "2026-09-02",
   }
 ];
 
