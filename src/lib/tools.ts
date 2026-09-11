@@ -110,6 +110,22 @@ export const tools: Tool[] = [
     tags: ["Calculate Margin", "Target Pricing", "100% Free"],
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>`,
     pubDate: "2026-09-02",
+  },
+  {
+    id: "free-robots-txt-generator",
+    category: "seo",
+    slug: "free-robots-txt-generator",
+    title: "Free Robots.txt Generator & Tester",
+    h1Base: "Free Robots.txt",
+    h1Accent: "Generator & Tester.",
+    seoTitle: "Free Robots.txt Generator & Tester | ToolTive",
+    seoDescription:
+      "Generate, test, and validate robots.txt rules for search crawlers with ToolTive's free online robots.txt generator and tester.",
+    cardTitle: "Robots.txt Generator & Tester",
+    cardExcerpt: "Create, test, and validate robots.txt rules and directives for search crawlers.",
+    tags: ["Robots.txt", "Crawler Control", "100% Free"],
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`,
+    pubDate: "2026-09-08",
   }
 ];
 

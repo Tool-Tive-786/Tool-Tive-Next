@@ -13,10 +13,16 @@ export default function Breadcrumb() {
   // URL ko segments mein todna (e.g. /tools/pdf-to-word -> ['tools', 'pdf-to-word'])
   const segments = pathname.split("/").filter((segment) => segment !== "");
 
+  // Exact labels for segments that cannot be derived from the slug.
+  const SEGMENT_LABELS: Record<string, string> = {
+    seo: "SEO",
+    "free-robots-txt-generator": "Free Robots.txt Generator & Tester",
+  };
+
   // Breadcrumb items create karna
   const breadcrumbItems = segments.map((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;
-    let label = segment
+    let label = SEGMENT_LABELS[segment] ?? segment
       .replace(/-/g, " ")
       .replace(/\b\w/g, (char) => char.toUpperCase());
 
