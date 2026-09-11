@@ -1,0 +1,53 @@
+name: CF Pages Debug
+on:
+  push:
+    paths:
+      - ".github/workflows/cf-debug.yml"
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Enable corepack (yarn 4)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build with next-on-pages
+        run: yarn pages:build
+
+      - name: Probe APIs under wrangler pages dev
+        run: |
+          npx wrangler pages dev .vercel/output/static --port 8788 > wrangler-dev.log 2>&1 &
+          for i in $(seq 1 15); do
+            if curl -s -o /dev/null http://localhost:8788/; then echo "server up"; break; fi
+            sleep 2
+          done
+          echo "=== GET /api/robots-txt/fetch (expect 405) ==="
+          curl -s -w "\nHTTP %{http_code}\n" http://localhost:8788/api/robots-txt/fetch || true
+          echo "=== POST missing url (expect 400) ==="
+          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8788/api/robots-txt/fetch -H "Content-Type: application/json" -d '{}' || true
+          echo "=== POST valid localhost ssrf (expect 403) ==="
+          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8788/api/robots-txt/fetch -H "Content-Type: application/json" -d '{"url":"http://127.0.0.1/robots.txt"}' || true
+          echo "=== POST /api/sitemap/robots (valid format) ==="
+          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8788/api/sitemap/robots -H "Content-Type: application/json" -d '{"origin":"https://tooltive.com"}' || true
+          echo "=== wrangler pages dev log (worker exceptions here) ==="
+          cat wrangler-dev.log
+
+      - name: Upload debug artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cf-debug-logs
+          path: |
+            wrangler-dev.log
+            .vercel/output/static/_worker.js/nop-build-log.json
+          if-no-files-found: ignore
