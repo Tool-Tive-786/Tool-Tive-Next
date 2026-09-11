@@ -3,12 +3,12 @@
    Warm Ember Aesthetic
    ============================================= */
 
+/* Sizing is intentionally inherited from the shared .container class so the
+   tool matches the site-wide content width exactly (90% / max 1280px). */
 .robots-tool-container {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 100%;
-  max-width: 1200px;
   margin: 0 auto 60px auto;
 }
 
