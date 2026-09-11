@@ -24,30 +24,41 @@ jobs:
       - name: Build with next-on-pages
         run: yarn pages:build
 
-      - name: Probe APIs under wrangler pages dev
+      - name: Prepare isolated site dir (no wrangler.toml, so CLI flags apply)
         run: |
-          npx wrangler pages dev .vercel/output/static --port 8788 > wrangler-dev.log 2>&1 &
-          for i in $(seq 1 15); do
-            if curl -s -o /dev/null http://localhost:8788/; then echo "server up"; break; fi
-            sleep 2
-          done
-          echo "=== GET /api/robots-txt/fetch (expect 405) ==="
-          curl -s -w "\nHTTP %{http_code}\n" http://localhost:8788/api/robots-txt/fetch || true
-          echo "=== POST missing url (expect 400) ==="
-          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8788/api/robots-txt/fetch -H "Content-Type: application/json" -d '{}' || true
-          echo "=== POST valid localhost ssrf (expect 403) ==="
-          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8788/api/robots-txt/fetch -H "Content-Type: application/json" -d '{"url":"http://127.0.0.1/robots.txt"}' || true
-          echo "=== POST /api/sitemap/robots (valid format) ==="
-          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8788/api/sitemap/robots -H "Content-Type: application/json" -d '{"origin":"https://tooltive.com"}' || true
-          echo "=== wrangler pages dev log (worker exceptions here) ==="
-          cat wrangler-dev.log
+          mkdir -p repro
+          cp -r .vercel/output/static repro/site
 
-      - name: Upload debug artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cf-debug-logs
-          path: |
-            wrangler-dev.log
-            .vercel/output/static/_worker.js/nop-build-log.json
-          if-no-files-found: ignore
+      - name: Probe A — as-is (compat date 2024-09-01)
+        run: |
+          cd repro
+          npx wrangler pages dev site --port 8788 --compatibility-date=2024-09-01 --compatibility-flags=nodejs_compat > wrangler-as-is.log 2>&1 &
+          for i in $(seq 1 15); do curl -s -o /dev/null http://localhost:8788/ && break; sleep 2; done
+          echo "=== GET /api/robots-txt/fetch ==="
+          curl -s -w "\nHTTP %{http_code}\n" http://localhost:8788/api/robots-txt/fetch || true
+          sleep 4
+          echo "=== POST missing url ==="
+          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8788/api/robots-txt/fetch -H "Content-Type: application/json" -d '{}' || true
+          sleep 4
+          echo "=== full wrangler log ==="
+          cat wrangler-as-is.log
+
+      - name: Probe B — compat date 2025-03-01 (nodejs_compat v2)
+        run: |
+          cd repro
+          npx wrangler pages dev site --port 8789 --compatibility-date=2025-03-01 --compatibility-flags=nodejs_compat > wrangler-v2.log 2>&1 &
+          for i in $(seq 1 15); do curl -s -o /dev/null http://localhost:8789/ && break; sleep 2; done
+          echo "=== GET /api/robots-txt/fetch ==="
+          curl -s -w "\nHTTP %{http_code}\n" http://localhost:8789/api/robots-txt/fetch || true
+          sleep 4
+          echo "=== POST missing url ==="
+          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8789/api/robots-txt/fetch -H "Content-Type: application/json" -d '{}' || true
+          sleep 4
+          echo "=== POST valid localhost ssrf ==="
+          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8789/api/robots-txt/fetch -H "Content-Type: application/json" -d '{"url":"http://127.0.0.1/robots.txt"}' || true
+          sleep 4
+          echo "=== POST valid https tooltive (live fetch) ==="
+          curl -s -w "\nHTTP %{http_code}\n" -X POST http://localhost:8789/api/robots-txt/fetch -H "Content-Type: application/json" -d '{"url":"https://tooltive.com"}' || true
+          sleep 4
+          echo "=== full wrangler log ==="
+          cat wrangler-v2.log
