@@ -89,7 +89,7 @@ export default function Hero() {
     }
   };
 
-  const handleTagClick = (e: React.MouseEvent<HTMLAnchorElement>, text: string) => {
+  const handleTagClick = (e: React.MouseEvent<HTMLElement>, text: string) => {
     e.preventDefault();
     setQuery(text);
     if (searchInputRef.current) {
@@ -216,11 +216,11 @@ export default function Hero() {
             {/* Popular Categories Quick Access */}
             <div className="popular-tags">
                 <span className="tag-label">Popular:</span>
-                <a href="#" className="tag" onClick={(e) => handleTagClick(e, 'Image Tools')}>Image Tools</a>
-                <a href="#" className="tag" onClick={(e) => handleTagClick(e, 'PDF Tools')}>PDF Tools</a>
-                <a href="#" className="tag" onClick={(e) => handleTagClick(e, 'Text & Writing')}>Text & Writing</a>
-                <a href="#" className="tag" onClick={(e) => handleTagClick(e, 'Developers')}>Developers</a>
-                <a href="#" className="tag" onClick={(e) => handleTagClick(e, 'Calculators')}>Calculators</a>
+                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Image Tools')}>Image Tools</button>
+                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'PDF Tools')}>PDF Tools</button>
+                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Text & Writing')}>Text & Writing</button>
+                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Developers')}>Developers</button>
+                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Calculators')}>Calculators</button>
             </div>
         </div>
 

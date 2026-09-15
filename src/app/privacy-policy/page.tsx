@@ -41,42 +41,34 @@ export default function PrivacyPolicy() {
           <p>This processing may support website delivery, security, abuse prevention, reliability, and network operations.</p>
           <p>ToolTive does not operate its own custom visitor logging system.</p>
 
-          <h2 id="browser-processing">2. Browser-Based Tool Processing</h2>
-          <p>Many ToolTive tools are designed to perform processing directly within your web browser.</p>
-          <p>Where a tool operates entirely on the client side, files selected for processing remain within your browser during the processing operation and are not uploaded to or transmitted to ToolTive's servers.</p>
-          <p>For example, our browser-based tools may process images or generate documents locally using technologies available within your browser.</p>
-          <p>ToolTive does not currently operate a backend file-upload system or API through which user files are routinely transmitted for processing.</p>
-          <p>You should nevertheless review the behavior and functionality of an individual tool before using it, particularly as ToolTive may add or change tools over time.</p>
+          <h2 id="browser-processing">2. Browser-Based Tool Processing &amp; Remote Requests</h2>
+          <p>Many ToolTive utilities are designed to operate directly within your web browser using client-side technologies.</p>
+          <p>Where a tool operates entirely on the client side (such as our Image Compressor, Image to PDF Converter, and Profit Margin Calculator), files and data entered into the tool remain in your browser memory during processing and are not uploaded to or stored on ToolTive's servers.</p>
+          <p>For tools that evaluate publicly accessible web resources (such as our <strong>XML Sitemap Generator</strong> crawler and <strong>Robots.txt Tester</strong> fetcher), our Cloudflare Edge infrastructure makes a temporary, automated HTTP request to retrieve the public sitemap or robots.txt file specified by the user. These requests do not transmit or retain personal user files.</p>
 
-          <h2 id="cookies">3. Cookies and Similar Technologies</h2>
-          <p>ToolTive's current website does not intentionally set first-party cookies for its core tool functionality.</p>
-          <p>ToolTive also does not currently use:</p>
+          <h2 id="cookies">3. Cookies and Local Browser Storage</h2>
+          <p>ToolTive does not set first-party tracking or authentication cookies for its core website functionality.</p>
+          <p>To provide drafting convenience, certain browser-based tools make use of <strong>browser local storage (<code>localStorage</code>)</strong> on your local device:</p>
           <ul>
-            <li><code>localStorage</code> for user data</li>
-            <li><code>sessionStorage</code> for user data</li>
-            <li>First-party tracking cookies</li>
-            <li>A newsletter or subscription tracking system</li>
+            <li><strong>Invoice Generator:</strong> Temporarily saves active invoice drafts, line items, and styling preferences (under the storage key <code>tooltive-storage</code>) so you do not lose progress if your browser window refreshes.</li>
+            <li><strong>SEO Schema Generator:</strong> Saves in-progress structured data form entries (under the storage key <code>tooltive_schema_generator_draft_v1</code>).</li>
           </ul>
-          <p>However, third-party services may use cookies or similar technologies when they are integrated into or used by the website.</p>
-          <p>For example, advertising services such as Google AdSense may use cookies and similar technologies when advertising is enabled on ToolTive.</p>
-          <p>The use of cookies and similar technologies may change as new services and features are introduced. Where required, ToolTive will provide appropriate disclosures and consent mechanisms.</p>
+          <p>This draft information resides strictly on your local device within your web browser. It is not transmitted to ToolTive servers and can be deleted at any time through your browser settings or in-tool reset buttons.</p>
+          <p>Third-party services integrated into the website (including Google Analytics and Google AdSense) may set and read cookies, web beacons, or unique device identifiers to analyze site usage and deliver advertising.</p>
 
           <h2 id="adsense">4. Advertising and Google AdSense</h2>
-          <p>ToolTive intends to use Google AdSense to display advertisements as part of its future monetization.</p>
-          <p>Google and third-party advertising partners may use cookies, web beacons, IP addresses, or similar technologies to serve, measure, and personalize advertising.</p>
-          <p>When Google advertising is enabled, third-party vendors, including Google, may use cookies to serve advertisements based on a user's previous visits to ToolTive or other websites.</p>
-          <p>Google's advertising technologies may allow advertising to be personalized based on applicable information and user settings.</p>
-          <p>Users may manage or opt out of personalized advertising through Google's advertising settings.</p>
-          <p>Google's current publisher requirements specifically require publishers to disclose the use of advertising cookies and related technologies when Google advertising is used. ToolTive will maintain its disclosures and consent configuration in accordance with the Google products actually deployed on the website.</p>
-          <p>For additional information about how Google uses information from websites and apps that use its services, users may review Google's applicable privacy information.</p>
+          <p>ToolTive is configured with <strong>Google AdSense</strong> (Publisher ID: <code>pub-9227549190577691</code>) to help support free access to our tools.</p>
+          <p>Google and third-party advertising partners may use cookies, web beacons, or device identifiers to serve, measure, and personalize advertising.</p>
+          <p>When advertisements are enabled, third-party vendors, including Google, may use cookies to serve ads based on a user's previous visits to ToolTive or other websites across the internet.</p>
+          <p>Users may manage their personalization preferences or opt out of personalized advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ads Settings</a> or <a href="https://optout.aboutads.info" target="_blank" rel="noopener noreferrer">aboutads.info</a>.</p>
+          <p>For more details on Google's privacy practices, please review <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">How Google uses information from sites or apps that use our services</a>.</p>
 
           <h2 id="analytics">5. Analytics and Measurement</h2>
-          <p>ToolTive may use Google Analytics or other analytics technologies in the future to understand website usage, measure performance, identify technical issues, and improve the website and its tools.</p>
-          <p>Analytics services may process technical information such as device information, browser information, pages viewed, interactions, approximate location information, and other usage information depending on the service and configuration.</p>
-          <p>Any analytics service used by ToolTive will be configured and disclosed according to the service actually implemented on the website.</p>
+          <p>ToolTive uses <strong>Google Analytics</strong> (Measurement ID: <code>G-877CM9ZVF7</code>) to measure website traffic, monitor page performance, understand tool adoption, and diagnose technical issues.</p>
+          <p>Google Analytics processes aggregated, non-personally identifiable technical information such as device type, browser characteristics, referring URLs, approximate geographic location, and interaction events.</p>
 
-          <h2 id="gtm">6. Google Tag Manager and Third-Party Services</h2>
-          <p>ToolTive may use Google Tag Manager or other third-party technologies to manage website tags and integrations.</p>
+          <h2 id="gtm">6. Google Tag Management Infrastructure</h2>
+          <p>ToolTive uses Google tag loading infrastructure (<code>gtag.js</code>) to load analytics and site verification scripts efficiently.</p>
           <p>Third-party services may process technical information or set or read cookies and similar technologies depending on how they are configured.</p>
           <p>ToolTive does not currently use third-party chat widgets, social-login systems, advertising networks other than those that may be introduced through its monetization setup, or external APIs to process user files.</p>
           <p>The third-party services used by ToolTive may change as the website develops. When such services materially affect user data or privacy, this Privacy Policy will be updated as appropriate.</p>
