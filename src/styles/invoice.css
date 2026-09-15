@@ -7,7 +7,6 @@
   --text-light: var(--text-dim);
   --accent-blue: var(--accent);
   --accent-blue-hover: var(--accent-light);
-  --bg-input: var(--bg-input);
   --danger: #ef4444;
 }
 
@@ -18,10 +17,10 @@
   width: 85%;
   margin: 112px auto 0 auto; /* Centered with top gap */
   overflow: hidden;
-  color-scheme: dark; /* Force native datepickers and dropdowns to be dark */
+  color-scheme: light;
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 .panel {

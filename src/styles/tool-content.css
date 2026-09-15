@@ -224,7 +224,7 @@
 
 .tc-point:hover {
     border-color: var(--border-hover);
-    box-shadow: 4px 4px 0 rgba(245, 158, 11, 0.15);
+    box-shadow: 4px 4px 0 rgba(var(--color-primary-rgb), 0.15);
 }
 
 .tc-point-num {
@@ -265,7 +265,7 @@
 
 .tc-feature:hover {
     border-color: var(--border-hover);
-    box-shadow: 4px 4px 0 rgba(245, 158, 11, 0.15);
+    box-shadow: 4px 4px 0 rgba(var(--color-primary-rgb), 0.15);
 }
 
 .tc-feature h4 {
@@ -316,7 +316,7 @@
 
 .tc-step:hover {
     border-color: var(--border-hover);
-    box-shadow: 4px 4px 0 rgba(245, 158, 11, 0.15);
+    box-shadow: 4px 4px 0 rgba(var(--color-primary-rgb), 0.15);
 }
 
 .tc-step-num {
@@ -473,7 +473,7 @@
 .tc-related-card:hover {
     border-color: var(--border-hover);
     transform: translateY(-3px);
-    box-shadow: 5px 5px 0 rgba(245, 158, 11, 0.25);
+    box-shadow: 5px 5px 0 rgba(var(--color-primary-rgb), 0.25);
 }
 
 .tc-related-icon {

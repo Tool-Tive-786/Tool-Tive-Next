@@ -133,6 +133,19 @@ export function getAllTools(): Tool[] {
   return tools;
 }
 
+/**
+ * Returns the most recently published tools without changing the catalogue order.
+ *
+ * Keep `pubDate` in ISO format (`YYYY-MM-DD`) when adding a new live tool. The
+ * homepage uses this helper, so the newest three tools are selected automatically
+ * on the next deployment.
+ */
+export function getLatestTools(limit = 3): Tool[] {
+  return [...tools]
+    .sort((first, second) => second.pubDate.localeCompare(first.pubDate))
+    .slice(0, Math.max(0, limit));
+}
+
 export function getToolsByCategory(category: string): Tool[] {
   return tools.filter((tool) => tool.category === category);
 }

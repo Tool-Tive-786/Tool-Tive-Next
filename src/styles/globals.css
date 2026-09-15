@@ -13,51 +13,77 @@
 
 /* ---------- CSS Variables (Brand Tokens) ---------- */
 :root {
-  /* Warm Ember - Enhanced Palette */
-  --bg-primary: #0a0908;
-  --bg-secondary: #12100e;
-  --bg-tertiary: #1c1916;
-  --bg-card: #181412;
-  --bg-card-hover: #231f1b;
-  --bg-card-glass: rgba(28, 25, 22, 0.6);
-  --bg-input: #141210;
-  --bg-elevated: #1e1a16;
+  /* ToolTive warm maroon palette — the single source of truth for decorative colour. */
+  --color-primary: #7C0E27;
+  --color-primary-dark: #5C0A1D;
+  --color-accent: #D6395C;
+  --color-accent-dark: #B32B49;
+  --color-surface: #FFFBF3;
+  --color-surface-alt: #F0E3CC;
+  --color-text: #2A1B1D;
+  /* Slightly deepened from the supplied warm-grey target for AA contrast on surface-alt. */
+  --color-text-muted: #70594D;
+  --color-on-accent: #FFFFFF;
 
-  --border-subtle: #1f1c19;
-  --border-default: #2a2621;
-  --border-hover: #3d362e;
-  --border-accent: rgba(245, 158, 11, 0.2);
-  --border-accent-strong: rgba(245, 158, 11, 0.4);
+  --color-primary-rgb: 124, 14, 39;
+  --color-accent-rgb: 214, 57, 92;
+  --color-surface-rgb: 255, 251, 243;
+  --color-text-rgb: 42, 27, 29;
+  --color-on-accent-rgb: 255, 255, 255;
 
-  --text-primary: #fafaf9;
-  --text-secondary: #c4b5a0;
-  --text-muted: #8c7e6a;
-  --text-dim: #5c5347;
+  --bg-primary: var(--color-surface);
+  --bg-secondary: var(--color-surface-alt);
+  --bg-tertiary: var(--color-surface);
+  --bg-card: var(--color-surface);
+  --bg-card-hover: var(--color-surface-alt);
+  --bg-card-glass: rgba(var(--color-surface-rgb), 0.9);
+  --bg-input: var(--color-surface);
+  --bg-elevated: var(--color-surface-alt);
 
-  --accent: #f59e0b;
-  --accent-light: #fbbf24;
-  --accent-bright: #fbbf24;
-  --accent-glow: rgba(245, 158, 11, 0.15);
-  --accent-glow-strong: rgba(245, 158, 11, 0.25);
-  --accent-soft: rgba(245, 158, 11, 0.08);
+  --border-subtle: rgba(var(--color-text-rgb), 0.12);
+  --border-default: rgba(var(--color-text-rgb), 0.12);
+  --border-hover: rgba(var(--color-primary-rgb), 0.4);
+  --border-accent: rgba(var(--color-primary-rgb), 0.28);
+  --border-accent-strong: rgba(var(--color-primary-rgb), 0.55);
 
-  --btn-bg: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  --btn-bg-hover: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  --btn-text: #0a0908;
-  --btn-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
-  --btn-shadow-hover: 0 6px 30px rgba(245, 158, 11, 0.4);
+  --text-primary: var(--color-text);
+  --text-secondary: var(--color-text-muted);
+  --text-muted: var(--color-text-muted);
+  --text-dim: var(--color-text-muted);
 
-  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 50%, rgba(217, 119, 6, 0.05) 0%, transparent 50%),
-    linear-gradient(180deg, #0a0908 0%, #12100e 100%);
-  --gradient-card: linear-gradient(145deg, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
-  --gradient-cta: radial-gradient(ellipse at 50% 100%, rgba(245, 158, 11, 0.1) 0%, transparent 60%),
-    linear-gradient(180deg, #12100e 0%, #0a0908 100%);
+  --accent: var(--color-primary);
+  --accent-light: var(--color-primary-dark);
+  --accent-bright: var(--color-accent);
+  --accent-glow: rgba(var(--color-primary-rgb), 0.14);
+  --accent-glow-strong: rgba(var(--color-primary-rgb), 0.22);
+  --accent-soft: rgba(var(--color-primary-rgb), 0.07);
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 40px rgba(245, 158, 11, 0.1);
+  --link-color: var(--color-primary);
+  --link-color-hover: var(--color-primary-dark);
+  --focus-ring: var(--color-accent);
+  --primary-color: var(--color-primary);
+  --primary-color-rgb: var(--color-primary-rgb);
+  --primary-hover: var(--color-primary-dark);
+  --bg-hover: var(--bg-card-hover);
+  --border-color: var(--border-default);
+
+  --btn-bg: var(--color-accent);
+  --btn-bg-hover: var(--color-accent-dark);
+  --btn-text: var(--color-on-accent);
+  --btn-shadow: 0 4px 16px rgba(var(--color-accent-rgb), 0.22);
+  --btn-shadow-hover: 0 6px 22px rgba(var(--color-accent-rgb), 0.3);
+
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(var(--color-primary-rgb), 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(var(--color-accent-rgb), 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-alt) 100%);
+  --gradient-card: linear-gradient(145deg, rgba(var(--color-primary-rgb), 0.03) 0%, transparent 50%);
+  --gradient-cta: radial-gradient(ellipse at 50% 100%, rgba(var(--color-accent-rgb), 0.1) 0%, transparent 60%),
+    linear-gradient(180deg, var(--color-surface-alt) 0%, var(--color-surface) 100%);
+
+  --shadow-sm: 0 2px 8px rgba(var(--color-text-rgb), 0.08);
+  --shadow-md: 0 8px 24px rgba(var(--color-text-rgb), 0.1);
+  --shadow-lg: 0 16px 40px rgba(var(--color-text-rgb), 0.14);
+  --shadow-glow: 0 0 36px rgba(var(--color-primary-rgb), 0.12);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -105,7 +131,7 @@ body {
 
 /* Selection */
 ::selection {
-  background: rgba(245, 158, 11, 0.3);
+  background: rgba(var(--color-accent-rgb), 0.24);
   color: var(--text-primary);
 }
 
@@ -147,19 +173,19 @@ body {
   line-height: 1.4;
   color: var(--text-secondary);
   flex-wrap: wrap;
-  background: rgba(30, 26, 22, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card-glass);
+  border: 1px solid var(--border-default);
   border-radius: 8px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-md);
   pointer-events: auto;
   transition: border-color var(--transition-base), background-color var(--transition-base);
 }
 
 .breadcrumb-list:hover {
-  border-color: rgba(245, 158, 11, 0.25);
-  background: rgba(35, 30, 26, 0.85);
+  border-color: var(--border-accent-strong);
+  background: var(--bg-card-hover);
 }
 
 .breadcrumb-item {
@@ -370,8 +396,8 @@ input {
 }
 
 .article-content pre {
-  background: var(--text-primary);
-  color: var(--border-default);
+  background: var(--color-primary-dark);
+  color: var(--color-on-accent);
   padding: 20px 24px;
   border-radius: 12px;
   overflow-x: auto;
@@ -437,18 +463,18 @@ input {
   font-size: 14px;
   font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
-  background-color: var(--accent);
-  color: var(--bg-primary);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
 }
 
 .blog-filter-btn:hover {
-  background-color: var(--accent);
-  color: var(--bg-primary);
+  background-color: var(--btn-bg-hover);
+  color: var(--btn-text);
 }
 
 .blog-filter-btn.active {
-  background-color: var(--accent);
-  color: var(--bg-primary);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
 }
 
 .blog-filter-search {
@@ -592,27 +618,24 @@ input {
 }
 
 /* =============================================
-   MASTER BUTTON OVERRIDE (All Buttons Match)
+   Shared button variants
    ============================================= */
 .btn-primary,
-.btn-secondary,
-.btn-tertiary,
 .nav-cta,
 .search-btn,
 .btn,
 .btn--primary,
-.btn--secondary,
-.btn--outline,
-.btn--ghost,
-.category-pill {
+.view-all-btn,
+.widget-btn,
+.newsletter-form button {
   background: var(--btn-bg) !important;
   color: var(--btn-text) !important;
-  border: none !important;
-  border-radius: var(--radius-full) !important;
+  border: 1px solid var(--btn-bg) !important;
+  border-radius: var(--radius-md) !important;
   font-weight: 700 !important;
   font-size: 14px !important;
   cursor: pointer !important;
-  transition: all var(--transition-base) !important;
+  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-fast) !important;
   box-shadow: var(--btn-shadow) !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -624,21 +647,79 @@ input {
 }
 
 .btn-primary:hover,
-.btn-secondary:hover,
-.btn-tertiary:hover,
 .nav-cta:hover,
 .search-btn:hover,
 .btn:hover,
 .btn--primary:hover,
+.view-all-btn:hover,
+.widget-btn:hover,
+.newsletter-form button:hover {
+  background: var(--btn-bg-hover) !important;
+  border-color: var(--btn-bg-hover) !important;
+  box-shadow: var(--btn-shadow-hover) !important;
+  color: var(--btn-text) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-secondary,
+.btn--secondary,
+.btn--outline,
+.tool-cta,
+.category-pill {
+  background: transparent !important;
+  color: var(--color-primary) !important;
+  border: 1px solid var(--color-primary) !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base), transform var(--transition-fast) !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  padding: 12px 26px !important;
+}
+
+.btn-secondary:hover,
 .btn--secondary:hover,
 .btn--outline:hover,
-.btn--ghost:hover,
+.tool-cta:hover,
 .category-pill:hover,
 .category-pill.active {
-  background: var(--btn-bg-hover) !important;
-  box-shadow: var(--btn-shadow-hover) !important;
-  transform: scale(1.03) !important;
-  color: var(--btn-text) !important;
+  background: var(--color-surface-alt) !important;
+  border-color: var(--color-primary-dark) !important;
+  color: var(--color-primary-dark) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-tertiary,
+.btn--ghost {
+  background: transparent !important;
+  color: var(--link-color) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+  cursor: pointer !important;
+  transition: color var(--transition-fast), background-color var(--transition-fast) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 12px 26px !important;
+}
+
+.btn-tertiary:hover,
+.btn--ghost:hover {
+  background: var(--accent-soft) !important;
+  color: var(--link-color-hover) !important;
 }
 
 /* Mini / Action Buttons */
@@ -663,4 +744,23 @@ input {
   background: var(--btn-bg-hover) !important;
   box-shadow: var(--btn-shadow-hover) !important;
   transform: scale(1.03) !important;
+}
+
+/* Keyboard focus is visible and consistent across the entire site. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus-ring) !important;
+  outline-offset: 3px !important;
+}
+
+@media (max-width: 480px) {
+  button,
+  a.btn-primary,
+  a.btn-secondary,
+  a.btn-tertiary,
+  a.nav-cta,
+  a.tool-cta,
+  a.view-all-btn,
+  a.widget-btn {
+    min-height: 44px;
+  }
 }

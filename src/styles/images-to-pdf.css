@@ -1,14 +1,14 @@
 .ipdf-root {
-    --p: var(--accent, #f59e0b);
-    --a: var(--accent-light, #fbbf24);
-    --bg: var(--bg-primary, #0a0908);
-    --card: var(--bg-card, #181412);
-    --inp: var(--bg-input, #141210);
-    --bd: var(--border-default, #2a2621);
-    --bd-hover: var(--border-hover, #3d362e);
-    --t: var(--text-primary, #fafaf9);
-    --t2: var(--text-secondary, #c4b5a0);
-    --m: var(--text-muted, #8c7e6a);
+    --p: var(--accent);
+    --a: var(--accent-light);
+    --bg: var(--bg-primary);
+    --card: var(--bg-card);
+    --inp: var(--bg-input);
+    --bd: var(--border-default);
+    --bd-hover: var(--border-hover);
+    --t: var(--text-primary);
+    --t2: var(--text-secondary);
+    --m: var(--text-muted);
     --no: #ef4444;
     color: var(--t);
     font-family: var(--font-sans, -apple-system, Segoe UI, Roboto, sans-serif);
@@ -78,7 +78,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--btn-text, #0a0908);
+    color: var(--btn-text);
     box-shadow: var(--btn-shadow);
     transition: transform 0.3s;
 }
@@ -193,7 +193,7 @@
 .ipdf-btn {
     padding: 14px 28px;
     background: var(--btn-bg, linear-gradient(135deg, var(--p), var(--a)));
-    color: var(--btn-text, #0a0908);
+    color: var(--btn-text);
     border: none;
     border-radius: var(--radius-md, 8px);
     font-weight: 700;
@@ -347,7 +347,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(10, 9, 8, 0.85);
+    background: var(--color-primary-dark);
     padding: 8px;
     font-size: 12px;
     font-weight: 500;

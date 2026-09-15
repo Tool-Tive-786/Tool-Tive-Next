@@ -392,7 +392,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(10, 9, 8, 0.9);
+    background: rgba(var(--color-text-rgb), 0.82);
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -491,15 +491,15 @@
     height: 32px;
     background: var(--accent);
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 2px solid var(--color-on-accent);
     box-shadow: var(--shadow-md);
 }
 
 .slider-label {
     position: absolute;
     top: 16px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
+    background: var(--color-primary-dark);
+    color: var(--color-on-accent);
     padding: 4px 12px;
     border-radius: var(--radius-full);
     font-size: 12px;

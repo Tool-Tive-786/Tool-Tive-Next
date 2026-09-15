@@ -49,7 +49,7 @@ export default function DynamicSchemaForm({ schema, formData, onChange }: Dynami
       <div className="schema-section-title">
         {schema.label} Properties
       </div>
-      <p className="schema-field-desc" style={{ marginBottom: '1.5rem', color: '#a0a0a0' }}>
+      <p className="schema-field-desc" style={{ marginBottom: '1.5rem', color: 'var(--text-dim)' }}>
         {schema.description}
       </p>
 
@@ -70,7 +70,7 @@ export default function DynamicSchemaForm({ schema, formData, onChange }: Dynami
               <details>
                 <summary className="schema-accordion-header" style={{ listStyle: 'none' }}>
                   <span className="schema-accordion-title">{group}</span>
-                  <span className="schema-toggle-icon" style={{ color: '#a0a0a0' }}>+</span>
+                  <span className="schema-toggle-icon" style={{ color: 'var(--text-dim)' }}>+</span>
                 </summary>
                 <div className="schema-accordion-content" style={{ paddingTop: '1.5rem' }}>
                   {fieldsInGroup.map(renderField)}
@@ -82,7 +82,7 @@ export default function DynamicSchemaForm({ schema, formData, onChange }: Dynami
 
         return (
           <div key={group} style={{ marginTop: '2rem' }}>
-            <h4 style={{ color: '#e5e7eb', fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <h4 style={{ color: 'var(--text-primary)', fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               {group}
             </h4>
             {fieldsInGroup.map(renderField)}

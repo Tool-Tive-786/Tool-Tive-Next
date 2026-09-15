@@ -6,7 +6,7 @@
   margin: 0 auto;
   padding: 2rem 1rem;
   font-family: inherit;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 @media (min-width: 900px) {
@@ -17,8 +17,8 @@
 }
 
 .pmc-panel {
-  background: #181412;
-  border: 1px solid #2a2420;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   padding: 1.5rem;
   flex: 1;
@@ -28,8 +28,8 @@
 }
 
 .pmc-results {
-  background: #181412;
-  border: 1px solid #F59E0B;
+  background: var(--bg-card);
+  border: 1px solid var(--color-primary);
   border-radius: 12px;
   padding: 1.5rem;
   flex: 1;
@@ -40,7 +40,7 @@
 .pmc-tabs {
   display: flex;
   gap: 0.5rem;
-  background: #0A0908;
+  background: var(--bg-input);
   padding: 0.25rem;
   border-radius: 8px;
   overflow-x: auto;
@@ -50,7 +50,7 @@
   flex: 1;
   background: transparent;
   border: none;
-  color: #a09890;
+  color: var(--text-dim);
   padding: 0.75rem 1rem;
   border-radius: 6px;
   cursor: pointer;
@@ -60,12 +60,12 @@
 }
 
 .pmc-tabs button:hover {
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .pmc-tabs button.is-active {
-  background: #2a2420;
-  color: #F59E0B;
+  background: var(--bg-secondary);
+  color: var(--color-primary);
 }
 
 .pmc-group {
@@ -77,8 +77,8 @@
 .pmc-group h3 {
   font-size: 1.1rem;
   margin: 0;
-  color: #fff;
-  border-bottom: 1px solid #2a2420;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-default);
   padding-bottom: 0.5rem;
 }
 
@@ -90,13 +90,13 @@
 
 .pmc-field label {
   font-size: 0.9rem;
-  color: #ccc;
+  color: var(--text-secondary);
 }
 
 .pmc-field input, .pmc-field select {
-  background: #0A0908;
-  border: 1px solid #2a2420;
-  color: #fff;
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
   padding: 0.75rem;
   border-radius: 6px;
   font-size: 1rem;
@@ -105,7 +105,7 @@
 
 .pmc-field input:focus, .pmc-field select:focus {
   outline: none;
-  border-color: #F59E0B;
+  border-color: var(--color-primary);
 }
 
 .pmc-row {
@@ -127,7 +127,7 @@
 
 .pmc-big-result .label {
   font-size: 1rem;
-  color: #a09890;
+  color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -135,7 +135,7 @@
 .pmc-big-result .value {
   font-size: 3.5rem;
   font-weight: 800;
-  color: #F59E0B;
+  color: var(--color-primary);
   margin: 0.5rem 0;
   line-height: 1;
 }
@@ -148,27 +148,27 @@
 }
 
 .pmc-stat {
-  background: #0A0908;
+  background: var(--bg-input);
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  border: 1px solid #2a2420;
+  border: 1px solid var(--border-default);
 }
 
 .pmc-stat .label {
   font-size: 0.85rem;
-  color: #a09890;
+  color: var(--text-dim);
 }
 
 .pmc-stat .value {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-top: 0.25rem;
 }
 
 .pmc-breakdown {
-  border-top: 1px solid #2a2420;
+  border-top: 1px solid var(--border-default);
   padding-top: 1rem;
 }
 
@@ -177,21 +177,21 @@
   justify-content: space-between;
   padding: 0.5rem 0;
   font-size: 0.95rem;
-  color: #ccc;
+  color: var(--text-secondary);
 }
 
 .pmc-breakdown-row.total {
   font-weight: 700;
-  color: #fff;
-  border-top: 1px dashed #2a2420;
+  color: var(--text-primary);
+  border-top: 1px dashed var(--border-default);
   margin-top: 0.5rem;
   padding-top: 0.75rem;
 }
 
 .pmc-advanced-toggle {
   background: transparent;
-  border: 1px solid #2a2420;
-  color: #F59E0B;
+  border: 1px solid var(--border-default);
+  color: var(--color-primary);
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
@@ -209,7 +209,7 @@
 .pmc-scenario-table th, .pmc-scenario-table td {
   padding: 0.75rem 0.5rem;
   text-align: right;
-  border-bottom: 1px solid #2a2420;
+  border-bottom: 1px solid var(--border-default);
 }
 
 .pmc-scenario-table th:first-child, .pmc-scenario-table td:first-child {
@@ -217,7 +217,7 @@
 }
 
 .pmc-scenario-table th {
-  color: #a09890;
+  color: var(--text-dim);
   font-weight: 500;
 }
 
@@ -227,8 +227,8 @@
 
 .pmc-reset-btn {
   background: transparent;
-  border: 1px solid #2a2420;
-  color: #a09890;
+  border: 1px solid var(--border-default);
+  color: var(--text-dim);
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
@@ -239,6 +239,6 @@
 }
 
 .pmc-reset-btn:hover {
-  background: #2a2420;
-  color: #fff;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }

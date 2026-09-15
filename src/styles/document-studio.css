@@ -28,22 +28,20 @@
    APP SHELL TOKENS (Ember Graphite)
 ============================================================ */
 .doc-studio-wrapper {
-    --bg: #0a0908;
-    --surface: #181412;
-    --surface-2: #141210;
-    --surface-3: #1e1a16;
-    --text: #fafaf9;
-    --text-dim: #c4b5a0;
-    --text-faint: #8c7e6a;
-    --border: #2a2621;
-    --border-strong: #3d362e;
-    --primary: #f59e0b;
-    --primary-rgb: 245, 158, 11;
-    --primary-2: #fbbf24;
-    --primary-2-rgb: 251, 191, 36;
-    --gold-soft: #fcd34d;
-    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+    --bg: var(--bg-primary);
+    --surface: var(--bg-card);
+    --surface-2: var(--bg-input);
+    --surface-3: var(--bg-elevated);
+    --text: var(--text-primary);
+    --text-dim: var(--text-secondary);
+    --text-faint: var(--text-dim);
+    --border: var(--border-default);
+    --border-strong: var(--border-hover);
+    --primary: var(--color-accent);
+    --primary-rgb: var(--color-accent-rgb);
+    --primary-2: var(--color-accent-dark);
+    --primary-2-rgb: 179, 43, 73;
+    --gold-soft: var(--color-primary);
 }
 
 /* ============================================================
@@ -131,7 +129,7 @@
 .doc-studio-wrapper select:focus,
 .doc-studio-wrapper textarea:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
     /* Focus Glow exactly as requested */
 }
 
@@ -179,7 +177,7 @@
 
 .doctabs button.is-active {
     background: linear-gradient(135deg, var(--primary), var(--primary-2));
-    color: #1A1206;
+    color: var(--color-on-accent);
     border-color: transparent;
 }
 
@@ -442,7 +440,7 @@
 
 .btn--primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-2));
-    color: #1A1206;
+    color: var(--color-on-accent);
     box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.3);
 }
 
@@ -489,7 +487,7 @@
 .preview-pane {
     display: flex;
     flex-direction: column;
-    background: #0a0908;
+    background: var(--color-primary-dark);
     flex: 1;
     border: 1px solid var(--border);
     border-radius: 16px;

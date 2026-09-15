@@ -120,7 +120,7 @@ export default function ProfitMarginCalculator() {
   const compareScenarios = useMemo(() => getComparisonScenarios(marginInputs), [marginInputs]);
 
   const renderAdvanced = () => (
-    <div className="pmc-group" style={{ marginTop: '1rem', background: '#0A0908', padding: '1rem', borderRadius: '8px', border: '1px solid #2a2420' }}>
+    <div className="pmc-group" style={{ marginTop: '1rem', background: 'var(--bg-input)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-default)' }}>
       <h3>Additional Costs & Fees</h3>
       <div className="pmc-row">
         <div className="pmc-field">
@@ -296,7 +296,7 @@ export default function ProfitMarginCalculator() {
                 <div className="pmc-big-result">
                   <div className="label">Required Selling Price</div>
                   <div className="value">{fmtCurrency(reverseResult.requiredPrice)}</div>
-                  <div style={{ fontSize: '0.85rem', color: '#a09890', marginTop: '0.5rem' }}>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginTop: '0.5rem' }}>
                     Accounts for your selected costs and fees.
                   </div>
                 </div>

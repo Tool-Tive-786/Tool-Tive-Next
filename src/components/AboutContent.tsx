@@ -429,7 +429,7 @@ export default function AboutContent() {
           </div>
           <div className="ab-deck-wrap">
             <div className="ab-meter-card">
-              <h4 style={{ fontFamily: 'var(--ab-mono)', fontSize: '0.72rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: '#ffffff', marginBottom: '1.4rem' }}>PLATFORM PROGRESS</h4>
+              <h4 style={{ fontFamily: 'var(--ab-mono)', fontSize: '0.72rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-primary)', marginBottom: '1.4rem' }}>PLATFORM PROGRESS</h4>
               <div className="ab-meter live">
                 <div className="m-top"><span>Available tools</span><b style={{ color: 'var(--ab-accent)' }}>{tools.length}</b></div>
               </div>
@@ -446,7 +446,7 @@ export default function AboutContent() {
               ].map((d, i) => (
                 <div key={d.title} className="ab-deck-card" style={{ '--i': i } as React.CSSProperties}>
                   <h3>{d.title}</h3>
-                  <div className="ab-dc-chips">{d.tags.map(t => <span key={t} className="ab-tag" style={{ color: 'var(--ab-accent)', borderColor: 'rgba(235, 179, 75, 0.3)' }}>{t}</span>)}</div>
+                  <div className="ab-dc-chips">{d.tags.map(t => <span key={t} className="ab-tag" style={{ color: 'var(--ab-accent)', borderColor: 'var(--border-accent)' }}>{t}</span>)}</div>
                   <p style={{ marginTop: '0.8rem', fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{d.desc}</p>
                 </div>
               ))}
@@ -512,13 +512,13 @@ export default function AboutContent() {
               }
               .ab-wt-base {
                 fill: transparent;
-                stroke: #0a0908;
+                stroke: var(--color-on-accent);
                 stroke-width: 2px;
                 opacity: 0.16;
               }
               .ab-wt-trace {
                 fill: transparent;
-                stroke: rgba(255, 255, 255, 0.2);
+                stroke: rgba(var(--color-on-accent-rgb), 0.2);
                 stroke-width: 1px;
                 stroke-dasharray: 20 140;
                 animation: wt-dash-1 12s linear infinite;
@@ -526,29 +526,29 @@ export default function AboutContent() {
               }
               .ab-wt-trace-2 {
                 fill: transparent;
-                stroke: rgba(255, 220, 100, 0.35);
+                stroke: rgba(var(--color-accent-rgb), 0.35);
                 stroke-width: 1.5px;
                 stroke-dasharray: 5 195;
                 animation: wt-dash-2 18s linear infinite;
                 transform: translate(-1px, -1px);
-                filter: drop-shadow(0 0 3px rgba(255, 200, 50, 0.3));
+                filter: drop-shadow(0 0 3px rgba(var(--color-accent-rgb), 0.3));
               }
               .ab-wt-node {
                 fill: transparent;
-                stroke: rgba(255, 255, 255, 0.85);
+                stroke: rgba(var(--color-on-accent-rgb), 0.85);
                 stroke-width: 2.5px;
                 stroke-dasharray: 1 299;
                 stroke-linecap: round;
                 animation: wt-dash-1 8s linear infinite;
-                filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+                filter: drop-shadow(0 0 5px rgba(var(--color-on-accent-rgb), 0.6));
               }
               .ab-wt-pulse {
                 fill: transparent;
-                stroke: rgba(255, 210, 100, 0.5);
+                stroke: rgba(var(--color-accent-rgb), 0.5);
                 stroke-width: 3px;
                 stroke-dasharray: 40 360;
                 animation: wt-dash-2 14s ease-in-out infinite;
-                filter: drop-shadow(0 0 6px rgba(255, 200, 50, 0.5));
+                filter: drop-shadow(0 0 6px rgba(var(--color-accent-rgb), 0.5));
               }
               @keyframes wt-dash-1 { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -1600; } }
               @keyframes wt-dash-2 { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 2000; } }
