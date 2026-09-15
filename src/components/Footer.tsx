@@ -2,38 +2,40 @@
 
 import Link from 'next/link';
 import '@/styles/footer.css';
-import { useState } from 'react';
-import { Turnstile } from '@marsidev/react-turnstile';
 import LogoIcon from './LogoIcon';
 
 export default function Footer() {
-  const [token, setToken] = useState("");
-
   return (
     <footer className="footer">
       <div className="footer-bg-glow"></div>
 
       <div className="footer-container">
-        {/* Newsletter Bar */}
+        {/* Updates / Blog Announcement Bar */}
         <div className="footer-newsletter">
           <div className="newsletter-text">
-            <h4>Stay in the loop</h4>
-            <p>Get notified when we launch new tools and features.</p>
+            <h4>Stay updated with ToolTive</h4>
+            <p>Explore guides, tool release updates, and business insights on our blog.</p>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
-            <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="Enter your email..." required />
-              <button type="submit" disabled={!token}>Subscribe</button>
-            </form>
-            <div style={{ transform: 'scale(0.8)', transformOrigin: 'right top' }}>
-              <Turnstile 
-                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                onSuccess={(token) => setToken(token)}
-                onError={() => setToken("")}
-                onExpire={() => setToken("")}
-                options={{ appearance: 'interaction-only' }}
-              />
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Link
+              href="/blog"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                background: 'var(--btn-bg)',
+                color: 'var(--btn-text)',
+                borderRadius: 'var(--radius-md)',
+                fontSize: '14px',
+                fontWeight: 700,
+                textDecoration: 'none',
+                boxShadow: 'var(--btn-shadow)',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              Explore Our Blog <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
+            </Link>
           </div>
         </div>
 
@@ -48,20 +50,6 @@ export default function Footer() {
             <p className="footer-desc">
               Providing free, high-quality professional online utilities for businesses and creatives. No signups, no hassle.
             </p>
-            <div className="footer-social">
-              <a href="#" className="social-link" aria-label="Twitter">
-                <i className="fab fa-x-twitter"></i>
-              </a>
-              <a href="#" className="social-link" aria-label="GitHub">
-                <i className="fab fa-github"></i>
-              </a>
-              <a href="#" className="social-link" aria-label="Discord">
-                <i className="fab fa-discord"></i>
-              </a>
-              <a href="#" className="social-link" aria-label="YouTube">
-                <i className="fab fa-youtube"></i>
-              </a>
-            </div>
           </div>
 
           {/* Company Column */}

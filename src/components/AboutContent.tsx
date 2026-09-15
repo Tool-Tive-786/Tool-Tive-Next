@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import FaqSection from '@/components/FaqSection';
 import ToolCard from '@/components/ToolCard';
+import { tools } from '@/lib/tools';
 import '@/styles/about.css';
 import '@/styles/tools.css';
 
@@ -130,8 +131,8 @@ export default function AboutContent() {
     },
     { 
       question: 'What tools are currently available on ToolTive?', 
-      answer: 'ToolTive currently offers an Invoice Generator, Image Compressor, and Image to PDF Converter. Each tool is built for a specific everyday digital task, with a focus on straightforward workflows and practical results. The available tool collection may grow as new utilities are developed and published.',
-      schemaAnswer: 'ToolTive currently offers an Invoice Generator, Image Compressor, and Image to PDF Converter. Each tool is built for a specific everyday digital task, with a focus on straightforward workflows and practical results. The available tool collection may grow as new utilities are developed and published.'
+      answer: 'ToolTive currently offers 7 free, practical online utilities across Business, PDF, Image, and SEO categories: Free Invoice Generator, Profit Margin Calculator, Free Image Compressor, Image to PDF Converter, Schema Markup Generator, XML Sitemap Generator, and Robots.txt Generator & Tester. Each tool is built for a specific digital task, with a focus on straightforward workflows and practical results. The collection is continuously expanding as new utilities are developed.',
+      schemaAnswer: 'ToolTive currently offers 7 free, practical online utilities across Business, PDF, Image, and SEO categories: Free Invoice Generator, Profit Margin Calculator, Free Image Compressor, Image to PDF Converter, Schema Markup Generator, XML Sitemap Generator, and Robots.txt Generator & Tester. Each tool is built for a specific digital task, with a focus on straightforward workflows and practical results. The collection is continuously expanding as new utilities are developed.'
     },
     { 
       question: 'Will ToolTive add more tools in the future?', 
@@ -162,7 +163,7 @@ export default function AboutContent() {
               <div className="ab-stat-row ab-reveal" style={{ '--d': '.45s' } as React.CSSProperties}>
                 <div className="ab-stat"><b data-count="0">0</b><span>Sign-ups required</span></div>
                 <div className="ab-stat"><b data-count="0">0</b><span>Files uploaded</span></div>
-                <div className="ab-stat"><b data-count="3">0</b><span>Tools live</span></div>
+                <div className="ab-stat"><b data-count={tools.length}>0</b><span>Tools live</span></div>
                 <div className="ab-stat"><b data-count="100" data-suffix="%">0</b><span>Free to use</span></div>
               </div>
               <div className="ab-open-cta ab-reveal" style={{ '--d': '.55s' } as React.CSSProperties}>
@@ -250,7 +251,7 @@ export default function AboutContent() {
           <div className="ab-def-grid">
             <div>
               <p className="ab-reveal" style={{ '--d': '.2s' } as React.CSSProperties}>ToolTive is a growing free online tools platform designed to make everyday digital tasks simpler.</p>
-              <p className="ab-reveal" style={{ '--d': '.3s', marginTop: '1rem' } as React.CSSProperties}>Whether you need to <b>create an invoice</b>, <b>reduce an image file size</b>, or <b>convert an image into a PDF</b>, ToolTive provides straightforward browser-based utilities built around one principle.</p>
+              <p className="ab-reveal" style={{ '--d': '.3s', marginTop: '1rem' } as React.CSSProperties}>Whether you need to <b>create an invoice</b>, <b>calculate profit margins</b>, <b>compress images</b>, or <b>generate SEO sitemaps and schema markup</b>, ToolTive provides straightforward browser-based utilities built around one principle.</p>
               <p className="ab-reveal" style={{ '--d': '.4s', marginTop: '1rem' } as React.CSSProperties}>Our tools are easy to understand and accessible — <b>without requiring you to create an account</b> for the current toolset.</p>
               <span className="ab-no-account ab-reveal" style={{ '--d': '.5s', marginTop: '1.4rem' } as React.CSSProperties}>⚿ No account. No setup. Just open &amp; go.</span>
             </div>
@@ -275,30 +276,17 @@ export default function AboutContent() {
 
           <div style={{ marginTop: '2.5rem' }}>
             <ul className="tools-grid">
-              <ToolCard
-                title="Free Invoice Generator"
-                description="Create professional invoices directly in your browser — without complicated software or unnecessary setup. Fill, preview, and done."
-                icon={`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`}
-                tags={['Business', 'Document', 'No Setup']}
-                category="business"
-                href="/all-tools/business/free-invoice-generator"
-              />
-              <ToolCard
-                title="Free Image Compressor"
-                description="Reduce image file sizes while maintaining useful image quality — making files easier to share, upload, and manage."
-                icon={`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`}
-                tags={['Image', 'Optimization', 'Client-side']}
-                category="editing"
-                href="/all-tools/compress/free-image-compressor"
-              />
-              <ToolCard
-                title="Free Image to PDF Converter"
-                description="Convert images into PDF documents directly from your browser through a simple, focused workflow."
-                icon={`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><circle cx="10" cy="13" r="2"></circle><path d="m20 17-1.09-1.09a2 2 0 0 0-2.82 0L10 22"></path></svg>`}
-                tags={['Converter', 'PDF', 'Browser-based']}
-                category="pdf"
-                href="/all-tools/pdf/free-online-image-to-pdf-converter"
-              />
+              {tools.map((tool) => (
+                <ToolCard
+                  key={tool.id}
+                  title={tool.cardTitle || tool.title}
+                  description={tool.cardExcerpt || tool.seoDescription}
+                  icon={tool.icon}
+                  tags={tool.tags}
+                  category={tool.category}
+                  href={`/all-tools/${tool.category}/${tool.slug}`}
+                />
+              ))}
             </ul>
           </div>
 
@@ -443,7 +431,7 @@ export default function AboutContent() {
             <div className="ab-meter-card">
               <h4 style={{ fontFamily: 'var(--ab-mono)', fontSize: '0.72rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: '#ffffff', marginBottom: '1.4rem' }}>PLATFORM PROGRESS</h4>
               <div className="ab-meter live">
-                <div className="m-top"><span>Available tools</span><b style={{ color: 'var(--ab-accent)' }}>3</b></div>
+                <div className="m-top"><span>Available tools</span><b style={{ color: 'var(--ab-accent)' }}>{tools.length}</b></div>
               </div>
               <div className="ab-meter plan">
                 <div className="m-top"><span>In development</span><b style={{ color: 'var(--ab-accent)' }}>5+</b></div>
@@ -503,7 +491,7 @@ export default function AboutContent() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
             <p className="ab-kicker ab-reveal">READY TO GET STARTED?</p>
             <h2 className="ab-reveal" style={{ '--d': '.1s', maxWidth: '100%', margin: '0 auto' } as React.CSSProperties}>Simple tools. Real results.<br />No unnecessary complexity.</h2>
-            <p className="ab-reveal" style={{ '--d': '.2s', maxWidth: '65ch', margin: '1.2rem auto 3rem auto' } as React.CSSProperties}>Whether you need to create an invoice, compress an image, convert a file, or handle another everyday digital task, ToolTive brings practical online tools together in one place.</p>
+            <p className="ab-reveal" style={{ '--d': '.2s', maxWidth: '65ch', margin: '1.2rem auto 3rem auto' } as React.CSSProperties}>Whether you need to create an invoice, calculate profit margins, compress images, convert documents, or generate SEO markup and sitemaps, ToolTive brings practical online tools together in one place.</p>
             <div className="ab-close-cta ab-reveal" style={{ '--d': '.3s' } as React.CSSProperties}>
               <Link href="/all-tools" className="ab-btn ab-btn-accent">EXPLORE TOOLS <span className="arr">→</span></Link>
               <Link href="/contact" className="ab-btn ab-btn-ghost">CONTACT US <span className="arr">→</span></Link>

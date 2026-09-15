@@ -25,6 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.95,
     },
     {
+      url: `${baseUrl}/about`,
+      lastModified: STATIC_PAGES_LAST_UPDATED,
+      changeFrequency: 'monthly',
+      priority: 0.70,
+    },
+    {
       url: `${baseUrl}/blog`,
       lastModified: STATIC_PAGES_LAST_UPDATED, // Will update dynamically below if posts exist
       changeFrequency: 'daily',
@@ -36,8 +42,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const legalRoutes: MetadataRoute.Sitemap = [
     { url: '/contact', priority: 0.40, changeFrequency: 'monthly' as const },
     { url: '/privacy-policy', priority: 0.20, changeFrequency: 'yearly' as const },
+    { url: '/cookie-policy', priority: 0.20, changeFrequency: 'yearly' as const },
     { url: '/terms-of-service', priority: 0.20, changeFrequency: 'yearly' as const },
     { url: '/disclaimer', priority: 0.20, changeFrequency: 'yearly' as const },
+    { url: '/dmca', priority: 0.20, changeFrequency: 'yearly' as const },
   ].map((route) => ({
     url: `${baseUrl}${route.url}`,
     lastModified: LEGAL_LAST_UPDATED,
