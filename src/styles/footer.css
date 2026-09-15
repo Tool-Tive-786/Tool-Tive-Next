@@ -27,7 +27,7 @@
     transform: translateX(-50%);
     width: 800px;
     height: 600px;
-    background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.04) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -134,7 +134,7 @@
     border-color: var(--border-accent);
     color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-sm);
 }
 
 .social-link:hover::before {

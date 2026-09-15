@@ -154,7 +154,7 @@ export default function ValidationPanel({ initialRawJson, onRawJsonChange, onEdi
   return (
     <div className="schema-validation-panel" style={{ width: '100%' }}>
       <div className="schema-section-title">Validate JSON-LD</div>
-      <p className="schema-field-desc" style={{ marginBottom: '1.5rem', color: '#a0a0a0' }}>
+      <p className="schema-field-desc" style={{ marginBottom: '1.5rem', color: 'var(--text-dim)' }}>
         Paste your existing Schema.org code below (raw JSON or wrapped in &lt;script&gt; tags) to check for syntax errors and missing Google rich-result properties.
       </p>
 

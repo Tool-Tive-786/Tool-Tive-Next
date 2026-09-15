@@ -18,11 +18,11 @@
 
 .schema-panel-left {
   flex: 1;
-  background-color: #181412;
+  background-color: var(--bg-card);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 
 .schema-panel-right {
@@ -37,7 +37,7 @@
 .schema-section-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-primary);
   margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@
   display: flex;
   gap: 0.5rem;
   margin-bottom: 2rem;
-  background-color: #12100E;
+  background-color: var(--bg-secondary);
   padding: 0.5rem;
   border-radius: 8px;
 }
@@ -59,7 +59,7 @@
   text-align: center;
   background: transparent;
   border: none;
-  color: #a0a0a0;
+  color: var(--text-dim);
   font-weight: 500;
   border-radius: 6px;
   cursor: pointer;
@@ -67,13 +67,13 @@
 }
 
 .schema-mode-tab:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  background-color: var(--accent-soft);
 }
 
 .schema-mode-tab.active {
-  background-color: #F59E0B;
-  color: #0A0908;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
   font-weight: 600;
 }
 
@@ -84,7 +84,7 @@
 .schema-label {
   display: block;
   font-size: 0.875rem;
-  color: #d1d5db;
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
@@ -93,9 +93,9 @@
 .schema-select,
 .schema-textarea {
   width: 100%;
-  background-color: #0A0908;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
   padding: 0.75rem;
   border-radius: 6px;
   font-family: inherit;
@@ -107,7 +107,7 @@
 .schema-select:focus,
 .schema-textarea:focus {
   outline: none;
-  border-color: #F59E0B;
+  border-color: var(--color-primary);
 }
 
 .schema-textarea {
@@ -116,8 +116,8 @@
 }
 
 .schema-btn {
-  background-color: #F59E0B;
-  color: #0A0908;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
   border: none;
   padding: 0.75rem 1.5rem;
   font-weight: 600;
@@ -131,32 +131,32 @@
 }
 
 .schema-btn:hover {
-  background-color: #FBBF24;
+  background-color: var(--btn-bg-hover);
 }
 
 .schema-btn-secondary {
-  background-color: #2a2420;
-  color: #ffffff;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .schema-btn-secondary:hover {
-  background-color: #38302b;
+  background-color: var(--bg-card-hover);
 }
 
 .schema-btn-outline {
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  border: 1px solid var(--border-hover);
+  color: var(--text-primary);
 }
 
 .schema-btn-outline:hover {
-  border-color: #F59E0B;
-  color: #F59E0B;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .schema-code-block {
-  background-color: #0A0908;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -166,13 +166,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1rem;
-  background-color: #12100E;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .schema-code-title {
   font-size: 0.875rem;
-  color: #a0a0a0;
+  color: var(--text-dim);
   font-weight: 500;
 }
 
@@ -184,7 +184,7 @@
 .schema-code-actions button {
   background: transparent;
   border: none;
-  color: #a0a0a0;
+  color: var(--text-dim);
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 4px;
@@ -195,8 +195,8 @@
 }
 
 .schema-code-actions button:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  background-color: var(--accent-glow);
 }
 
 .schema-code-content {
@@ -204,7 +204,7 @@
   padding: 1rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.875rem;
-  color: #e5e7eb;
+  color: var(--text-secondary);
   overflow-x: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -213,10 +213,10 @@
 }
 
 .schema-health-panel {
-  background-color: #181412;
+  background-color: var(--bg-card);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-default);
 }
 
 .schema-health-item {
@@ -224,7 +224,7 @@
   align-items: flex-start;
   gap: 0.75rem;
   padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .schema-health-item:last-child {
@@ -244,27 +244,27 @@
 
 .schema-health-text {
   font-size: 0.875rem;
-  color: #d1d5db;
+  color: var(--text-secondary);
   line-height: 1.4;
 }
 
 .schema-health-title {
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
   display: block;
 }
 
 /* Accordion for nested/repeatable fields */
 .schema-accordion {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   margin-bottom: 1rem;
   overflow: hidden;
 }
 
 .schema-accordion-header {
-  background-color: #12100E;
+  background-color: var(--bg-secondary);
   padding: 0.75rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -276,21 +276,21 @@
 .schema-accordion-title {
   font-weight: 500;
   font-size: 0.95rem;
-  color: #e5e7eb;
+  color: var(--text-secondary);
 }
 
 .schema-accordion-content {
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-default);
 }
 
 .schema-repeater-add {
   width: 100%;
   padding: 0.75rem;
   background-color: transparent;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  color: #a0a0a0;
+  border: 1px dashed var(--border-hover);
+  color: var(--text-dim);
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
@@ -298,9 +298,9 @@
 }
 
 .schema-repeater-add:hover {
-  border-color: #F59E0B;
-  color: #F59E0B;
-  background-color: rgba(245, 158, 11, 0.05);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--accent-soft);
 }
 
 .schema-repeater-remove {
@@ -340,7 +340,7 @@
 
 .schema-field-desc {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-dim);
   margin-top: 0.25rem;
 }
 

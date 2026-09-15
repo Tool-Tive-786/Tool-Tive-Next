@@ -44,7 +44,7 @@
 
 .info-card:hover {
     border-color: var(--accent);
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.05);
+    box-shadow: 0 4px 20px rgba(var(--color-primary-rgb), 0.05);
     transform: translateY(-2px);
 }
 
@@ -129,13 +129,13 @@
 }
 
 .form-control::placeholder {
-    color: #666;
+    color: var(--text-dim);
 }
 
 .form-control:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    box-shadow: 0 0 0 2px var(--accent-glow-strong);
 }
 
 textarea.form-control {
@@ -166,7 +166,7 @@ textarea.form-control {
 .success-icon {
     width: 64px;
     height: 64px;
-    background: rgba(245, 158, 11, 0.1);
+    background: var(--accent-soft);
     color: var(--accent);
     border-radius: 50%;
     display: flex;

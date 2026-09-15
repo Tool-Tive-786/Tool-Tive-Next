@@ -12,7 +12,7 @@
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .sg-tabs {
@@ -40,7 +40,7 @@
 }
 
 .sg-tab-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--accent-soft);
   color: var(--text-primary);
 }
 
@@ -132,22 +132,24 @@
 }
 
 .sg-primary-btn {
-  background: var(--primary-color);
-  color: white;
+  background: var(--btn-bg);
+  color: var(--btn-text);
 }
 
 .sg-primary-btn:hover {
-  background: var(--primary-hover);
+  background: var(--btn-bg-hover);
 }
 
 .sg-secondary-btn {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
 }
 
 .sg-secondary-btn:hover {
-  background: var(--bg-hover);
+  background: var(--color-surface-alt);
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
 }
 
 .sg-error-msg {
@@ -255,7 +257,7 @@
   align-items: center;
   gap: 4px;
   font-size: 0.8rem;
-  color: #f59e0b;
+  color: var(--color-primary);
   margin-top: 4px;
   white-space: nowrap;
   overflow: hidden;

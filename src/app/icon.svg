@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
   <!-- Group for shared color and subtle rounded corners to match the premium look -->
-  <g fill="#F59E0B" stroke="#F59E0B" stroke-width="1.5" stroke-linejoin="round">
+  <g fill="#7C0E27" stroke="#7C0E27" stroke-width="1.5" stroke-linejoin="round">
     
     <!-- Left Top Ribbon -->
     <path d="M 48 24 L 28 14 L 8 24 L 8 36 L 28 26 L 48 36 Z" />

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getAllTools } from '@/lib/tools';
+import { getLatestTools } from '@/lib/tools';
 import { getAllPosts } from '@/lib/blog';
 import ArticleCard from '@/components/ArticleCard';
 import Hero from '@/components/Hero';
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const tools = getAllTools();
+  // This stays automatic: every newly published tool with a current `pubDate`
+  // replaces the oldest item in the homepage's three-tool showcase.
+  const latestTools = getLatestTools(3);
   const allPosts = await getAllPosts();
   const recentPosts = allPosts.slice(0, 3);
 
@@ -27,17 +29,17 @@ export default async function Home() {
       <section className="section container" id="tools">
         <header className="section-header">
           <div className="section-badge">
-            OUR TOOLBOX
+            JUST ADDED
           </div>
           <h2 className="section-heading">
-            Powerful Tools for <span className="highlight">Every Task.</span>
+            Latest <span className="highlight">Tools.</span>
           </h2>
           <p className="section-description">
-            Browse our collection of free, high-quality tools designed to make your work faster and easier. No signup needed.
+            Explore our three newest free tools, built to make your work faster and easier. No signup needed.
           </p>
         </header>
 
-        <HomeToolsSection tools={tools} />
+        <HomeToolsSection tools={latestTools} />
       </section>
 
       <section className="blog-section" id="blog" itemScope itemType="https://schema.org/Blog">

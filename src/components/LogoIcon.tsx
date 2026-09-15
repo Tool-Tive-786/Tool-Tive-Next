@@ -8,7 +8,7 @@ export default function LogoIcon({ className }: { className?: string }) {
       viewBox="0 0 100 100" 
       fill="none"
     >
-      <g fill="#F59E0B" stroke="#F59E0B" strokeWidth="1.5" strokeLinejoin="round">
+      <g fill="var(--color-primary)" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinejoin="round">
         <path d="M 48 24 L 28 14 L 8 24 L 8 36 L 28 26 L 48 36 Z" />
         <path d="M 48 40 L 28 30 L 8 40 L 8 52 L 32 40 L 32 76 L 48 84 Z" />
         <path d="M 52 24 L 72 14 L 92 24 L 92 36 L 72 26 L 52 36 Z" />

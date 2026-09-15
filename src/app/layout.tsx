@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "@/styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
-
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: '--font-sans' });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: '--font-space' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tooltive.com'),
@@ -60,7 +56,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
           />
       </head>
-      <body className={`${inter.className} ${spaceGrotesk.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <div className="floating-shapes">
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
