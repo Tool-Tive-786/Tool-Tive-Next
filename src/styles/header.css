@@ -31,12 +31,23 @@
 .logo {
     display: flex;
     align-items: center;
+    gap: 10px;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 26px;
     font-weight: 700;
     color: var(--btn-bg);
     text-decoration: none;
     letter-spacing: -0.5px;
+}
+
+.logo-mark {
+    width: 44px;
+    height: auto;
+    flex: 0 0 auto;
+}
+
+.logo-wordmark {
+    line-height: 1;
 }
 
 .nav-links {
@@ -220,6 +231,10 @@
 
     .mobile-cta {
         display: inline-flex !important;
+    }
+
+    .logo-mark {
+        width: 40px;
     }
 }
 

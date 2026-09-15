@@ -62,27 +62,25 @@
     font-family: var(--font-space, 'Space Grotesk'), sans-serif;
     font-size: 24px;
     font-weight: 800;
-    color: var(--text-primary);
+    color: var(--btn-bg);
     text-decoration: none;
     margin-bottom: 20px;
     letter-spacing: -0.5px;
 }
 
-.footer-logo-icon {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.footer-logo-mark {
+    width: 52px;
+    height: auto;
+    flex: 0 0 auto;
     transition: all var(--transition-base, 0.3s);
 }
 
-.footer-logo:hover .footer-logo-icon {
-    transform: rotate(-10deg) scale(1.1);
+.footer-logo:hover .footer-logo-mark {
+    transform: translateY(-2px) scale(1.05);
 }
 
-.footer-logo span {
-    color: var(--accent);
+.footer-wordmark {
+    line-height: 1;
 }
 
 .footer-desc {

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import '@/styles/header.css';
 import { getAllTools } from '@/lib/tools';
@@ -24,7 +25,15 @@ export default function Header() {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar">
       <div className="navbar-inner">
         <Link href="/" className="logo">
-          ToolTive.
+          <Image
+            className="logo-mark"
+            src="/brand/tooltive-tt-mark.png"
+            alt=""
+            width={973}
+            height={681}
+            priority
+          />
+          <span className="logo-wordmark">ToolTive.</span>
         </Link>
 
         <ul className="nav-links">

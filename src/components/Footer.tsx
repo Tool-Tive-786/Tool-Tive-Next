@@ -1,8 +1,8 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import '@/styles/footer.css';
-import LogoIcon from './LogoIcon';
 
 export default function Footer() {
   return (
@@ -44,8 +44,14 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="footer-brand">
             <Link href="/" className="footer-logo">
-              <LogoIcon className="footer-logo-icon" />
-              Tool <span>Tive.</span>
+              <Image
+                className="footer-logo-mark"
+                src="/brand/tooltive-tt-mark.png"
+                alt=""
+                width={973}
+                height={681}
+              />
+              <span className="footer-wordmark">ToolTive.</span>
             </Link>
             <p className="footer-desc">
               Providing free, high-quality professional online utilities for businesses and creatives. No signups, no hassle.
