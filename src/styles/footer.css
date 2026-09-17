@@ -59,13 +59,14 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: 24px;
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-size: 1.28rem;
+    font-weight: 600;
     color: var(--btn-bg);
     text-decoration: none;
     margin-bottom: 20px;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.01em;
+    line-height: 1;
 }
 
 .footer-logo-mark {
@@ -145,13 +146,9 @@
 
 /* ---------- Link Columns ---------- */
 .footer-col h4 {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: 13px;
-    font-weight: 700;
+    font-family: var(--font-body);
     color: var(--text-primary);
     margin-bottom: 24px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
     position: relative;
     display: inline-block;
 }
@@ -182,8 +179,10 @@
 .footer-col span.contact-item {
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
+    font-family: var(--font-body);
+    font-size: 0.94rem;
+    font-weight: 400;
+    line-height: 1.5;
     transition: all var(--transition-fast, 0.2s);
     display: inline-flex;
     align-items: center;
@@ -267,34 +266,68 @@
 }
 
 .newsletter-text h4 {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: 18px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
     margin-bottom: 6px;
 }
 
 .newsletter-text p {
-    font-size: 14px;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: var(--text-secondary);
 }
 
 .newsletter-form {
+    flex: 0 1 480px;
+    width: 100%;
+    max-width: 480px;
+}
+
+.newsletter-mailbox {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-base, 0.3s), box-shadow var(--transition-base, 0.3s);
+}
+
+.newsletter-mailbox:focus-within {
+    border-color: var(--border-default);
+    box-shadow: none;
+}
+
+.newsletter-input-area {
+    display: flex;
+    align-items: center;
     flex: 1;
-    max-width: 400px;
+    min-width: 0;
+}
+
+.newsletter-mail-icon {
+    flex: 0 0 auto;
+    margin-left: 12px;
+    color: var(--accent);
+    font-size: 14px;
 }
 
 .newsletter-form input {
     flex: 1;
-    padding: 12px 18px;
-    background: var(--bg-input);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-md);
+    min-width: 0;
+    padding: 12px 14px;
+    background: transparent;
+    border: 0;
     color: var(--text-primary);
-    font-size: 14px;
-    font-family: inherit;
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.5;
     outline: none;
     transition: all var(--transition-base, 0.3s);
 }
@@ -303,13 +336,16 @@
     color: var(--text-dim);
 }
 
-.newsletter-form input:focus {
-    border-color: var(--border-accent-strong);
-    box-shadow: 0 0 0 3px var(--accent-glow);
+.newsletter-form input:focus,
+.newsletter-form input:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
 }
 
 .newsletter-form button {
-    padding: 12px 24px;
+    flex: 0 0 auto;
+    padding: 12px 20px !important;
     background: var(--btn-bg);
     color: var(--btn-text);
     border: none;
@@ -416,6 +452,7 @@
     }
 
     .newsletter-form {
+        flex: 0 0 auto;
         width: 100%;
         max-width: 100%;
     }
@@ -428,8 +465,15 @@
 }
 
 @media (max-width: 480px) {
-    .newsletter-form {
+    .newsletter-mailbox {
         flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .newsletter-input-area {
+        min-height: 46px;
     }
 
     .newsletter-form button {

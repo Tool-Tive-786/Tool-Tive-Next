@@ -275,16 +275,11 @@ export default function AboutContent() {
           </div>
 
           <div style={{ marginTop: '2.5rem' }}>
-            <ul className="tools-grid">
+            <ul className="tools-grid tool-card-grid">
               {tools.map((tool) => (
                 <ToolCard
                   key={tool.id}
-                  title={tool.cardTitle || tool.title}
-                  description={tool.cardExcerpt || tool.seoDescription}
-                  icon={tool.icon}
-                  tags={tool.tags}
-                  category={tool.category}
-                  href={`/all-tools/${tool.category}/${tool.slug}`}
+                  tool={tool}
                 />
               ))}
             </ul>

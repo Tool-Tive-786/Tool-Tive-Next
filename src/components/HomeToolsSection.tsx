@@ -5,15 +5,19 @@ import Link from 'next/link';
 import ToolCard from './ToolCard';
 import type { Tool } from '@/lib/tools';
 
-const categoryIcons: Record<string, string> = {
-  'business': 'fas fa-briefcase',
-  'editing': 'fas fa-image', // specific to image refiner
-  'pdf': 'fas fa-file-pdf',
-  'security': 'fas fa-shield-alt',
-  'writing': 'fas fa-pen',
-};
+interface HomeToolsSectionProps {
+  tools: Tool[];
+  showFilters?: boolean;
+  viewAllLabel?: string;
+  cardCtaLabel?: string;
+}
 
-export default function HomeToolsSection({ tools }: { tools: Tool[] }) {
+export default function HomeToolsSection({
+  tools,
+  showFilters = true,
+  viewAllLabel = 'View All Tools',
+  cardCtaLabel = 'Use tool',
+}: HomeToolsSectionProps) {
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
   // Derive unique categories from the actual tools array
@@ -28,36 +32,34 @@ export default function HomeToolsSection({ tools }: { tools: Tool[] }) {
 
   return (
     <>
-      <div className="home-tool-categories">
-        <button
-          onClick={() => setActiveCategory('all')}
-          className={`category-pill ${activeCategory === 'all' ? 'active' : ''}`}
-        >
-          All Tools
-        </button>
-
-        {categories.map((cat) => (
+      {showFilters && (
+        <div className="home-tool-categories">
           <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`category-pill ${activeCategory === cat ? 'active' : ''}`}
-            style={{ textTransform: 'capitalize' }}
+            onClick={() => setActiveCategory('all')}
+            className={`category-pill ${activeCategory === 'all' ? 'active' : ''}`}
           >
-            {cat}
+            All Tools
           </button>
-        ))}
-      </div>
 
-      <ul className="tools-grid">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`category-pill ${activeCategory === cat ? 'active' : ''}`}
+              style={{ textTransform: 'capitalize' }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <ul className="tools-grid tool-card-grid">
         {filteredTools.map((tool) => (
           <ToolCard
             key={tool.id}
-            title={tool.cardTitle || tool.title}
-            description={tool.cardExcerpt || tool.seoDescription}
-            icon={tool.icon}
-            tags={tool.tags}
-            category={tool.category}
-            href={`/all-tools/${tool.category}/${tool.slug}`}
+            tool={tool}
+            ctaLabel={cardCtaLabel}
           />
         ))}
       </ul>
@@ -66,7 +68,7 @@ export default function HomeToolsSection({ tools }: { tools: Tool[] }) {
         <div className="view-all-wrap">
           <Link href="/all-tools" className="view-all-btn">
             <i className="fas fa-th-large"></i>
-            View All Tools
+            {viewAllLabel}
           </Link>
         </div>
       )}

@@ -5,7 +5,7 @@
 
 .about-page {
   --ab-mono: 'JetBrains Mono', monospace;
-  --ab-disp: var(--font-space, 'Space Grotesk', sans-serif);
+  --ab-disp: var(--font-display);
   --ab-card: var(--bg-card);
   --ab-card-hover: var(--bg-card-hover);
   --ab-border: var(--border-default);
@@ -26,11 +26,11 @@
 @media (min-width: 768px) { .ab-wrap { width:90% } }
 
 /* ----- Headings & shared ----- */
-.about-page h1,.about-page h2,.about-page h3,.ab-disp { font-family:var(--ab-disp); font-weight:800; line-height:1.08; letter-spacing:-.02em }
+.about-page h1,.about-page h2,.about-page h3,.ab-disp { font-family:var(--ab-disp); font-weight:600; line-height:1.08; letter-spacing:-.015em }
 .ab-mono { font-family:var(--ab-mono) }
 .ab-kicker { font-family:var(--ab-mono); font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; display:inline-flex; align-items:center; gap:.7rem; margin-bottom:1.4rem; color:var(--text-secondary) }
 .ab-kicker::before { content:""; width:12px; height:12px; background:var(--ab-accent); border:2px solid var(--ab-accent) }
-.ab-sec-title { font-size:clamp(2rem,4.6vw,3.4rem); max-width:16ch; color:var(--text-primary) }
+.ab-sec-title { font-size:clamp(1.85rem,3.4vw,2.55rem); max-width:16ch; color:var(--text-primary) }
 .ab-section { position:relative; padding:clamp(4.5rem,9vw,7.5rem) 0 }
 .ab-cross { position:absolute; font-family:var(--ab-mono); color:var(--text-dim); font-size:1rem; user-select:none }
 .ab-reveal { opacity:1; transform:none; transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0s) }
@@ -59,13 +59,13 @@
 .ab-line-mask { overflow:hidden; display:block }
 .ab-line-mask > span { display:block; transform:translateY(110%); animation:ab-rise .9s cubic-bezier(.2,.8,.2,1) forwards; animation-delay:var(--d,0s) }
 @keyframes ab-rise { to { transform:none } }
-.about-page h1 { font-size:clamp(36px,5.5vw,64px); color:var(--text-primary) }
+.about-page h1 { font-size:clamp(2.9rem,6.4vw,5.4rem); line-height:.99; letter-spacing:-.02em; color:var(--text-primary) }
 .about-page h1 .hl { background:var(--ab-accent); color:var(--color-on-accent); padding:0 .15em; box-shadow:4px 4px 0 rgba(var(--color-primary-rgb), 0.4) }
 .ab-open-sub { margin-top:1.6rem; max-width:52ch; color:var(--text-secondary); font-size:1.06rem; line-height:1.65 }
 .ab-stat-row { display:flex; flex-wrap:wrap; gap:0; margin-top:2.2rem; border:2px solid var(--ab-border-strong); background:var(--ab-card); box-shadow:var(--ab-shadow) }
 .ab-stat { flex:1; min-width:130px; padding:1rem 1.2rem; border-right:2px solid var(--ab-border) }
 .ab-stat:last-child { border-right:0 }
-.ab-stat b { font-family:var(--ab-disp); font-size:clamp(1.6rem,3vw,2.3rem); display:block; line-height:1; color:var(--ab-accent) }
+.ab-stat b { font-family:var(--ab-disp); font-size:clamp(1.55rem,3vw,1.65rem); font-weight:600; display:block; line-height:1.1; letter-spacing:normal; font-variant-numeric:tabular-nums; color:var(--ab-accent) }
 .ab-stat span { font-family:var(--ab-mono); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-muted) }
 .ab-open-cta { display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap }
 
@@ -287,7 +287,7 @@
 .ab-close-sec { background:var(--ab-accent); border-top:3px solid var(--ab-accent-deep); overflow:hidden; text-align:center; color:var(--color-on-accent) }
 .ab-close-sec .ab-kicker { color:var(--color-on-accent) }
 .ab-close-sec .ab-kicker::before { background:var(--color-primary-dark); border-color:var(--color-on-accent) }
-.ab-close-sec h2 { font-size:clamp(2.2rem,5.6vw,4.4rem); max-width:18ch; margin:0 auto; color:var(--color-on-accent) }
+.ab-close-sec h2 { font-size:clamp(1.85rem,3.4vw,2.55rem); max-width:18ch; margin:0 auto; color:var(--color-on-accent) }
 .ab-close-sec p { max-width:56ch; margin:1.6rem auto 0; color:var(--color-on-accent) }
 .ab-close-cta { display:flex; gap:1.1rem; justify-content:center; margin-top:2.4rem; flex-wrap:wrap }
 .ab-close-sec .ab-btn-accent { background:var(--color-primary-dark); color:var(--color-on-accent); box-shadow:6px 6px 0 rgba(var(--color-text-rgb), .2); border-color:var(--color-primary-dark) }

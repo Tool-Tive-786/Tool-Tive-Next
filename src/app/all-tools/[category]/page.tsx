@@ -144,16 +144,11 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       )}
 
-      <ul className="tools-grid">
+      <ul className="tools-grid tool-card-grid">
         {categoryTools.map((tool) => (
           <ToolCard
             key={tool.id}
-            title={tool.cardTitle || tool.title}
-            description={tool.cardExcerpt || tool.seoDescription}
-            icon={tool.icon}
-            tags={tool.tags}
-            category={tool.category}
-            href={`/all-tools/${tool.category}/${tool.slug}`}
+            tool={tool}
           />
         ))}
       </ul>
