@@ -53,11 +53,12 @@
 }
 
 .tc-hero-title {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+    font-weight: 600;
     color: var(--text-primary);
-    letter-spacing: -0.025em;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
     line-height: 1.15;
     margin-bottom: 20px;
     text-align: center;
@@ -122,9 +123,11 @@
 }
 
 .tc-value-text h4 {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: 14px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
     margin-bottom: 4px;
 }
@@ -186,11 +189,12 @@
 }
 
 .tc-section-heading {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: clamp(24px, 3vw, 32px);
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+    font-weight: 600;
     color: var(--text-primary);
-    letter-spacing: -0.02em;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
     line-height: 1.2;
     margin-bottom: 16px;
 }
@@ -228,9 +232,13 @@
 }
 
 .tc-point-num {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: 13px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: normal;
+    font-variant-numeric: tabular-nums;
     color: var(--accent);
     min-width: 24px;
     padding-top: 2px;
@@ -320,9 +328,12 @@
 }
 
 .tc-step-num {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: 28px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: normal;
+    font-variant-numeric: tabular-nums;
     color: var(--accent);
     opacity: 0.5;
     margin-bottom: 12px;
@@ -432,9 +443,11 @@
 }
 
 .tc-related-heading {
-    font-family: var(--font-space, 'Space Grotesk'), sans-serif;
-    font-size: 20px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
     margin-bottom: 24px;
     letter-spacing: -0.02em;

@@ -95,8 +95,11 @@
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Typography */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Typography — loaded and self-hosted through next/font. */
+  --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
+  --font-body: var(--font-instrument-sans), "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-body);
+  --font-space: var(--font-display);
 }
 
 /* ---------- Base ---------- */
@@ -104,11 +107,100 @@ html,
 body {
   background-color: var(--bg-primary) !important;
   color: var(--text-primary);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.5;
   overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+p {
+  line-height: 1.65;
+}
+
+strong,
+dd {
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+button,
+[role="button"] {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+input,
+select,
+textarea {
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+/* Reusable small-caps label. Keep typography here; components only own layout. */
+.caps {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.index-number {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.numeric,
+.stat-number,
+[data-count],
+[data-result-count],
+input[type="number"],
+output,
+time {
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: normal;
 }
 
 /* Scrollbar */
@@ -303,7 +395,7 @@ input {
 
 .article-content h1 {
   font-size: 36px;
-  font-weight: 800;
+  font-weight: 600;
   margin-top: 2em;
   margin-bottom: 0.5em;
   line-height: 1.2;
@@ -312,7 +404,7 @@ input {
 
 .article-content h2 {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 1.75em;
   margin-bottom: 0.5em;
   line-height: 1.3;
@@ -632,8 +724,11 @@ input {
   color: var(--btn-text) !important;
   border: 1px solid var(--btn-bg) !important;
   border-radius: var(--radius-md) !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  line-height: 1 !important;
+  letter-spacing: 0.01em !important;
   cursor: pointer !important;
   transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-fast) !important;
   box-shadow: var(--btn-shadow) !important;
@@ -670,8 +765,11 @@ input {
   color: var(--color-primary) !important;
   border: 1px solid var(--color-primary) !important;
   border-radius: var(--radius-md) !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  line-height: 1 !important;
+  letter-spacing: 0.01em !important;
   cursor: pointer !important;
   transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base), transform var(--transition-fast) !important;
   box-shadow: none !important;

@@ -15,7 +15,7 @@ export default async function BlogIndex() {
   const categories = ['all', ...(await getAllCategories())];
 
   return (
-    <section className="blog-page-container container">
+    <section className="blog-page-container container" itemScope itemType="https://schema.org/Blog">
       <div style={{ textAlign: 'center' }}>
         <h1 className="page-heading">Blog</h1>
         <p className="page-sub" style={{ margin: '8px auto 40px auto' }}>Browse by category or read our latest articles.</p>
@@ -38,7 +38,13 @@ export default async function BlogIndex() {
           </div>
 
           <div className="blog-content">
-            <div className="blog-grid">
+            <div className="blog-reading-labels" aria-hidden="true">
+              <span>Date</span>
+              <span></span>
+              <span>The piece</span>
+              <span>Read</span>
+            </div>
+            <ol className="blog-reading-list blog-page-reading-list">
               {posts.map((post) => (
                 <ArticleCard
                   key={post.slug}
@@ -47,12 +53,13 @@ export default async function BlogIndex() {
                   category={post.category}
                   slug={post.slug}
                   pubDate={post.pubDate}
+                  contentHtml={post.contentHtml}
                   image={post.image}
                   imageAlt={post.imageAlt}
                   imageTitle={post.imageTitle}
                 />
               ))}
-            </div>
+            </ol>
           </div>
         </>
       }>

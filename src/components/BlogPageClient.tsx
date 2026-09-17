@@ -43,7 +43,13 @@ export default function BlogPageClient({ posts, categories }: { posts: BlogPost[
             </div>
 
             <div className="blog-content">
-                <div className="blog-grid">
+                <div className="blog-reading-labels" aria-hidden="true">
+                    <span>Date</span>
+                    <span></span>
+                    <span>The piece</span>
+                    <span>Read</span>
+                </div>
+                <ol className="blog-reading-list blog-page-reading-list">
                     {filteredPosts.map((post) => (
                         <ArticleCard
                             key={post.slug}
@@ -52,12 +58,13 @@ export default function BlogPageClient({ posts, categories }: { posts: BlogPost[
                             category={post.category}
                             slug={post.slug}
                             pubDate={post.pubDate}
+                            contentHtml={post.contentHtml}
                             image={post.image}
                             imageAlt={post.imageAlt}
                             imageTitle={post.imageTitle}
                         />
                     ))}
-                </div>
+                </ol>
                 {filteredPosts.length === 0 && (
                     <p style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '40px 0' }}>
                         No articles found in this category.

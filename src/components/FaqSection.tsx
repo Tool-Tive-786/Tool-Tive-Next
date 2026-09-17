@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import Link from 'next/link';
 import '@/styles/faq.css';
 
@@ -45,34 +45,41 @@ const defaultFaqs: FaqItem[] = [
     }
 ];
 
+function getSchemaText(node: React.ReactNode): string {
+    if (typeof node === 'string' || typeof node === 'number') {
+        return String(node);
+    }
+
+    if (Array.isArray(node)) {
+        return node.map(getSchemaText).filter(Boolean).join(' ');
+    }
+
+    if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
+        return getSchemaText(node.props.children);
+    }
+
+    return '';
+}
+
 export default function FaqSection({
     faqs = defaultFaqs,
-    title = <>Frequently Asked <span className="highlight">Questions.</span></>,
+    title = <>Frequently <span className="faq-title-highlight"><em>Asked</em></span> Questions</>,
     description = "Everything you need to know about ToolTive and how our tools work securely in your browser.",
     label = "Support",
     showCta = true
 }: FaqSectionProps) {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const sectionId = useId().replace(/:/g, '');
 
     const toggleItem = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
-    const rawSchemaTexts = [
-        "Yes, all tools on ToolTive including the Invoice Generator and Image Refiner are 100% free to use with no hidden costs, subscriptions, or watermarks.",
-        "No signup is required. You can use all our tools instantly directly in your browser without creating an account or providing an email address.",
-        "Absolutely. All processing happens locally in your web browser. We do not store your images, financial data, or documents on our servers. Once you close the tab, the data is gone.",
-        "Yes! All our tools are fully responsive and work perfectly on smartphones, tablets, and desktop computers. No app download is needed.",
-        "No, there are no daily or monthly usage limits. You can use our tools as many times as you need, completely free of charge.",
-        "We love feedback! You can reach out to us through our Contact page or email us directly. We read every message and constantly add new tools based on user requests."
-    ];
-
     const schemaData = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": faqs.map((faq, idx) => {
-            // Use explicit schemaAnswer if provided, otherwise fallback to the hardcoded ones if default, or empty
-            const answerText = faq.schemaAnswer || (faqs === defaultFaqs ? rawSchemaTexts[idx] : "See details inside.");
+        "mainEntity": faqs.map((faq) => {
+            const answerText = faq.schemaAnswer?.trim() || getSchemaText(faq.answer).replace(/\s+/g, ' ').trim();
             return {
                 "@type": "Question",
                 "name": faq.question,
@@ -85,7 +92,7 @@ export default function FaqSection({
     };
 
     return (
-        <section className="faq-section" id="faq">
+        <section className="faq-section" id="faq" aria-labelledby={`${sectionId}-heading`}>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
@@ -93,45 +100,52 @@ export default function FaqSection({
 
             <div className="container faq-container">
                 <header className="faq-header">
-                    <div className="faq-label">
+                    <p className="faq-label caps">
+                        <span aria-hidden="true"></span>
                         {label}
-                    </div>
-                    <h2>{title}</h2>
-                    <p>{description}</p>
+                    </p>
+                    <h2 id={`${sectionId}-heading`}>{title}</h2>
+                    {description && <p className="faq-description">{description}</p>}
                 </header>
 
-                <div className="faq-list" role="region" aria-label="Frequently Asked Questions">
+                <div
+                    className="faq-list"
+                    itemScope
+                    itemType="https://schema.org/FAQPage"
+                    aria-label="Frequently Asked Questions"
+                >
                     {faqs.map((faq, index) => {
                         const isActive = openIndex === index;
+                        const questionId = `${sectionId}-question-${index}`;
+                        const answerId = `${sectionId}-answer-${index}`;
                         return (
-                            <div
+                            <article
                                 key={index}
                                 className={`faq-item ${isActive ? 'active' : ''}`}
                                 itemScope
                                 itemProp="mainEntity"
                                 itemType="https://schema.org/Question"
                             >
-                                <button
-                                    className="faq-question"
-                                    aria-expanded={isActive}
-                                    aria-controls={`faq-answer-${index}`}
-                                    onClick={() => toggleItem(index)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' || e.key === ' ') {
-                                            e.preventDefault();
-                                            toggleItem(index);
-                                        }
-                                    }}
-                                >
-                                    <span className="faq-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                                    <span itemProp="name" className="faq-title">{faq.question}</span>
-                                    <span className="faq-toggle" aria-hidden="true">
-                                        +
-                                    </span>
-                                </button>
+                                <h3 className="faq-question-heading">
+                                    <button
+                                        id={questionId}
+                                        className="faq-question"
+                                        type="button"
+                                        aria-expanded={isActive}
+                                        aria-controls={answerId}
+                                        onClick={() => toggleItem(index)}
+                                    >
+                                        <span className="faq-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                                        <span itemProp="name" className="faq-title">{faq.question}</span>
+                                        <span className="faq-toggle" aria-hidden="true">+</span>
+                                    </button>
+                                </h3>
                                 <div
                                     className="faq-answer"
-                                    id={`faq-answer-${index}`}
+                                    id={answerId}
+                                    role="region"
+                                    aria-labelledby={questionId}
+                                    aria-hidden={!isActive}
                                     itemScope
                                     itemProp="acceptedAnswer"
                                     itemType="https://schema.org/Answer"
@@ -140,7 +154,7 @@ export default function FaqSection({
                                         <p>{faq.answer}</p>
                                     </div>
                                 </div>
-                            </div>
+                            </article>
                         );
                     })}
                 </div>

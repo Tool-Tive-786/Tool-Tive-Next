@@ -1,234 +1,220 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { searchTools } from '@/lib/search';
-import { Tool } from '@/lib/tools';
+import { getAllTools, type Tool } from '@/lib/tools';
+
+const valuePoints = [
+  {
+    icon: 'tag',
+    title: 'Free to Use',
+    description: 'No subscription required for the current toolkit.',
+  },
+  {
+    icon: 'gauge',
+    title: 'Fast & Practical',
+    description: 'Focused workflows for everyday tasks.',
+  },
+  {
+    icon: 'lock',
+    title: 'Privacy-Conscious',
+    description: 'Browser and remote processing are clearly identified.',
+  },
+  {
+    icon: 'check',
+    title: 'No Unnecessary Complexity',
+    description: 'Open a tool and get straight to the result.',
+  },
+];
+
+function TrustIcon({ icon }: { icon: string }) {
+  if (icon === 'tag') {
+    return (
+      <svg className="trust-value-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4 4h7.2l9.3 9.3a1.5 1.5 0 0 1 0 2.1l-5.1 5.1a1.5 1.5 0 0 1-2.1 0L4 11.2V4z" />
+        <circle cx="8.2" cy="8.2" r="1.4" />
+      </svg>
+    );
+  }
+
+  if (icon === 'gauge') {
+    return (
+      <svg className="trust-value-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4.5 17.5a7.5 7.5 0 0 1 15 0" />
+        <path d="M12 17.5l3.6-4.6" />
+        <circle cx="12" cy="17.5" r="1.3" />
+      </svg>
+    );
+  }
+
+  if (icon === 'lock') {
+    return (
+      <svg className="trust-value-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="5" y="11" width="14" height="9" rx="2" />
+        <path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3" />
+        <circle cx="12" cy="15.2" r="1.2" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg className="trust-value-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M8.3 12.4l2.6 2.6 4.9-5.4" />
+    </svg>
+  );
+}
+
+const publishedTools = getAllTools();
+
+const categoryLabels: Record<string, string> = {
+  pdf: 'PDF & Files',
+  compress: 'Images',
+  business: 'Business',
+  seo: 'SEO',
+};
+
+function getFanCardStyle(index: number, count: number): React.CSSProperties {
+  const position = count === 1 ? 0 : (index / (count - 1)) - 0.5;
+  const distance = Math.abs(position);
+
+  return {
+    '--fan-r-stack': `${(position * 10).toFixed(2)}deg`,
+    '--fan-x-stack': `${(position * 14.75).toFixed(1)}px`,
+    '--fan-y-stack': `${(distance * 10 - 2).toFixed(1)}px`,
+    '--fan-r-open': `${(position * Math.min(44, count * 9)).toFixed(2)}deg`,
+    '--fan-x-open': `${(position * 155.8).toFixed(1)}px`,
+    '--fan-y-open': `${(position * position * 120).toFixed(1)}px`,
+    zIndex: Math.round(10 - distance * 10),
+  } as React.CSSProperties;
+}
+
+function getToolDisplayName(tool: Tool) {
+  return tool.cardTitle || tool.title;
+}
 
 export default function Hero() {
-  const router = useRouter();
-  const searchContainerRef = useRef<HTMLDivElement>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const primaryCtaRef = useRef<HTMLAnchorElement>(null);
 
-  const [query, setQuery] = useState('');
-  const [debouncedQuery, setDebouncedQuery] = useState('');
-  const [results, setResults] = useState<Tool[]>([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const handleMagnetMove = (event: React.PointerEvent<HTMLAnchorElement>) => {
+    if (!window.matchMedia('(pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const button = primaryCtaRef.current;
+    if (!button) return;
 
-  // Handle click outside to close dropdown
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchContainerRef.current &&
-        !searchContainerRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Debounce the query
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 150);
-    return () => clearTimeout(handler);
-  }, [query]);
-
-  // Perform search when debounced query changes
-  useEffect(() => {
-    if (debouncedQuery.trim().length > 0) {
-      const searchResults = searchTools(debouncedQuery).slice(0, 6); // Limit to 6 results
-      setResults(searchResults);
-      setIsDropdownOpen(true);
-      setSelectedIndex(-1);
-    } else {
-      setResults([]);
-      setIsDropdownOpen(false);
-    }
-  }, [debouncedQuery]);
-
-  const handleSearchSubmit = () => {
-    if (query.trim()) {
-      setIsDropdownOpen(false);
-      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-    }
+    const rect = button.getBoundingClientRect();
+    const offsetX = Math.max(-5, Math.min(5, (event.clientX - (rect.left + rect.width / 2)) * 0.16));
+    const offsetY = Math.max(-5, Math.min(5, (event.clientY - (rect.top + rect.height / 2)) * 0.22));
+    button.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!isDropdownOpen) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        handleSearchSubmit();
-      }
-      return;
-    }
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev < results.length - 1 ? prev + 1 : prev));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev > -1 ? prev - 1 : prev));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (selectedIndex >= 0 && selectedIndex < results.length) {
-        const selectedTool = results[selectedIndex];
-        setIsDropdownOpen(false);
-        router.push(`/all-tools/${selectedTool.category}/${selectedTool.slug}`);
-      } else {
-        handleSearchSubmit();
-      }
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      setIsDropdownOpen(false);
-    }
-  };
-
-  const handleTagClick = (e: React.MouseEvent<HTMLElement>, text: string) => {
-    e.preventDefault();
-    setQuery(text);
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
+  const resetMagnet = () => {
+    if (primaryCtaRef.current) primaryCtaRef.current.style.transform = '';
   };
 
   return (
-    <section className="hero" id="home">
-        {/* Animated Background */}
-        <div className="hero-bg">
-            <div className="floating-orb orb-1"></div>
-            <div className="floating-orb orb-2"></div>
-            <div className="floating-orb orb-3"></div>
-            <div className="grid-pattern"></div>
-        </div>
+    <>
+      <section className="hero" id="home">
+        <div className="hero-layout container">
+          <div className="hero-copy">
+            <p className="hero-overline caps"><i aria-hidden="true"></i>Free · No sign-up</p>
 
-        <div className="hero-content">
-            {/* USP Badge */}
-            <div className="hero-badge">
-                <div className="stars">
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                </div>
-                100% Free Tools — No Signup Required
-            </div>
+            <h1 className="hero-title" aria-label="Free Online Tools for Work, Business and Everyday Tasks">
+              <span className="hero-title-line"><span>Free Online Tools&nbsp;for</span></span>
+              <span className="hero-title-line"><span>Work, Business&nbsp;&amp;</span></span>
+              <span className="hero-title-line">
+                <span><span className="hero-highlight"><em>Everyday Tasks</em><svg viewBox="0 0 320 14" aria-hidden="true"><path pathLength="100" d="M4 10 C 58 3, 126 13, 190 7 S 276 3, 316 8" /></svg></span></span>
+              </span>
+            </h1>
 
-            {/* Headline & Sub-headline */}
-            <h1>Every Tool You Need. <br />For <span className="highlight">Everything You Do.</span></h1>
-            <p className="hero-desc">
-                ToolTive provides a complete, high-quality toolkit for every field. Completely free, right in your browser.
+            <p className="hero-subcopy">
+              Why pay for tools you only need to get the job done? ToolTive brings practical online tools into one simple platform — from file conversion and image compression to business, SEO, and everyday productivity tasks.
             </p>
 
-            {/* Premium Search Bar */}
-            <div className="hero-search-container" ref={searchContainerRef}>
-                <div className="search-wrapper">
-                    <i className="fas fa-search search-icon"></i>
-                    <input 
-                      type="text" 
-                      ref={searchInputRef}
-                      placeholder="Search for any tool (e.g., PDF Converter, Image Upscaler)..."
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      onFocus={() => {
-                        if (query.trim().length > 0) setIsDropdownOpen(true);
-                      }}
-                      role="combobox"
-                      aria-expanded={isDropdownOpen}
-                      aria-controls="search-dropdown-list"
-                      aria-autocomplete="list"
-                    />
-                    {query && (
-                      <button 
-                        className="clear-search-btn" 
-                        onClick={() => {
-                          setQuery('');
-                          if (searchInputRef.current) searchInputRef.current.focus();
-                        }}
-                        aria-label="Clear search"
+            <div className="hero-main-actions">
+              <Link
+                ref={primaryCtaRef}
+                href="/all-tools"
+                className="hero-main-cta"
+                onPointerMove={handleMagnetMove}
+                onPointerLeave={resetMagnet}
+              >
+                Start using the tools
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15" /><path d="M13 6l6 6-6 6" /></svg>
+              </Link>
+            </div>
+
+          </div>
+
+          <aside className="hero-tool-stage" aria-label="Published ToolTive tools">
+            <span className="hero-tool-stamp" aria-hidden="true">
+              {publishedTools.length} live tools
+            </span>
+
+            <div className="hero-tool-fan" role="list" aria-label={`${publishedTools.length} published tools`}>
+              {publishedTools.map((tool, index) => {
+                const toolPath = `/all-tools/${tool.category}/${tool.slug}`;
+                const displayName = getToolDisplayName(tool);
+                return (
+                  <article
+                    className="hero-tool-card"
+                    key={tool.id}
+                    role="listitem"
+                    style={getFanCardStyle(index, publishedTools.length)}
+                    data-tool-path={toolPath}
+                  >
+                    <span className="hero-tool-card-top">
+                      <span className="hero-tool-card-category">{categoryLabels[tool.category] || tool.category}</span>
+                      <span className="hero-tool-card-number">No. {String(index + 1).padStart(2, '0')}</span>
+                    </span>
+                    <strong className="hero-tool-card-name">{displayName}</strong>
+                    <span className="hero-tool-card-footer">
+                      <span className="hero-tool-card-meta">Free · No signup</span>
+                      <Link
+                        href={toolPath}
+                        className="hero-tool-card-arrow"
+                        aria-label={`Open ${displayName}`}
+                        title={`Open ${displayName}`}
                       >
-                        <i className="fas fa-times"></i>
-                      </button>
-                    )}
-                    <button className="search-btn" onClick={handleSearchSubmit}>
-                        <i className="fas fa-bolt"></i>
-                        <span>Search</span>
-                    </button>
-                </div>
-
-                {/* Live Search Dropdown */}
-                {isDropdownOpen && (
-                  <div className="search-dropdown" id="search-dropdown-list" role="listbox">
-                    {results.length > 0 ? (
-                      <>
-                        {results.map((tool, index) => (
-                          <Link 
-                            key={tool.id}
-                            href={`/all-tools/${tool.category}/${tool.slug}`}
-                            className={`search-dropdown-item ${index === selectedIndex ? 'active' : ''}`}
-                            onClick={() => setIsDropdownOpen(false)}
-                            role="option"
-                            aria-selected={index === selectedIndex}
-                          >
-                            <div className="search-item-icon" dangerouslySetInnerHTML={{ __html: tool.icon }} />
-                            <div className="search-item-text">
-                              <div className="search-item-title">{tool.title}</div>
-                              <div className="search-item-cat">{tool.category.toUpperCase()}</div>
-                            </div>
-                          </Link>
-                        ))}
-                        <button 
-                          className="search-dropdown-footer"
-                          onClick={handleSearchSubmit}
-                        >
-                          View all results for "{query.trim()}" &rarr;
-                        </button>
-                      </>
-                    ) : (
-                      <div className="search-dropdown-empty">
-                        <p>No tools found for "{query.trim()}"</p>
-                        <span>Try another keyword or browse all tools.</span>
-                      </div>
-                    )}
-                  </div>
-                )}
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 12h15" />
+                          <path d="M13 6l6 6-6 6" />
+                        </svg>
+                      </Link>
+                    </span>
+                  </article>
+                );
+              })}
             </div>
 
-            {/* Action Buttons (See All Tools + Blog) */}
-            <div className="hero-actions">
-                <Link href="#tools" className="btn-secondary">
-                    <i className="fas fa-th-large"></i>
-                    See All Tools
-                </Link>
-                <Link href="#blog" className="btn-tertiary">
-                    <i className="fas fa-book-open"></i>
-                    Read Our Blog
-                </Link>
-            </div>
+            <span className="hero-tool-caption">
+              <i aria-hidden="true"></i>
+              ToolTive catalogue
+            </span>
+          </aside>
 
-            {/* Popular Categories Quick Access */}
-            <div className="popular-tags">
-                <span className="tag-label">Popular:</span>
-                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Image Tools')}>Image Tools</button>
-                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'PDF Tools')}>PDF Tools</button>
-                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Text & Writing')}>Text & Writing</button>
-                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Developers')}>Developers</button>
-                <button type="button" className="tag" onClick={(e) => handleTagClick(e, 'Calculators')}>Calculators</button>
-            </div>
+          <p className="hero-footnote">
+            <i aria-hidden="true"></i>
+            <span>Privacy-conscious by design: browser-based tools process locally where supported, while remote workflows clearly indicate how data is handled.</span>
+          </p>
         </div>
+      </section>
 
-        {/* Scroll Down Indicator */}
-        <Link href="#tools" className="scroll-indicator">
-            <span>Scroll</span>
-            <i className="fas fa-chevron-down"></i>
-        </Link>
-    </section>
+      <section className="trust-strip" aria-label="Why ToolTive — trust points">
+        <h2 className="trust-strip-heading">Free, practical and privacy-conscious online tools without unnecessary complexity</h2>
+        <div className="trust-strip-inner container">
+          <ul className="trust-strip-list">
+            {valuePoints.map((point) => (
+              <li className="trust-value" key={point.title}>
+                <TrustIcon icon={point.icon} />
+                <div>
+                  <h3>{point.title}</h3>
+                  <p>{point.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
   );
 }
