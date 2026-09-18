@@ -1,7 +1,4 @@
-"use client";
-
-import React, { useRef } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import { getAllTools, type Tool } from '@/lib/tools';
 
 const valuePoints = [
@@ -94,23 +91,6 @@ function getToolDisplayName(tool: Tool) {
 }
 
 export default function Hero() {
-  const primaryCtaRef = useRef<HTMLAnchorElement>(null);
-
-  const handleMagnetMove = (event: React.PointerEvent<HTMLAnchorElement>) => {
-    if (!window.matchMedia('(pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const button = primaryCtaRef.current;
-    if (!button) return;
-
-    const rect = button.getBoundingClientRect();
-    const offsetX = Math.max(-5, Math.min(5, (event.clientX - (rect.left + rect.width / 2)) * 0.16));
-    const offsetY = Math.max(-5, Math.min(5, (event.clientY - (rect.top + rect.height / 2)) * 0.22));
-    button.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-  };
-
-  const resetMagnet = () => {
-    if (primaryCtaRef.current) primaryCtaRef.current.style.transform = '';
-  };
-
   return (
     <>
       <section className="hero" id="home">
@@ -131,16 +111,13 @@ export default function Hero() {
             </p>
 
             <div className="hero-main-actions">
-              <Link
-                ref={primaryCtaRef}
+              <a
                 href="/all-tools"
                 className="hero-main-cta"
-                onPointerMove={handleMagnetMove}
-                onPointerLeave={resetMagnet}
               >
                 Start using the tools
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15" /><path d="M13 6l6 6-6 6" /></svg>
-              </Link>
+              </a>
             </div>
 
           </div>
@@ -150,15 +127,14 @@ export default function Hero() {
               {publishedTools.length} live tools
             </span>
 
-            <div className="hero-tool-fan" role="list" aria-label={`${publishedTools.length} published tools`}>
+            <ol className="hero-tool-fan" aria-label={`${publishedTools.length} published tools`}>
               {publishedTools.map((tool, index) => {
                 const toolPath = `/all-tools/${tool.category}/${tool.slug}`;
                 const displayName = getToolDisplayName(tool);
                 return (
-                  <article
+                  <li
                     className="hero-tool-card"
                     key={tool.id}
-                    role="listitem"
                     style={getFanCardStyle(index, publishedTools.length)}
                     data-tool-path={toolPath}
                   >
@@ -169,7 +145,7 @@ export default function Hero() {
                     <strong className="hero-tool-card-name">{displayName}</strong>
                     <span className="hero-tool-card-footer">
                       <span className="hero-tool-card-meta">Free · No signup</span>
-                      <Link
+                      <a
                         href={toolPath}
                         className="hero-tool-card-arrow"
                         aria-label={`Open ${displayName}`}
@@ -179,12 +155,12 @@ export default function Hero() {
                           <path d="M4 12h15" />
                           <path d="M13 6l6 6-6 6" />
                         </svg>
-                      </Link>
+                      </a>
                     </span>
-                  </article>
+                  </li>
                 );
               })}
-            </div>
+            </ol>
 
             <span className="hero-tool-caption">
               <i aria-hidden="true"></i>

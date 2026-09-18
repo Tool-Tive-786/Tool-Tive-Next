@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import { Fraunces, Instrument_Sans } from "next/font/google";
-import Script from "next/script";
 import "@/styles/globals.css";
 import "@/styles/cards.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Breadcrumb from "@/components/Breadcrumb";
 
 const displayFont = Fraunces({
   subsets: ["latin"],
   weight: "variable",
-  style: ["normal", "italic"],
+  style: ["normal"],
   axes: ["opsz"],
   variable: "--font-fraunces",
   display: "swap",
@@ -20,7 +18,7 @@ const displayFont = Fraunces({
 const bodyFont = Instrument_Sans({
   subsets: ["latin"],
   weight: "variable",
-  style: ["normal", "italic"],
+  style: ["normal"],
   variable: "--font-instrument-sans",
   display: "swap",
   fallback: ["Helvetica Neue", "Arial", "sans-serif"],
@@ -55,36 +53,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
       <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-        
-        {/* Google Analytics - Loaded safely using Next.js Script */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-877CM9ZVF7"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-877CM9ZVF7');
-          `}
-        </Script>
-        {/* Google AdSense - Site Verification */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9227549190577691"
-          crossOrigin="anonymous"
+        <meta name="google-adsense-account" content="ca-pub-9227549190577691" />
+        {process.env.NODE_ENV === 'production' && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){function loadAnalytics(){setTimeout(function(){window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-877CM9ZVF7';s.onload=function(){gtag('js',new Date());gtag('config','G-877CM9ZVF7',{transport_type:'beacon'})};document.head.appendChild(s)},8000)}if(document.readyState==='complete'){loadAnalytics()}else{window.addEventListener('load',loadAnalytics,{once:true})}})();`,
+            }}
           />
+        )}
       </head>
       <body suppressHydrationWarning>
-        <div className="floating-shapes">
-          <div className="shape shape-1"></div>
-          <div className="shape shape-2"></div>
-          <div className="shape shape-3"></div>
-        </div>
         <Header />
-        <Breadcrumb />
         <main>{children}</main>
         <Footer />
       </body>

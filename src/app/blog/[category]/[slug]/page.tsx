@@ -1,5 +1,6 @@
 import { getPostBySlug, getAllPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
+import SiteIcon from '@/components/SiteIcon';
 import '@/styles/blog.css';
 
 interface Props {
@@ -171,11 +172,11 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Sample Promo / Widget */}
           <div className="sidebar-widget">
             <div className="widget-icon">
-              <i className="fas fa-bolt"></i>
+              <SiteIcon name="bolt" />
             </div>
-            <h4>Try Our Free Tools</h4>
+            <h3>Try Our Free Tools</h3>
             <p>Speed up your workflow with our premium tools, completely free.</p>
-            <a href="/all-tools" className="widget-btn">View All Tools <i className="fas fa-arrow-right"></i></a>
+            <a href="/all-tools" className="widget-btn">View All Tools <SiteIcon name="arrow-right" /></a>
           </div>
         </aside>
       </div>

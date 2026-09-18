@@ -28,7 +28,7 @@ export default function ToolHowToSection({ eyebrow, heading, description, steps 
                                 <div className="tc-step-num">
                                     {String(index + 1).padStart(2, '0')}
                                 </div>
-                                <h4>{step.title}</h4>
+                                <h3>{step.title}</h3>
                                 <p>{step.description}</p>
                             </div>
                         ))}

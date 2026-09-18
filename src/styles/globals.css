@@ -100,6 +100,13 @@
   --font-body: var(--font-instrument-sans), "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-body);
   --font-space: var(--font-display);
+
+  /* Heading Typography Scales — unified across whole site matching Home Page */
+  --h1-hero-size: clamp(2.9rem, 6.4vw, 5.4rem);
+  --h1-page-size: clamp(2.1rem, 4.2vw, 3.1rem);
+  --h2-section-size: clamp(1.95rem, 3.6vw, 2.7rem);
+  --h3-card-size: 1.25rem;
+  --h4-item-size: 1.08rem;
 }
 
 /* ---------- Base ---------- */
@@ -116,13 +123,41 @@ body {
   overflow-x: hidden;
 }
 
-h1,
-h2,
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--h1-page-size);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--h2-section-size);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
 h3 {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
+  font-size: var(--h3-card-size);
   font-weight: 600;
-  letter-spacing: -0.015em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+h4 {
+  font-family: var(--font-display);
+  font-size: var(--h4-item-size);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--text-primary);
 }
 
 p {
@@ -225,6 +260,19 @@ time {
 ::selection {
   background: rgba(var(--color-accent-rgb), 0.24);
   color: var(--text-primary);
+}
+
+/* Screen-reader only utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 /* ---------- Layout Container ---------- */
@@ -394,37 +442,45 @@ input {
 }
 
 .article-content h1 {
-  font-size: 36px;
+  font-family: var(--font-display);
+  font-size: var(--h1-page-size);
   font-weight: 600;
   margin-top: 2em;
   margin-bottom: 0.5em;
-  line-height: 1.2;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
 .article-content h2 {
-  font-size: 24px;
+  font-family: var(--font-display);
+  font-size: var(--h2-section-size);
   font-weight: 600;
   margin-top: 1.75em;
   margin-bottom: 0.5em;
-  line-height: 1.3;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   color: var(--text-primary);
 }
 
 .article-content h3 {
-  font-size: 20px;
+  font-family: var(--font-display);
+  font-size: var(--h3-card-size);
   font-weight: 600;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
-  line-height: 1.4;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
 .article-content h4 {
-  font-size: 18px;
+  font-family: var(--font-display);
+  font-size: var(--h4-item-size);
   font-weight: 600;
   margin-top: 1.25em;
   margin-bottom: 0.5em;
+  line-height: 1.3;
   color: var(--text-primary);
 }
 
@@ -645,68 +701,12 @@ input {
 
 
 
-/* ========== FLOATING ELEMENTS ========== */
-.floating-shapes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: -1;
-  /* Make sure it stays in background */
-  overflow: hidden;
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  animation: float 20s ease-in-out infinite;
-}
-
-.shape-1 {
-  width: 400px;
-  height: 400px;
-  top: 10%;
-  left: -10%;
-  animation-delay: 0s;
-}
-
-.shape-2 {
-  width: 300px;
-  height: 300px;
-  top: 60%;
-  right: -5%;
-  animation-delay: -7s;
-}
-
-.shape-3 {
-  width: 200px;
-  height: 200px;
-  bottom: 20%;
-  left: 30%;
-  animation-delay: -14s;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  25% {
-    transform: translate(30px, -30px) scale(1.05);
-  }
-
-  50% {
-    transform: translate(-20px, 20px) scale(0.95);
-  }
-
-  75% {
-    transform: translate(20px, 10px) scale(1.02);
-  }
+.site-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  vertical-align: -0.125em;
 }
 
 /* =============================================
@@ -759,8 +759,7 @@ input {
 .btn-secondary,
 .btn--secondary,
 .btn--outline,
-.tool-cta,
-.category-pill {
+.tool-cta {
   background: transparent !important;
   color: var(--color-primary) !important;
   border: 1px solid var(--color-primary) !important;
@@ -785,13 +784,79 @@ input {
 .btn-secondary:hover,
 .btn--secondary:hover,
 .btn--outline:hover,
-.tool-cta:hover,
-.category-pill:hover,
-.category-pill.active {
+.tool-cta:hover {
   background: var(--color-surface-alt) !important;
   border-color: var(--color-primary-dark) !important;
   color: var(--color-primary-dark) !important;
   transform: translateY(-1px) !important;
+}
+
+/* Category filter bar container */
+.filters-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  margin-bottom: 32px !important;
+}
+
+.home-tool-categories {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 10px 12px !important;
+  margin-bottom: 40px !important;
+  width: 100% !important;
+}
+
+/* Category filter buttons */
+.category-pill {
+  background: var(--bg-card, #FFFBF3) !important;
+  color: var(--color-primary) !important;
+  border: 1.5px solid rgba(var(--color-primary-rgb), 0.3) !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  line-height: 1 !important;
+  letter-spacing: 0.01em !important;
+  cursor: pointer !important;
+  transition: all var(--transition-base) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  padding: 10px 22px !important;
+  margin: 4px 6px !important;
+}
+
+.category-pill:hover {
+  background: var(--btn-bg) !important;
+  border-color: var(--btn-bg) !important;
+  color: var(--btn-text) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--btn-shadow-hover) !important;
+}
+
+.category-pill.active {
+  background: var(--btn-bg) !important;
+  border-color: var(--btn-bg) !important;
+  color: var(--btn-text) !important;
+  box-shadow: var(--btn-shadow) !important;
+  transform: translateY(-1px) !important;
+}
+
+.category-pill.active:hover {
+  background: var(--btn-bg-hover) !important;
+  border-color: var(--btn-bg-hover) !important;
+  color: var(--btn-text) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--btn-shadow-hover) !important;
 }
 
 .btn-tertiary,

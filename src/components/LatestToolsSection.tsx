@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import type { Tool } from '@/lib/tools';
 import ToolCard from '@/components/ToolCard';
 
@@ -81,13 +80,13 @@ export default function LatestToolsSection({ tools }: LatestToolsSectionProps) {
         </ol>
 
         <footer className="latest-tools-footer">
-          <Link href="/all-tools" className="latest-tools-all">
+          <a href="/all-tools" className="latest-tools-all">
             Explore All Tools
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 12h15" />
               <path d="m13 6 6 6-6 6" />
             </svg>
-          </Link>
+          </a>
         </footer>
       </div>
     </section>

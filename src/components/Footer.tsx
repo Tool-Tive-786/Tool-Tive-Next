@@ -1,23 +1,8 @@
-"use client";
-
-import type { FormEvent } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import SiteIcon from '@/components/SiteIcon';
 import '@/styles/footer.css';
 
 export default function Footer() {
-  const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const email = String(formData.get('newsletter-email') || '').trim();
-
-    if (!email) return;
-
-    const subject = encodeURIComponent('ToolTive newsletter subscription');
-    const body = encodeURIComponent(`Please add ${email} to the ToolTive updates list.`);
-    window.location.href = `mailto:support@tooltive.com?subject=${subject}&body=${body}`;
-  };
-
   return (
     <footer className="footer">
       <div className="footer-bg-glow"></div>
@@ -26,13 +11,13 @@ export default function Footer() {
         {/* Updates / Blog Announcement Bar */}
         <div className="footer-newsletter">
           <div className="newsletter-text">
-            <h4>Stay updated with ToolTive</h4>
+            <h3>Stay updated with ToolTive</h3>
             <p>Explore guides, tool release updates, and business insights on our blog.</p>
           </div>
-          <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
-            <label className="newsletter-mailbox">
-              <span className="newsletter-input-area">
-                <i className="fas fa-envelope newsletter-mail-icon" aria-hidden="true"></i>
+          <form className="newsletter-form" action="mailto:support@tooltive.com?subject=ToolTive%20newsletter%20subscription" method="post" encType="text/plain">
+            <div className="newsletter-mailbox">
+              <label className="newsletter-input-area">
+                <SiteIcon name="envelope" className="newsletter-mail-icon" />
                 <span className="sr-only">Email address</span>
                 <input
                   type="email"
@@ -42,11 +27,11 @@ export default function Footer() {
                   aria-label="Email address for ToolTive updates"
                   required
                 />
-              </span>
+              </label>
               <button type="submit">
-                Subscribe <i className="fas fa-arrow-right" aria-hidden="true"></i>
+                Subscribe <SiteIcon name="arrow-right" />
               </button>
-            </label>
+            </div>
           </form>
         </div>
 
@@ -54,16 +39,17 @@ export default function Footer() {
         <div className="footer-top">
           {/* Brand Column */}
           <div className="footer-brand">
-            <Link href="/" className="footer-logo">
+            <a href="/" className="footer-logo">
               <Image
                 className="footer-logo-mark"
-                src="/brand/tooltive-tt-mark.png"
+                src="/brand/tooltive-tt-mark-104.webp"
                 alt=""
-                width={973}
-                height={681}
+                width={104}
+                height={73}
+                sizes="52px"
               />
               <span className="footer-wordmark">ToolTive.</span>
-            </Link>
+            </a>
             <p className="footer-desc">
               Providing free, high-quality professional online utilities for businesses and creatives. No signups, no hassle.
             </p>
@@ -71,41 +57,41 @@ export default function Footer() {
 
           {/* Company Column */}
           <div className="footer-col">
-            <h4 className="caps">Company</h4>
+            <h3 className="caps">Company</h3>
             <ul>
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/all-tools">All Tools</Link></li>
-              <li><Link href="/blog">Blog</Link></li>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/all-tools">All Tools</a></li>
+              <li><a href="/blog">Blog</a></li>
             </ul>
           </div>
 
           {/* Legal Column */}
           <div className="footer-col">
-            <h4 className="caps">Legal</h4>
+            <h3 className="caps">Legal</h3>
             <ul>
-              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-              <li><Link href="/terms-of-service">Terms of Service</Link></li>
-              <li><Link href="/cookie-policy">Cookie Policy</Link></li>
-              <li><Link href="/disclaimer">Disclaimer</Link></li>
-              <li><Link href="/dmca">DMCA Policy</Link></li>
+              <li><a href="/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/terms-of-service">Terms of Service</a></li>
+              <li><a href="/cookie-policy">Cookie Policy</a></li>
+              <li><a href="/disclaimer">Disclaimer</a></li>
+              <li><a href="/dmca">DMCA Policy</a></li>
             </ul>
           </div>
 
           {/* Contact Column */}
           <div className="footer-col">
-            <h4 className="caps">Contact</h4>
+            <h3 className="caps">Contact</h3>
             <ul>
               <li>
                 <a href="mailto:support@tooltive.com" className="contact-item">
-                  <i className="fas fa-envelope"></i>
+                  <SiteIcon name="envelope" />
                   support@tooltive.com
                 </a>
               </li>
               <li>
-                <Link href="/contact" className="contact-item">
-                  <i className="fas fa-comment-dots"></i>
+                <a href="/contact" className="contact-item">
+                  <SiteIcon name="comment" />
                   Contact Us
-                </Link>
+                </a>
               </li>
 
             </ul>

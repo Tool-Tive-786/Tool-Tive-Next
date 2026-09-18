@@ -5,10 +5,10 @@
 
 .blog-page-container .page-heading {
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+  font-size: var(--h1-page-size, clamp(2.1rem, 4.2vw, 3.1rem));
   font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
 .blog-page-container .page-sub,
@@ -21,10 +21,28 @@
 
 .blog-page-container .blog-card h3 {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: var(--h3-card-size, 1.25rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.01em;
+}
+
+.filters-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.home-tool-categories {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-bottom: 40px;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -157,8 +175,12 @@
   margin: 0 auto 16px auto;
 }
 
-.sidebar-widget h4 {
-  font-size: 18px;
+.sidebar-widget h3 {
+  font-family: var(--font-display);
+  font-size: var(--h3-card-size, 1.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
   margin-bottom: 8px;
 }
@@ -201,10 +223,10 @@
 .article-title {
   margin-top: 12px;
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+  font-size: var(--h1-page-size, clamp(2.1rem, 4.2vw, 3.1rem));
   font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
@@ -223,11 +245,11 @@
 
 .blog-heading {
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+  font-size: var(--h1-page-size, clamp(2.1rem, 4.2vw, 3.1rem));
   font-weight: 600;
-  line-height: 1.08;
+  line-height: 1.05;
   color: var(--text-primary);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   text-align: center;
 }
 
@@ -252,6 +274,6 @@
   }
 
   .blog-heading {
-    font-size: 26px;
+    font-size: clamp(1.75rem, 5.5vw, 2.2rem);
   }
 }

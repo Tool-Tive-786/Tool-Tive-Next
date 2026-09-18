@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import SiteIcon from '@/components/SiteIcon';
 
 export default function ContactForm() {
     const [name, setName] = useState("");
@@ -21,7 +22,7 @@ export default function ContactForm() {
     return (
         <div className="contact-form-wrapper">
             <div style={{ marginBottom: '24px' }}>
-                <h2 style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                <h2 className="contact-form-title">
                     Send Us a Message
                 </h2>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: '1.5' }}>
@@ -88,7 +89,7 @@ export default function ContactForm() {
                 </div>
 
                 <button type="submit" className="btn-primary submit-btn" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                    <i className="fas fa-paper-plane"></i>
+                    <SiteIcon name="paper-plane" />
                     Open in Email Client
                 </button>
 

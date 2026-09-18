@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { searchTools } from '@/lib/search';
 import { Tool } from '@/lib/tools';
 import HomeToolsSection from '@/components/HomeToolsSection';
+import SiteIcon from '@/components/SiteIcon';
 import '@/styles/home.css';
 import '@/styles/tools.css';
 
@@ -24,7 +25,7 @@ function SearchResults() {
   return (
     <div style={{ paddingTop: '180px', paddingBottom: '100px', minHeight: '60vh' }} className="container">
       <header className="section-header" style={{ marginBottom: '60px' }}>
-        <h1 className="section-heading" style={{ fontSize: '32px' }}>
+        <h1 className="section-heading">
           Search Results for <span className="highlight">"{query}"</span>
         </h1>
         <p className="section-description">
@@ -36,7 +37,7 @@ function SearchResults() {
         <HomeToolsSection tools={results} />
       ) : (
         <div className="tools-empty" style={{ padding: '80px 20px', textAlign: 'center' }}>
-          <i className="fas fa-search" style={{ fontSize: '48px', color: 'var(--text-muted)', marginBottom: '24px', opacity: 0.5 }}></i>
+          <SiteIcon name="search" style={{ width: 48, height: 48, color: 'var(--text-muted)', marginBottom: 24, opacity: 0.5 }} />
           <h2 style={{ color: 'var(--text-primary)', marginBottom: '12px' }}>No tools found</h2>
           <p style={{ color: 'var(--text-secondary)' }}>We couldn't find any tools matching "{query}". Try adjusting your keywords or browse all tools.</p>
         </div>

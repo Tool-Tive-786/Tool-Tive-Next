@@ -1,4 +1,5 @@
 import React from 'react';
+import SiteIcon from '@/components/SiteIcon';
 
 interface ValueProp {
     icon: string;
@@ -19,10 +20,10 @@ export default function ToolValueStrip({ items }: ToolValueStripProps) {
                 {items.map((item, index) => (
                     <div key={index} className="tc-value-item">
                         <div className="tc-value-icon">
-                            <i className={item.icon} aria-hidden="true"></i>
+                            <SiteIcon name={item.icon} />
                         </div>
                         <div className="tc-value-text">
-                            <h4>{item.title}</h4>
+                            <h3>{item.title}</h3>
                             <p>{item.description}</p>
                         </div>
                     </div>

@@ -1,7 +1,5 @@
-"use client";
-
-import React, { useId, useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
+import SiteIcon from '@/components/SiteIcon';
 import '@/styles/faq.css';
 
 export interface FaqItem {
@@ -68,12 +66,7 @@ export default function FaqSection({
     label = "Support",
     showCta = true
 }: FaqSectionProps) {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
-    const sectionId = useId().replace(/:/g, '');
-
-    const toggleItem = (index: number) => {
-        setOpenIndex(openIndex === index ? null : index);
-    };
+    const sectionId = 'faq';
 
     const schemaData = {
         "@context": "https://schema.org",
@@ -115,37 +108,21 @@ export default function FaqSection({
                     aria-label="Frequently Asked Questions"
                 >
                     {faqs.map((faq, index) => {
-                        const isActive = openIndex === index;
-                        const questionId = `${sectionId}-question-${index}`;
-                        const answerId = `${sectionId}-answer-${index}`;
                         return (
-                            <article
+                            <details
                                 key={index}
-                                className={`faq-item ${isActive ? 'active' : ''}`}
+                                className="faq-item"
                                 itemScope
                                 itemProp="mainEntity"
                                 itemType="https://schema.org/Question"
                             >
-                                <h3 className="faq-question-heading">
-                                    <button
-                                        id={questionId}
-                                        className="faq-question"
-                                        type="button"
-                                        aria-expanded={isActive}
-                                        aria-controls={answerId}
-                                        onClick={() => toggleItem(index)}
-                                    >
-                                        <span className="faq-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                                        <span itemProp="name" className="faq-title">{faq.question}</span>
-                                        <span className="faq-toggle" aria-hidden="true">+</span>
-                                    </button>
-                                </h3>
+                                <summary className="faq-question">
+                                    <span className="faq-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                                    <span itemProp="name" className="faq-title" role="heading" aria-level={3}>{faq.question}</span>
+                                    <span className="faq-toggle" aria-hidden="true">+</span>
+                                </summary>
                                 <div
                                     className="faq-answer"
-                                    id={answerId}
-                                    role="region"
-                                    aria-labelledby={questionId}
-                                    aria-hidden={!isActive}
                                     itemScope
                                     itemProp="acceptedAnswer"
                                     itemType="https://schema.org/Answer"
@@ -154,19 +131,19 @@ export default function FaqSection({
                                         <p>{faq.answer}</p>
                                     </div>
                                 </div>
-                            </article>
+                            </details>
                         );
                     })}
                 </div>
 
                 {showCta && (
                     <div className="faq-cta">
-                        <h4>Still have questions?</h4>
+                        <h3>Still have questions?</h3>
                         <p>Can't find the answer you're looking for? Our team is happy to help.</p>
-                        <Link href="/contact" className="btn-primary">
-                            <i className="fas fa-envelope"></i>
+                        <a href="/contact" className="btn-primary">
+                            <SiteIcon name="envelope" />
                             Contact Support
-                        </Link>
+                        </a>
                     </div>
                 )}
             </div>

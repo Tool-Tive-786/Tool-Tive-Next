@@ -5,8 +5,11 @@
 }
 
 .legal-page h1 {
-    font-size: 30px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: var(--h1-page-size, clamp(2.1rem, 4.2vw, 3.1rem));
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
     margin-bottom: 8px;
 }
@@ -18,10 +21,13 @@
 }
 
 .legal-page h2 {
-    font-size: 20px;
+    font-family: var(--font-display);
+    font-size: var(--h2-section-size, clamp(1.95rem, 3.6vw, 2.7rem));
     font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
     color: var(--text-primary);
-    margin-top: 32px;
+    margin-top: 36px;
     margin-bottom: 12px;
 }
 
@@ -50,13 +56,5 @@
     .legal-page {
         max-width: 100%;
         padding: 20px 16px 40px 16px;
-    }
-
-    .legal-page h1 {
-        font-size: 24px;
-    }
-
-    .legal-page h2 {
-        font-size: 18px;
     }
 }

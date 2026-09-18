@@ -9,13 +9,12 @@ import SearchModal from '@/components/SearchModal';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const searchBtnRef = useRef<HTMLButtonElement>(null);
 
   const tools = getAllTools();
   const categories = useMemo(() => {
-    return Array.from(new Set(tools.map(t => t.category)));
+    return Array.from(new Set(tools.map((tool) => tool.category)));
   }, [tools]);
 
   useEffect(() => {
@@ -58,15 +57,16 @@ export default function Header() {
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar">
+      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar" aria-label="Primary navigation">
         <div className="navbar-inner">
-          <Link href="/" className="logo">
+          <Link href="/" className="logo" aria-label="ToolTive home">
             <Image
               className="logo-mark"
-              src="/brand/tooltive-tt-mark.png"
+              src="/brand/tooltive-tt-mark-104.webp"
               alt=""
-              width={973}
-              height={681}
+              width={104}
+              height={73}
+              sizes="(max-width: 768px) 40px, 44px"
               priority
             />
             <span className="logo-wordmark">ToolTive.</span>
@@ -76,17 +76,29 @@ export default function Header() {
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About</Link></li>
             <li className="dropdown">
-              <button className="dropdown-trigger">
-                Tools
-              </button>
-              <div className="dropdown-menu">
-                {categories.map(cat => (
-                  <Link key={cat} href={`/all-tools/${cat}`} className="dropdown-item" style={{ textTransform: 'capitalize' }}>
-                    {cat === 'pdf' ? 'PDF' : cat}
+              <details onMouseLeave={(e) => e.currentTarget.removeAttribute('open')}>
+                <summary className="dropdown-trigger">Tools</summary>
+                <div className="dropdown-menu">
+                  {categories.map((category) => (
+                    <Link
+                      key={category}
+                      href={`/all-tools/${category}`}
+                      className="dropdown-item"
+                      style={{ textTransform: 'capitalize' }}
+                      onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}
+                    >
+                      {category === 'pdf' ? 'PDF' : category}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/all-tools"
+                    className="dropdown-item dropdown-all"
+                    onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}
+                  >
+                    All Tools
                   </Link>
-                ))}
-                <Link href="/all-tools" className="dropdown-item" style={{ borderTop: '1px solid var(--border-default)', marginTop: '4px', paddingTop: '10px' }}>All Tools</Link>
-              </div>
+                </div>
+              </details>
             </li>
             <li><Link href="/blog">Blog</Link></li>
           </ul>
@@ -104,40 +116,34 @@ export default function Header() {
               title="Search (Press /)"
             >
               <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="10.5" cy="10.5" r="6.5"/>
-                <path d="M15.5 15.5L21 21"/>
+                <circle cx="10.5" cy="10.5" r="6.5" />
+                <path d="M15.5 15.5L21 21" />
               </svg>
               <span>Search</span>
             </button>
 
-            <button
-              className="mobile-menu-btn"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            >
-              {mobileMenuOpen ? 'Close' : 'Menu'}
-            </button>
-          </div>
-        </div>
-
-        {/* MOBILE MENU */}
-        <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
-          <div className="mobile-menu-inner">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-            <Link href="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
-            {categories.map(cat => (
-              <Link key={cat} href={`/all-tools/${cat}`} onClick={() => setMobileMenuOpen(false)} style={{ textTransform: 'capitalize' }}>
-                {cat === 'pdf' ? 'PDF' : cat} Tools
-              </Link>
-            ))}
-            <Link href="/all-tools" onClick={() => setMobileMenuOpen(false)}>All Tools</Link>
-            <Link href="/blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
-            <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+            <details className="mobile-menu-details">
+              <summary className="mobile-menu-btn" aria-label="Menu">Menu</summary>
+              <div className="mobile-menu">
+                <div className="mobile-menu-inner">
+                  <Link href="/">Home</Link>
+                  <Link href="/about">About</Link>
+                  {categories.map((category) => (
+                    <Link key={category} href={`/all-tools/${category}`}>
+                      {category === 'pdf' ? 'PDF' : category} Tools
+                    </Link>
+                  ))}
+                  <Link href="/all-tools">All Tools</Link>
+                  <Link href="/blog">Blog</Link>
+                  <Link href="/contact">Contact</Link>
+                </div>
+              </div>
+            </details>
           </div>
         </div>
       </nav>
 
-      {/* SEARCH OVERLAY */}
+      {/* SEARCH OVERLAY MODAL */}
       <SearchModal isOpen={searchOpen} onClose={handleCloseSearch} />
     </>
   );

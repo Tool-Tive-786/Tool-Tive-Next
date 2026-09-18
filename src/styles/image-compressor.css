@@ -581,16 +581,22 @@
 
 .tc-seo-content h2 {
     color: var(--tc-text);
-    font-size: 24px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: var(--h2-section-size, clamp(1.95rem, 3.6vw, 2.7rem));
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
     margin-bottom: 16px;
     margin-top: 0;
 }
 
 .tc-seo-content h3 {
     color: var(--tc-text);
-    font-size: 20px;
+    font-family: var(--font-display);
+    font-size: var(--h3-card-size, 1.25rem);
     font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     margin-top: 32px;
     margin-bottom: 16px;
 }
@@ -619,13 +625,5 @@
     .tc-seo-content {
         padding: 24px 0px;
         margin-top: 40px;
-    }
-
-    .tc-seo-content h2 {
-        font-size: 20px;
-    }
-
-    .tc-seo-content h3 {
-        font-size: 18px;
     }
 }
