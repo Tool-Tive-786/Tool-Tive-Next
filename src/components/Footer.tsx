@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import SiteIcon from '@/components/SiteIcon';
+import NewsletterForm from '@/components/NewsletterForm';
 import '@/styles/footer.css';
 
 export default function Footer() {
@@ -14,25 +15,7 @@ export default function Footer() {
             <h3>Stay updated with ToolTive</h3>
             <p>Explore guides, tool release updates, and business insights on our blog.</p>
           </div>
-          <form className="newsletter-form" action="mailto:support@tooltive.com?subject=ToolTive%20newsletter%20subscription" method="post" encType="text/plain">
-            <div className="newsletter-mailbox">
-              <label className="newsletter-input-area">
-                <SiteIcon name="envelope" className="newsletter-mail-icon" />
-                <span className="sr-only">Email address</span>
-                <input
-                  type="email"
-                  name="newsletter-email"
-                  placeholder="Enter your email address"
-                  autoComplete="email"
-                  aria-label="Email address for ToolTive updates"
-                  required
-                />
-              </label>
-              <button type="submit">
-                Subscribe <SiteIcon name="arrow-right" />
-              </button>
-            </div>
-          </form>
+          <NewsletterForm />
         </div>
 
         {/* Footer Top - Main Grid */}
