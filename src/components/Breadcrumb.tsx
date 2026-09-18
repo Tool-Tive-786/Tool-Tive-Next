@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SiteIcon from '@/components/SiteIcon';
 
 export default function Breadcrumb() {
   const pathname = usePathname();
@@ -71,7 +72,7 @@ export default function Breadcrumb() {
       <ol className="breadcrumb-list">
         <li className="breadcrumb-item">
           <Link href="/" className="breadcrumb-link">
-            <i className="fas fa-home breadcrumb-home-icon" aria-hidden="true"></i>
+            <SiteIcon name="home" className="breadcrumb-home-icon" />
             <span>Home</span>
           </Link>
         </li>

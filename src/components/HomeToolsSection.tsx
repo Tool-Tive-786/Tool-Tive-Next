@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import ToolCard from './ToolCard';
 import type { Tool } from '@/lib/tools';
+import SiteIcon from '@/components/SiteIcon';
 
 interface HomeToolsSectionProps {
   tools: Tool[];
@@ -67,7 +68,7 @@ export default function HomeToolsSection({
       {filteredTools.length > 0 && (
         <div className="view-all-wrap">
           <Link href="/all-tools" className="view-all-btn">
-            <i className="fas fa-th-large"></i>
+            <SiteIcon name="th-large" />
             {viewAllLabel}
           </Link>
         </div>

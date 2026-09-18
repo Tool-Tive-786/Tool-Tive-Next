@@ -22,7 +22,7 @@ export const tools: Tool[] = [
     title: "Free Online Image to PDF Converter",
     h1Base: "Free Online",
     h1Accent: "Image to PDF Converter.",
-    seoTitle: "Free Online Image to PDF Converter | ToolTive",
+    seoTitle: "Free Online Image to PDF Converter",
     seoDescription:
       "Free Online Image to PDF Converter for multiple files. Fast, secure, and entirely on your device.",
     cardTitle: "Image to PDF Converter",
@@ -54,7 +54,7 @@ export const tools: Tool[] = [
     title: "Online Free Invoice Generator",
     h1Base: "Free Online",
     h1Accent: "Invoice Generator.",
-    seoTitle: "Free Invoice Generator – Create Invoices Online | ToolTive",
+    seoTitle: "Free Invoice Generator – Create Invoices Online",
     seoDescription:
       "Generate free invoices online instantly. Professional templates, discount calculations, and export to PDF or Word. No signup required.",
     cardTitle: "Free Invoice Generator",
@@ -86,7 +86,7 @@ export const tools: Tool[] = [
     title: "Free XML Sitemap Generator",
     h1Base: "Free XML Sitemap",
     h1Accent: "Generator.",
-    seoTitle: "Free XML Sitemap Generator | ToolTive",
+    seoTitle: "Free XML Sitemap Generator",
     seoDescription:
       "Generate and validate XML sitemaps for your website instantly. Supports URL lists, website crawling, and structural SEO validation without limits.",
     cardTitle: "XML Sitemap Generator",
@@ -102,7 +102,7 @@ export const tools: Tool[] = [
     title: "Free Profit Margin Calculator",
     h1Base: "Free",
     h1Accent: "Profit Margin Calculator.",
-    seoTitle: "Free Profit Margin Calculator | ToolTive",
+    seoTitle: "Free Profit Margin Calculator",
     seoDescription:
       "Calculate profit margin, markup, profit per sale, and target selling price. Add shipping, fees, discounts, and other costs with this free calculator.",
     cardTitle: "Profit Margin Calculator",
@@ -118,7 +118,7 @@ export const tools: Tool[] = [
     title: "Free Robots.txt Generator & Tester",
     h1Base: "Free Robots.txt",
     h1Accent: "Generator & Tester.",
-    seoTitle: "Free Robots.txt Generator & Tester | ToolTive",
+    seoTitle: "Free Robots.txt Generator & Tester",
     seoDescription:
       "Generate, test, and validate robots.txt rules for search crawlers with ToolTive's free online robots.txt generator and tester.",
     cardTitle: "Robots.txt Generator & Tester",

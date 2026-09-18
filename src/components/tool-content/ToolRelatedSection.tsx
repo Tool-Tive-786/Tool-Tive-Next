@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import SiteIcon from '@/components/SiteIcon';
 
 interface RelatedTool {
     href: string;
@@ -23,10 +24,10 @@ export default function ToolRelatedSection({ tools }: ToolRelatedSectionProps) {
                     {tools.map((tool, index) => (
                         <Link key={index} href={tool.href} className="tc-related-card">
                             <div className="tc-related-icon">
-                                <i className={tool.icon} aria-hidden="true"></i>
+                                <SiteIcon name={tool.icon} />
                             </div>
                             <div>
-                                <h4>{tool.title}</h4>
+                                <h3>{tool.title}</h3>
                                 <p>{tool.description}</p>
                             </div>
                         </Link>

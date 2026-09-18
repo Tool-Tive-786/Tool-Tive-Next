@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { getAllTools, getLatestTools } from '@/lib/tools';
 import { getAllPosts } from '@/lib/blog';
 import ArticleCard from '@/components/ArticleCard';
 import Hero from '@/components/Hero';
 import LatestToolsSection from '@/components/LatestToolsSection';
 import FaqSection, { type FaqItem } from '@/components/FaqSection';
+import SiteIcon from '@/components/SiteIcon';
 import '@/styles/home.css';
 import '@/styles/tools.css';
 
@@ -235,7 +235,7 @@ export default async function Home() {
 
               return (
                 <li key={category.category}>
-                  <Link
+                  <a
                     href={category.href}
                     className="home-category-row"
                     aria-label={`${category.title}: explore ${toolCount} ${toolCount === 1 ? 'tool' : 'tools'}`}
@@ -268,20 +268,20 @@ export default async function Home() {
                         <path d="m13 6 6 6-6 6" />
                       </svg>
                     </span>
-                  </Link>
+                  </a>
                 </li>
               );
             })}
           </ol>
 
           <footer className="home-categories-footer">
-            <Link href="/all-tools" className="home-categories-all">
+            <a href="/all-tools" className="home-categories-all">
               Browse All Tools
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M4 12h15" />
                 <path d="m13 6 6 6-6 6" />
               </svg>
-            </Link>
+            </a>
           </footer>
         </div>
       </section>
@@ -376,13 +376,13 @@ export default async function Home() {
           </ol>
 
           <footer className="blog-reading-footer">
-            <Link href="/blog" className="blog-reading-all">
+            <a href="/blog" className="blog-reading-all">
               Explore All Article
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M4 12h15" />
                 <path d="m13 6 6 6-6 6" />
               </svg>
-            </Link>
+            </a>
           </footer>
         </div>
       </section>
@@ -405,12 +405,12 @@ export default async function Home() {
                 Explore a growing collection of free online tools built to make everyday digital work simpler. Find the tool you need, get the job done, and come back whenever the next task comes up.
               </p>
               <div className="final-cta-actions">
-                <Link href="/all-tools" className="hero-primary-cta">
-                  Explore All Tools <i className="fas fa-arrow-right" aria-hidden="true"></i>
-                </Link>
-                <Link href="/blog" className="hero-secondary-cta">
-                  Read ToolTive Blog <i className="fas fa-book-open" aria-hidden="true"></i>
-                </Link>
+                <a href="/all-tools" className="hero-primary-cta">
+                  Explore All Tools <SiteIcon name="arrow-right" />
+                </a>
+                <a href="/blog" className="hero-secondary-cta">
+                  Read ToolTive Blog <SiteIcon name="book" />
+                </a>
               </div>
             </div>
 
@@ -418,7 +418,7 @@ export default async function Home() {
               <div className="final-trust-grid">
                 {finalTrustItems.map((item) => (
                   <div className="final-trust-item" key={item.label}>
-                    <i className={item.icon} aria-hidden="true"></i>
+                    <SiteIcon name={item.icon} />
                     <span>{item.label}</span>
                   </div>
                 ))}

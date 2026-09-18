@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { getLatestTools, type Tool } from '@/lib/tools';
 
 interface ToolCardProps {
@@ -43,7 +42,7 @@ export default function ToolCard({
 
   return (
     <li className="site-tool-item">
-      <Link
+      <a
         href={href}
         className="latest-tool-card"
         aria-label={`${ctaLabel}: ${title}`}
@@ -94,7 +93,7 @@ export default function ToolCard({
             </svg>
           </span>
         </span>
-      </Link>
+      </a>
     </li>
   );
 }

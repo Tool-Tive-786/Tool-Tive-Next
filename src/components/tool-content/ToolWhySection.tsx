@@ -29,7 +29,7 @@ export default function ToolWhySection({ eyebrow, heading, description, points }
                                     {String(index + 1).padStart(2, '0')}
                                 </span>
                                 <div className="tc-point-body">
-                                    <h4>{point.title}</h4>
+                                    <h3>{point.title}</h3>
                                     {point.description && <p>{point.description}</p>}
                                 </div>
                             </li>

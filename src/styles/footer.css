@@ -145,7 +145,7 @@
 }
 
 /* ---------- Link Columns ---------- */
-.footer-col h4 {
+.footer-col h3 {
     font-family: var(--font-body);
     color: var(--text-primary);
     margin-bottom: 24px;
@@ -153,7 +153,7 @@
     display: inline-block;
 }
 
-.footer-col h4::after {
+.footer-col h3::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -265,7 +265,7 @@
     opacity: 0.4;
 }
 
-.newsletter-text h4 {
+.newsletter-text h3 {
     font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 600;
@@ -291,16 +291,17 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 5px;
-    background: var(--bg-input);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-md);
-    transition: border-color var(--transition-base, 0.3s), box-shadow var(--transition-base, 0.3s);
+    padding: 6px 6px 6px 14px;
+    background: var(--color-surface, #ffffff);
+    border: 1.5px solid var(--border-strong, rgba(42, 27, 29, 0.22));
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: border-color var(--transition-base, 0.2s), box-shadow var(--transition-base, 0.2s);
 }
 
 .newsletter-mailbox:focus-within {
-    border-color: var(--border-default);
-    box-shadow: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.12);
 }
 
 .newsletter-input-area {
@@ -308,19 +309,21 @@
     align-items: center;
     flex: 1;
     min-width: 0;
+    gap: 10px;
 }
 
 .newsletter-mail-icon {
-    flex: 0 0 auto;
-    margin-left: 12px;
-    color: var(--accent);
-    font-size: 14px;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    color: var(--color-primary);
+    stroke-width: 1.8;
 }
 
 .newsletter-form input {
     flex: 1;
     min-width: 0;
-    padding: 12px 14px;
+    padding: 9px 0;
     background: transparent;
     border: 0;
     color: var(--text-primary);
@@ -329,11 +332,12 @@
     font-weight: 400;
     line-height: 1.5;
     outline: none;
-    transition: all var(--transition-base, 0.3s);
+    transition: all var(--transition-base, 0.2s);
 }
 
 .newsletter-form input::placeholder {
-    color: var(--text-dim);
+    color: var(--text-muted);
+    opacity: 0.75;
 }
 
 .newsletter-form input:focus,
@@ -344,24 +348,42 @@
 }
 
 .newsletter-form button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     flex: 0 0 auto;
-    padding: 12px 20px !important;
+    padding: 10px 22px !important;
     background: var(--btn-bg);
     color: var(--btn-text);
-    border: none;
-    border-radius: var(--radius-md);
-    font-size: 14px;
-    font-weight: 700;
+    border: 1px solid var(--btn-bg);
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.01em;
     cursor: pointer;
-    transition: all var(--transition-base, 0.3s);
+    transition: background-color var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-fast);
     box-shadow: var(--btn-shadow);
     white-space: nowrap;
 }
 
+.newsletter-form button .site-icon {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    transition: transform 0.2s ease;
+}
+
 .newsletter-form button:hover {
     background: var(--btn-bg-hover);
+    border-color: var(--btn-bg-hover);
     box-shadow: var(--btn-shadow-hover);
     transform: translateY(-1px);
+}
+
+.newsletter-form button:hover .site-icon {
+    transform: translateX(3px);
 }
 
 /* ============================================

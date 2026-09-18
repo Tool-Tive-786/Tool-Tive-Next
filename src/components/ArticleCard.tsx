@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import type { CSSProperties } from 'react';
 
 interface ArticleCardProps {
@@ -41,6 +40,11 @@ function getReadingTime(contentHtml = '') {
     return Math.max(1, Math.ceil(words / 220));
 }
 
+function getCardImage(image: string) {
+    if (!image.startsWith('/tooltive-card-images/') || !image.endsWith('.webp')) return image;
+    return image.replace(/\.webp$/, '-420.webp');
+}
+
 export default function ArticleCard({
     title,
     description,
@@ -56,13 +60,14 @@ export default function ArticleCard({
     const readingTime = getReadingTime(contentHtml);
     const href = `/blog/${category}/${slug}`;
     const featuredImage = image || '/hero-section.webp';
+    const renderedImage = getCardImage(featuredImage);
     const canonicalUrl = `https://tooltive.com${href}`;
     const schemaImage = featuredImage.startsWith('http') ? featuredImage : `https://tooltive.com${featuredImage}`;
     const formattedCategory = category.replace(/-/g, ' ');
 
     return (
         <li>
-            <Link
+            <a
                 href={href}
                 className="blog-reading-row"
                 itemProp="blogPost"
@@ -87,10 +92,12 @@ export default function ArticleCard({
 
                 <span className="blog-reading-image">
                     <Image
-                        src={featuredImage}
+                        src={renderedImage}
                         alt={imageAlt || title}
                         title={imageTitle || title}
                         fill
+                        loading="lazy"
+                        fetchPriority="low"
                         sizes="(max-width: 600px) 68px, (max-width: 860px) 112px, 140px"
                     />
                 </span>
@@ -111,7 +118,7 @@ export default function ArticleCard({
                         <path d="m13 6 6 6-6 6" />
                     </svg>
                 </span>
-            </Link>
+            </a>
         </li>
     );
 }

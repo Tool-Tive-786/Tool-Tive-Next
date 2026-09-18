@@ -87,8 +87,7 @@
     stroke-width: 4.5;
     stroke-linecap: round;
     stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    animation: faq-title-underline 0.6s ease 0.25s forwards;
+    stroke-dashoffset: 0;
 }
 
 @keyframes faq-title-underline {
@@ -128,6 +127,14 @@
     transition: background-color 180ms ease;
 }
 
+.faq-item > summary {
+    list-style: none;
+}
+
+.faq-item > summary::-webkit-details-marker {
+    display: none;
+}
+
 .faq-item:last-child {
     border-bottom: 0;
 }
@@ -144,19 +151,14 @@
 }
 
 .faq-item:hover,
-.faq-item.active {
+.faq-item[open] {
     background: var(--bg-secondary);
 }
 
 .faq-item:hover::before,
 .faq-item:focus-within::before,
-.faq-item.active::before {
+.faq-item[open]::before {
     scale: 1 1;
-}
-
-.faq-question-heading {
-    margin: 0;
-    font: inherit;
 }
 
 .faq-question {
@@ -216,7 +218,7 @@
 }
 
 .faq-item:hover .faq-num,
-.faq-item.active .faq-num {
+.faq-item[open] .faq-num {
     color: var(--accent-bright);
 }
 
@@ -224,7 +226,7 @@
     border-color: var(--accent-bright);
 }
 
-.faq-item.active .faq-toggle {
+.faq-item[open] .faq-toggle {
     transform: rotate(45deg);
     border-color: var(--accent-bright);
     background: var(--accent-bright);
@@ -238,7 +240,7 @@
     transition: grid-template-rows 360ms cubic-bezier(.2, .75, .25, 1), visibility 0s linear 360ms;
 }
 
-.faq-item.active .faq-answer {
+.faq-item[open] .faq-answer {
     grid-template-rows: 1fr;
     visibility: visible;
     transition: grid-template-rows 360ms cubic-bezier(.2, .75, .25, 1), visibility 0s linear 0s;
@@ -278,7 +280,7 @@
     background: var(--bg-secondary);
 }
 
-.faq-cta h4 {
+.faq-cta h3 {
     margin: 0;
     color: var(--accent);
     font-family: var(--font-display);

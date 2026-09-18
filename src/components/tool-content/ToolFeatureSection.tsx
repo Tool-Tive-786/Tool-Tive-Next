@@ -25,7 +25,7 @@ export default function ToolFeatureSection({ eyebrow, heading, description, item
                     <div className="tc-features-grid">
                         {items.map((item, index) => (
                             <div key={index} className="tc-feature">
-                                <h4>{item.title}</h4>
+                                <h3>{item.title}</h3>
                                 <p>{item.description}</p>
                             </div>
                         ))}

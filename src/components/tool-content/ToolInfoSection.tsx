@@ -1,4 +1,5 @@
 import React from 'react';
+import SiteIcon from '@/components/SiteIcon';
 
 interface InfoItem {
     label: string;
@@ -36,10 +37,10 @@ export default function ToolInfoSection({ items, privacy }: ToolInfoSectionProps
                 {privacy && (
                     <div className="tc-privacy">
                         <div className="tc-privacy-icon">
-                            <i className="fas fa-shield-halved" aria-hidden="true"></i>
+                            <SiteIcon name="shield" />
                         </div>
                         <div>
-                            <h4>{privacy.title}</h4>
+                            <h3>{privacy.title}</h3>
                             <p>{privacy.description}</p>
                         </div>
                     </div>
