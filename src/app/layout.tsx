@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import "@/styles/cards.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const displayFont = Fraunces({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         <Header />
+        <Breadcrumb />
         <main>{children}</main>
         <Footer />
       </body>
