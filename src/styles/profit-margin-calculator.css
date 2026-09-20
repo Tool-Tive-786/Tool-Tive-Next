@@ -114,6 +114,13 @@
   gap: 1rem;
 }
 
+@media (max-width: 600px) {
+  .pmc-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
 .pmc-error {
   color: #ef4444;
   font-size: 0.85rem;

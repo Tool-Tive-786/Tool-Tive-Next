@@ -1,5 +1,5 @@
 .tools-page {
-    padding-top: 180px;
+    padding-top: 16px;
     padding-bottom: 80px;
 }
 
@@ -289,7 +289,8 @@
 
 @media (max-width: 768px) {
     .tools-page {
-        padding-top: 20px;
+        padding-top: 12px;
+        padding-bottom: 60px;
     }
 
     .page-heading {

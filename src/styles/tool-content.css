@@ -3,6 +3,19 @@
    NEW file — does NOT replace toolscontent.css
    ============================================= */
 
+/* ---------- Page Shell & Spacing ---------- */
+.tools-page {
+    padding-top: 16px;
+    padding-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+    .tools-page {
+        padding-top: 12px;
+        padding-bottom: 60px;
+    }
+}
+
 /* ---------- Shell ---------- */
 .tc-shell {
     width: 100%;

@@ -15,7 +15,7 @@
   --ab-orange: var(--color-accent);
   --ab-shadow: 4px 4px 0 rgba(var(--color-primary-rgb), 0.25);
   --ab-shadow-lg: 8px 8px 0 rgba(var(--color-primary-rgb), 0.18);
-  padding-top: 80px;
+  padding-top: 20px;
   padding-bottom: 0;
 }
 .about-page ::selection { background: var(--ab-accent); color: var(--color-on-accent) }
@@ -309,8 +309,11 @@
 @media(max-width:560px) {
   .ab-postcards { grid-template-columns:1fr }
   .ab-pc { --r:0deg !important }
-  .ab-stat-row { flex-wrap:wrap }
-  .ab-stat { min-width:45% }
+  .ab-stat-row { flex-wrap:wrap; gap:0.75rem }
+  .ab-stat { min-width:100% }
+}
+@media(max-width:480px) {
+  .ab-giant { font-size:clamp(2rem,11vw,3.5rem); letter-spacing:-.03em }
 }
 
 /* ========== REDUCED MOTION ========== */

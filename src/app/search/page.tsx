@@ -23,7 +23,7 @@ function SearchResults() {
   }, [query]);
 
   return (
-    <div style={{ paddingTop: '180px', paddingBottom: '100px', minHeight: '60vh' }} className="container">
+    <div style={{ paddingTop: '24px', paddingBottom: '80px', minHeight: '60vh' }} className="container">
       <header className="section-header" style={{ marginBottom: '60px' }}>
         <h1 className="section-heading">
           Search Results for <span className="highlight">"{query}"</span>

@@ -107,6 +107,22 @@
   --h2-section-size: clamp(1.95rem, 3.6vw, 2.7rem);
   --h3-card-size: 1.25rem;
   --h4-item-size: 1.08rem;
+
+  /* Header & Page Top Spacing Tokens */
+  --header-height-desktop: 73px;
+  --header-height-mobile: 65px;
+  --header-height: var(--header-height-desktop);
+  --page-top-gap-desktop: 24px;
+  --page-top-gap-mobile: 16px;
+  --page-top-gap: var(--page-top-gap-desktop);
+  --page-top-offset: calc(var(--header-height) + var(--page-top-gap));
+}
+
+@media (max-width: 992px) {
+  :root {
+    --header-height: var(--header-height-mobile);
+    --page-top-gap: var(--page-top-gap-mobile);
+  }
 }
 
 /* ---------- Base ---------- */
@@ -294,12 +310,12 @@ time {
    ============================================= */
 .breadcrumb-nav {
   display: block;
-  position: absolute;
-  top: 96px;
-  left: 0;
-  right: 0;
+  position: relative;
+  width: 100%;
+  margin-top: var(--header-height);
+  padding-top: 16px;
+  padding-bottom: 8px;
   z-index: 10;
-  pointer-events: none;
 }
 
 .breadcrumb-list {
@@ -312,14 +328,12 @@ time {
   font-size: 13px;
   line-height: 1.4;
   color: var(--text-secondary);
-  flex-wrap: wrap;
   background: var(--bg-card-glass);
   border: 1px solid var(--border-default);
   border-radius: 8px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--shadow-md);
-  pointer-events: auto;
   transition: border-color var(--transition-base), background-color var(--transition-base);
 }
 
@@ -371,22 +385,29 @@ time {
   letter-spacing: -0.01em;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .breadcrumb-nav {
-    position: relative !important;
-    top: auto !important;
-    padding-top: 86px !important;
-    padding-bottom: 0 !important;
-    margin-bottom: 18px !important;
+    margin-top: var(--header-height);
+    padding-top: 12px;
+    padding-bottom: 6px;
   }
 
   .breadcrumb-list {
     display: flex;
-    width: 100%;
-    padding: 7px 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    scrollbar-width: none;
+    max-width: 100%;
+    padding: 6px 12px;
     font-size: 12px;
     gap: 6px;
     border-radius: 6px;
+  }
+
+  .breadcrumb-list::-webkit-scrollbar {
+    display: none;
   }
 }
 
