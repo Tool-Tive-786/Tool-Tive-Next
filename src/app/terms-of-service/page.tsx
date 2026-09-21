@@ -1,10 +1,23 @@
 import '@/styles/legal.css';
 import '@/styles/blog.css'; // Reusing blog layout styles for TOC and grid
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'ToolTive Terms of Service.',
+  description: "Review the Terms of Service governing your use of ToolTive's free online tools, document converters, financial calculators, and web utilities.",
   alternates: { canonical: '/terms-of-service' },
+  openGraph: {
+    title: 'Terms of Service · ToolTive',
+    description: "Review the Terms of Service governing your use of ToolTive's free online tools, document converters, financial calculators, and web utilities.",
+    url: '/terms-of-service',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms of Service · ToolTive',
+    description: "Review the Terms of Service governing your use of ToolTive's free online tools, document converters, financial calculators, and web utilities.",
+  },
 };
 
 export default function TermsOfService() {

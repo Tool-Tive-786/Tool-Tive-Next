@@ -9,17 +9,23 @@ import "@/styles/tool-content.css";
 import "@/styles/sitemap-generator.css";
 
 export const metadata: Metadata = {
-    title: 'Free XML Sitemap Generator | ToolTive',
+    title: 'Free XML Sitemap Generator',
     description: 'Generate, crawl, and validate XML sitemaps with precision. Handles up to 50k URLs with automatic splitting and SEO health checks.',
     keywords: 'xml sitemap generator, sitemap validator, free sitemap generator, SEO sitemap, create sitemap online',
     robots: { index: true, follow: true },
     alternates: { canonical: '/all-tools/seo/free-xml-sitemap-generator' },
     openGraph: {
-        title: 'Free XML Sitemap Generator',
-        description: 'Generate, crawl, and validate XML sitemaps with precision.',
+        title: 'Free XML Sitemap Generator · ToolTive',
+        description: 'Generate, crawl, and validate XML sitemaps with precision. Handles up to 50k URLs with automatic splitting and SEO health checks.',
         url: '/all-tools/seo/free-xml-sitemap-generator',
+        type: 'website',
         images: [{ url: '/icon.svg', width: 800, height: 600, alt: 'ToolTive XML Sitemap Generator' }],
-    }
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free XML Sitemap Generator · ToolTive',
+        description: 'Generate, crawl, and validate XML sitemaps with precision. Handles up to 50k URLs with automatic splitting and SEO health checks.',
+    },
 };
 
 const sitemapContentConfig: ToolContentConfig = {

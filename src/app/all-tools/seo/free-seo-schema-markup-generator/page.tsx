@@ -8,11 +8,22 @@ import SchemaMarkupGeneratorNoSSR from '@/components/tools/schema-generator/Sche
 import "@/styles/schema-markup-generator.css";
 
 export const metadata: Metadata = {
-    title: 'Free SEO Schema Markup Generator & Validator | ToolTive',
-    description: 'Generate and validate Schema.org JSON-LD markup for articles, products, FAQs, businesses, and more with ToolTive\'s free online schema tool.',
+    title: 'Free SEO Schema Markup Generator & Validator',
+    description: "Generate and validate Schema.org JSON-LD markup for articles, products, FAQs, businesses, and more with ToolTive's free online schema tool.",
     keywords: 'schema markup generator, SEO schema generator, JSON-LD generator, structured data generator, schema validator, SEO tool, free schema markup checker',
     robots: { index: true, follow: true },
     alternates: { canonical: '/all-tools/seo/free-seo-schema-markup-generator' },
+    openGraph: {
+        title: 'Free SEO Schema Markup Generator & Validator · ToolTive',
+        description: "Generate and validate Schema.org JSON-LD markup for articles, products, FAQs, businesses, and more with ToolTive's free online schema tool.",
+        url: '/all-tools/seo/free-seo-schema-markup-generator',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free SEO Schema Markup Generator & Validator · ToolTive',
+        description: "Generate and validate Schema.org JSON-LD markup for articles, products, FAQs, businesses, and more with ToolTive's free online schema tool.",
+    },
 };
 
 // Content configuration

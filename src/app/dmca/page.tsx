@@ -1,10 +1,23 @@
 import '@/styles/legal.css';
 import '@/styles/blog.css'; // Reusing blog layout styles for TOC and grid
 
-export const metadata = {
-  title: { absolute: 'DMCA Policy | ToolTive' },
-  description: 'ToolTive DMCA Policy and Copyright Information.',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'DMCA Policy',
+  description: "Review ToolTive's DMCA copyright policy, infringement notice guidelines, and contact instructions for designated copyright agents.",
   alternates: { canonical: '/dmca' },
+  openGraph: {
+    title: 'DMCA Policy · ToolTive',
+    description: "Review ToolTive's DMCA copyright policy, infringement notice guidelines, and contact instructions for designated copyright agents.",
+    url: '/dmca',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DMCA Policy · ToolTive',
+    description: "Review ToolTive's DMCA copyright policy, infringement notice guidelines, and contact instructions for designated copyright agents.",
+  },
 };
 
 export default function DmcaPolicy() {

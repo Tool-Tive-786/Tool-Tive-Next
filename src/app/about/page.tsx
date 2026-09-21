@@ -15,6 +15,13 @@ export const metadata: Metadata = {
     description:
       'Learn about ToolTive, a browser-based platform offering practical online tools for everyday digital tasks, including invoices, image compression, and file conversion.',
     url: '/about',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About ToolTive | Free Online Tools for Everyday Tasks',
+    description:
+      'Learn about ToolTive, a browser-based platform offering practical online tools for everyday digital tasks, including invoices, image compression, and file conversion.',
   },
 };
 

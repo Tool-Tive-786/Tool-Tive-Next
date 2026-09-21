@@ -1,10 +1,23 @@
 import '@/styles/contact.css';
 import ContactForm from '@/components/ContactForm';
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'Contact Us',
   description: 'Get in touch with the ToolTive team for support, feature requests, or inquiries.',
   alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact Us · ToolTive',
+    description: 'Get in touch with the ToolTive team for support, feature requests, or inquiries.',
+    url: '/contact',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Us · ToolTive',
+    description: 'Get in touch with the ToolTive team for support, feature requests, or inquiries.',
+  },
 };
 
 export default function Contact() {

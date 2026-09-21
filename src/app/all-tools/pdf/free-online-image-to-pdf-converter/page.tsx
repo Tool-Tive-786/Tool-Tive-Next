@@ -8,17 +8,18 @@ import ToolContentLayout from "@/components/tool-content/ToolContentLayout";
 import { ToolContentConfig } from "@/components/tool-content/ToolContentTypes";
 
 export const metadata: Metadata = {
-    title: "Free Online Image to PDF Converter - ToolTive",
+    title: "Free Online Image to PDF Converter",
     description: "Use our Free Online Image to PDF Converter to merge multiple JPG, PNG, and WebP files into a single PDF document. Fast, secure, and 100% free.",
     keywords: "free online image to pdf converter, image to pdf, merge images to pdf, convert jpg to pdf, free pdf converter",
     openGraph: {
-        title: "Free Online Image to PDF Converter - ToolTive",
+        title: "Free Online Image to PDF Converter · ToolTive",
         description: "Use our Free Online Image to PDF Converter to merge multiple JPG, PNG, and WebP files into a single PDF document. Fast, secure, and 100% free.",
+        url: "/all-tools/pdf/free-online-image-to-pdf-converter",
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Free Online Image to PDF Converter - ToolTive",
+        title: "Free Online Image to PDF Converter · ToolTive",
         description: "Use our Free Online Image to PDF Converter to merge multiple JPG, PNG, and WebP files into a single PDF document. Fast, secure, and 100% free.",
     },
     alternates: { canonical: '/all-tools/pdf/free-online-image-to-pdf-converter' },

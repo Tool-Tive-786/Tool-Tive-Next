@@ -182,6 +182,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  openGraph: {
+    title: 'Free Online Tools for Work, Business & Everyday Tasks · ToolTive',
+    description: 'Use free online tools for PDF and image workflows, business tasks, SEO, and everyday productivity — with no unnecessary complexity.',
+    url: '/',
+    type: 'website',
+    siteName: 'ToolTive',
+    images: [{ url: '/hero-section.webp', width: 1200, height: 630, alt: 'ToolTive Free Online Tools' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Online Tools for Work, Business & Everyday Tasks · ToolTive',
+    description: 'Use free online tools for PDF and image workflows, business tasks, SEO, and everyday productivity — with no unnecessary complexity.',
+    images: ['/hero-section.webp'],
+  },
 };
 
 export default async function Home() {
@@ -196,8 +210,37 @@ export default async function Home() {
   const allPosts = await getAllPosts();
   const recentPosts = allPosts.slice(0, 3);
 
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'ToolTive',
+    url: 'https://tooltive.com',
+    description: 'Free utilities for professionals and creatives. No signups, no hassle.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://tooltive.com/all-tools?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'ToolTive',
+    url: 'https://tooltive.com',
+    logo: 'https://tooltive.com/tooltive-logo.webp',
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
       <Hero />
 
       <section className="home-categories-section" id="tools" aria-labelledby="home-categories-title">

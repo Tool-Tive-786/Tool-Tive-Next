@@ -3,10 +3,23 @@ import { getAllTools } from '@/lib/tools';
 import ToolsPageClient from '@/components/ToolsPageClient';
 import '@/styles/tools.css';
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
     title: 'All Tools',
-    description: 'Browse all free online tools available on ToolTive.',
+    description: 'Browse all free online tools and utilities available on ToolTive, from PDF and image converters to business calculators and SEO generators.',
     alternates: { canonical: '/all-tools' },
+    openGraph: {
+        title: 'All Tools · ToolTive',
+        description: 'Browse all free online tools and utilities available on ToolTive, from PDF and image converters to business calculators and SEO generators.',
+        url: '/all-tools',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'All Tools · ToolTive',
+        description: 'Browse all free online tools and utilities available on ToolTive, from PDF and image converters to business calculators and SEO generators.',
+    },
 };
 
 export default function ToolsIndex() {
