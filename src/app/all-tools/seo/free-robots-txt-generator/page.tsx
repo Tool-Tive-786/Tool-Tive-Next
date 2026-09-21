@@ -4,7 +4,7 @@ import FaqSection from "@/components/FaqSection";
 import ToolHeroSection from "@/components/tool-content/ToolHeroSection";
 import ToolContentLayout from "@/components/tool-content/ToolContentLayout";
 import { ToolContentConfig } from "@/components/tool-content/ToolContentTypes";
-import RobotsTxtToolNoSSR from "@/components/tools/robots-txt/RobotsTxtToolNoSSR";
+import RobotsTxtTool from "@/components/tools/robots-txt/RobotsTxtTool";
 import "@/styles/tool-content.css";
 import "@/styles/robots-txt.css";
 
@@ -206,7 +206,7 @@ export default function RobotsTxtGeneratorPage() {
                 description={robotsTxtContentConfig.intro.description}
             />
 
-            <RobotsTxtToolNoSSR />
+            <RobotsTxtTool />
 
             <ToolContentLayout config={robotsTxtContentConfig} />
 

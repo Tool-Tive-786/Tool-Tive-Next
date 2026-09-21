@@ -28,11 +28,17 @@ const DEFAULT_GROUPS: RobotsGeneratorGroup[] = [
 
 const DEFAULT_SITEMAPS = ["https://example.com/sitemap.xml"];
 
+const DEFAULT_RAW_CONTENT = generateRobotsTxt({
+  groups: DEFAULT_GROUPS,
+  sitemaps: DEFAULT_SITEMAPS,
+  headerComment: "Generated with ToolTive Free Robots.txt Generator & Tester (https://tooltive.com)"
+});
+
 export default function RobotsTxtTool() {
   const [activeMode, setActiveMode] = useState<RobotsToolMode>("generator");
   const [groups, setGroups] = useState<RobotsGeneratorGroup[]>(DEFAULT_GROUPS);
   const [sitemaps, setSitemaps] = useState<string[]>(DEFAULT_SITEMAPS);
-  const [rawContent, setRawContent] = useState<string>("");
+  const [rawContent, setRawContent] = useState<string>(DEFAULT_RAW_CONTENT);
 
   // When raw content is replaced outside the generator (tester edit, upload,
   // live fetch, reset, template), the next regeneration effect must not
