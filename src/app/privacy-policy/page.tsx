@@ -1,10 +1,23 @@
 import '@/styles/legal.css';
 import '@/styles/blog.css'; // Reusing blog layout styles for TOC and grid
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'ToolTive Privacy Policy — how we handle your data.',
+  description: "Read ToolTive's Privacy Policy to learn how we prioritize local in-browser processing, safeguard your privacy, and handle data responsibly.",
   alternates: { canonical: '/privacy-policy' },
+  openGraph: {
+    title: 'Privacy Policy · ToolTive',
+    description: "Read ToolTive's Privacy Policy to learn how we prioritize local in-browser processing, safeguard your privacy, and handle data responsibly.",
+    url: '/privacy-policy',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy · ToolTive',
+    description: "Read ToolTive's Privacy Policy to learn how we prioritize local in-browser processing, safeguard your privacy, and handle data responsibly.",
+  },
 };
 
 export default function PrivacyPolicy() {

@@ -1,10 +1,23 @@
 import '@/styles/legal.css';
 import '@/styles/blog.css'; // Reusing blog layout styles for TOC and grid
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'Cookie Policy',
-  description: 'ToolTive Cookie Policy.',
+  description: 'Learn how ToolTive uses cookies and local storage to preserve tool preferences and provide smooth browser-based utilities without intrusive tracking.',
   alternates: { canonical: '/cookie-policy' },
+  openGraph: {
+    title: 'Cookie Policy · ToolTive',
+    description: 'Learn how ToolTive uses cookies and local storage to preserve tool preferences and provide smooth browser-based utilities without intrusive tracking.',
+    url: '/cookie-policy',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cookie Policy · ToolTive',
+    description: 'Learn how ToolTive uses cookies and local storage to preserve tool preferences and provide smooth browser-based utilities without intrusive tracking.',
+  },
 };
 
 export default function CookiePolicy() {

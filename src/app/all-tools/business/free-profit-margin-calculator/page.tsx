@@ -7,11 +7,22 @@ import { ToolContentConfig } from '@/components/tool-content/ToolContentTypes';
 import { getToolBySlug } from '@/lib/tools';
 
 export const metadata: Metadata = {
-    title: 'Free Profit Margin Calculator | Calculate Margin & Markup',
+    title: 'Free Profit Margin & Markup Calculator',
     description: 'Calculate profit margin, markup, profit per sale, and target selling price. Add shipping, fees, discounts, and other costs with this free calculator.',
     keywords: 'profit margin calculator, profit margin calculator online, profit margin calculator free, gross profit margin calculator, markup calculator, margin vs markup calculator, selling price calculator',
     robots: { index: true, follow: true },
     alternates: { canonical: '/all-tools/business/free-profit-margin-calculator' },
+    openGraph: {
+        title: 'Free Profit Margin & Markup Calculator · ToolTive',
+        description: 'Calculate profit margin, markup, profit per sale, and target selling price. Add shipping, fees, discounts, and other costs with this free calculator.',
+        url: '/all-tools/business/free-profit-margin-calculator',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Profit Margin & Markup Calculator · ToolTive',
+        description: 'Calculate profit margin, markup, profit per sale, and target selling price. Add shipping, fees, discounts, and other costs with this free calculator.',
+    },
 };
 
 const pmcContentConfig: ToolContentConfig = {

@@ -4,10 +4,23 @@ import BlogPageClient from '@/components/BlogPageClient';
 import ArticleCard from '@/components/ArticleCard';
 import '@/styles/blog.css';
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'Blog',
-  description: 'Free online tools, guides, and articles for business and creatives.',
+  description: 'Free online tools, guides, and practical articles for business, AI, and creatives.',
   alternates: { canonical: '/blog' },
+  openGraph: {
+    title: 'Blog · ToolTive',
+    description: 'Free online tools, guides, and practical articles for business, AI, and creatives.',
+    url: '/blog',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog · ToolTive',
+    description: 'Free online tools, guides, and practical articles for business, AI, and creatives.',
+  },
 };
 
 export default async function BlogIndex() {

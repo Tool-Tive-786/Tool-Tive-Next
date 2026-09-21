@@ -1,5 +1,5 @@
 ---
-title: "How to Calculate Profit Margin: Formula, Examples, and Pricing Tips"
+title: "How to Calculate Profit Margin: Formula & Guide"
 description: "Learn how to calculate profit margin with simple formulas and examples. Understand gross margin, markup, fees, discounts, and target pricing."
 pubDate: 2026-09-03
 category: "business"

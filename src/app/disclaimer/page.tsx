@@ -1,10 +1,23 @@
 import '@/styles/legal.css';
 import '@/styles/blog.css'; // Reusing blog layout styles for TOC and grid
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'Disclaimer',
-  description: 'ToolTive Disclaimer.',
+  description: "Read ToolTive's Disclaimer regarding the accuracy, completeness, and general informational nature of our free online calculation and conversion tools.",
   alternates: { canonical: '/disclaimer' },
+  openGraph: {
+    title: 'Disclaimer · ToolTive',
+    description: "Read ToolTive's Disclaimer regarding the accuracy, completeness, and general informational nature of our free online calculation and conversion tools.",
+    url: '/disclaimer',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Disclaimer · ToolTive',
+    description: "Read ToolTive's Disclaimer regarding the accuracy, completeness, and general informational nature of our free online calculation and conversion tools.",
+  },
 };
 
 export default function Disclaimer() {

@@ -16,26 +16,33 @@ export async function generateMetadata({ params }: Props) {
   if (!post) {
     return { title: 'Not Found' };
   }
-  return {
-    title: post.title,
-    description: post.description,
-    robots: {
-      index: true,
-      follow: true,
-    },
-    alternates: { canonical: `/blog/${resolvedParams.category}/${resolvedParams.slug}` },
-    openGraph: {
+    const postImageUrl = post.image
+      ? (post.image.startsWith('http') ? post.image : `https://tooltive.com${post.image}`)
+      : 'https://tooltive.com/hero-section.webp';
+
+    return {
       title: post.title,
       description: post.description,
-      type: 'article',
-      publishedTime: new Date(post.pubDate).toISOString(),
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.description,
-    },
-  };
+      robots: {
+        index: true,
+        follow: true,
+      },
+      alternates: { canonical: `/blog/${resolvedParams.category}/${resolvedParams.slug}` },
+      openGraph: {
+        title: `${post.title} · ToolTive`,
+        description: post.description,
+        url: `/blog/${resolvedParams.category}/${resolvedParams.slug}`,
+        type: 'article',
+        publishedTime: new Date(post.pubDate).toISOString(),
+        images: [{ url: postImageUrl, alt: post.imageAlt || post.title }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${post.title} · ToolTive`,
+        description: post.description,
+        images: [postImageUrl],
+      },
+    };
 }
 
 export async function generateStaticParams() {

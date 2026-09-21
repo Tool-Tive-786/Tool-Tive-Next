@@ -64,7 +64,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         return time > latest ? time : latest;
       }, 0)
     );
-    coreRoutes[1].lastModified = latestToolDate;
+    const allToolsRoute = coreRoutes.find((r) => r.url === `${baseUrl}/all-tools`);
+    if (allToolsRoute) {
+      allToolsRoute.lastModified = latestToolDate;
+    }
   }
 
   const toolRoutes: MetadataRoute.Sitemap = tools.map((tool) => ({
@@ -102,8 +105,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         return time > latest ? time : latest;
       }, 0)
     );
-    coreRoutes[2].lastModified = latestPostDate;
+    const blogRoute = coreRoutes.find((r) => r.url === `${baseUrl}/blog`);
+    if (blogRoute) {
+      blogRoute.lastModified = latestPostDate;
+    }
   }
+
+  // Optimize Blog Categories: get the latest pubDate per blog category
+  const blogCategoryMap = new Map<string, number>();
+  posts.forEach(post => {
+    const postTime = new Date(post.pubDate).getTime();
+    const currentMax = blogCategoryMap.get(post.category) || 0;
+    if (postTime > currentMax) {
+      blogCategoryMap.set(post.category, postTime);
+    }
+  });
+
+  const blogCatRoutes: MetadataRoute.Sitemap = Array.from(blogCategoryMap.entries()).map(([cat, time]) => ({
+    url: `${baseUrl}/blog/${cat}`,
+    lastModified: new Date(time),
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.category}/${post.slug}`,
@@ -112,5 +135,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.80,
   }));
 
-  return [...coreRoutes, ...legalRoutes, ...toolCatRoutes, ...toolRoutes, ...postRoutes];
+  return [...coreRoutes, ...legalRoutes, ...toolCatRoutes, ...toolRoutes, ...blogCatRoutes, ...postRoutes];
 }

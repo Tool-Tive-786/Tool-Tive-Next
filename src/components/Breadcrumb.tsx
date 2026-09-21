@@ -17,6 +17,7 @@ export default function Breadcrumb() {
   // Exact labels for segments that cannot be derived from the slug.
   const SEGMENT_LABELS: Record<string, string> = {
     seo: "SEO",
+    ai: "AI",
     "free-robots-txt-generator": "Free Robots.txt Generator & Tester",
   };
 

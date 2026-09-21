@@ -13,22 +13,22 @@ interface Props {
 
 const categoryMetaMap: Record<string, { title: string; desc: string; heading: string }> = {
   pdf: {
-    title: 'Free Online PDF Tools & Converters | ToolTive',
+    title: 'Free Online PDF Tools & Converters',
     desc: 'Convert images to PDF and manage document workflows directly in your browser. Fast, secure, and 100% free with no file uploads to servers.',
     heading: 'PDF Tools',
   },
   compress: {
-    title: 'Free Image Compressor & Resizer Online | ToolTive',
+    title: 'Free Image Compressor & Resizer Online',
     desc: 'Compress JPG, PNG, and WebP images by up to 90% without losing quality. Fast client-side image optimization with zero watermarks or file uploads.',
     heading: 'Image Compression Tools',
   },
   business: {
-    title: 'Free Business Tools & Financial Calculators | ToolTive',
+    title: 'Free Business Tools & Financial Calculators',
     desc: 'Generate professional invoices and calculate profit margins with ToolTive’s free online business tools. Fast, private, and no signup required.',
     heading: 'Business & Financial Tools',
   },
   seo: {
-    title: 'Free Technical SEO Tools & Generators | ToolTive',
+    title: 'Free Technical SEO Tools & Generators',
     desc: 'Generate and validate Schema.org JSON-LD, XML sitemaps, and robots.txt directives with ToolTive’s free technical SEO utilities.',
     heading: 'Technical SEO Tools',
   },
@@ -83,10 +83,23 @@ export async function generateMetadata({ params }: Props) {
   const meta = categoryMetaMap[category];
 
   if (!meta) {
+    const fallbackTitle = `${category.charAt(0).toUpperCase() + category.slice(1)} Tools`;
+    const fallbackDesc = `Free online ${category} tools from ToolTive.`;
     return {
-      title: `${category.charAt(0).toUpperCase() + category.slice(1)} Tools | ToolTive`,
-      description: `Free online ${category} tools from ToolTive.`,
+      title: fallbackTitle,
+      description: fallbackDesc,
       alternates: { canonical: `/all-tools/${category}` },
+      openGraph: {
+        title: `${fallbackTitle} · ToolTive`,
+        description: fallbackDesc,
+        url: `/all-tools/${category}`,
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${fallbackTitle} · ToolTive`,
+        description: fallbackDesc,
+      },
     };
   }
 
@@ -94,6 +107,17 @@ export async function generateMetadata({ params }: Props) {
     title: meta.title,
     description: meta.desc,
     alternates: { canonical: `/all-tools/${category}` },
+    openGraph: {
+      title: `${meta.title} · ToolTive`,
+      description: meta.desc,
+      url: `/all-tools/${category}`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${meta.title} · ToolTive`,
+      description: meta.desc,
+    },
   };
 }
 
