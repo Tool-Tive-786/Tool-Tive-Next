@@ -1,0 +1,9 @@
+export const BASIC_SCANS_PER_DAY = 3;
+export const BASIC_MAX_PAGES = 10;
+export const BASIC_MAX_DEPTH = 2;
+export const BASIC_MAX_REDIRECT_HOPS = 3;
+export const BASIC_MAX_RESPONSE_BYTES = 1 * 1024 * 1024; // 1 MiB
+export const BASIC_REQUEST_TIMEOUT_MS = 8000;
+export const SCAN_RETENTION_HOURS = 24;
+export const TURNSTILE_REQUIRED = true;
+export const BASIC_WORKERS_AI_REQUIRED = false;

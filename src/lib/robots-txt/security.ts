@@ -146,7 +146,7 @@ export function validateRobotsRedirectUrl(
  * Comprehensive SSRF hostname check protecting against loopbacks,
  * private networks, link-local, cloud metadata, and integer/hex IP encodings.
  */
-function isSafePublicHostname(hostname: string): { safe: boolean; error?: string } {
+export function isSafePublicHostname(hostname: string): { safe: boolean; error?: string } {
   // Empty check
   if (!hostname) {
     return { safe: false, error: "Hostname is missing." };
@@ -163,7 +163,9 @@ function isSafePublicHostname(hostname: string): { safe: boolean; error?: string
     hostname.endsWith(".corp") ||
     hostname.endsWith(".test") ||
     hostname.endsWith(".invalid") ||
-    hostname.endsWith(".example")
+    hostname.endsWith(".example") ||
+    hostname === "instance-data" ||
+    hostname.endsWith(".instance-data")
   ) {
     return { safe: false, error: "Local or private domain names are not allowed." };
   }
@@ -178,7 +180,7 @@ function isSafePublicHostname(hostname: string): { safe: boolean; error?: string
     return { safe: false, error: "Hexadecimal-encoded IP addresses are not permitted." };
   }
 
-  // Check IPv4 addresses (including octal with leading zeroes)
+  // Check all IPv4 address variations (including octal, hex, dotted shorthand like 127.1)
   if (isPrivateOrReservedIpv4(hostname)) {
     return {
       safe: false,
@@ -201,22 +203,42 @@ function isSafePublicHostname(hostname: string): { safe: boolean; error?: string
  * Checks if a hostname string is a private, loopback, link-local, or metadata IPv4 address.
  */
 function isPrivateOrReservedIpv4(host: string): boolean {
-  const ipv4Regex = /^(\d{1,4})\.(\d{1,4})\.(\d{1,4})\.(\d{1,4})$/;
-  const match = host.match(ipv4Regex);
-  if (!match) return false;
+  // If host consists only of digits, dots, and hex prefixes
+  const parts = host.split(".");
+  if (parts.length > 4 || parts.length === 0) return false;
 
-  const octets = [
-    parseOctet(match[1]),
-    parseOctet(match[2]),
-    parseOctet(match[3]),
-    parseOctet(match[4])
-  ];
-
-  if (octets.some((o) => isNaN(o) || o < 0 || o > 255)) {
-    return true; // Malformed IP or octal overflow
+  // Check if every part is an integer or hex or octal
+  const parsedParts: number[] = [];
+  for (const part of parts) {
+    if (!/^(0x[0-9a-f]+|0[0-7]+|\d+)$/i.test(part)) {
+      return false; // Contains letters/symbols that aren't valid numeric IP parts
+    }
+    const num = parseNumericPart(part);
+    if (isNaN(num) || num < 0) return false;
+    parsedParts.push(num);
   }
 
-  const [a, b] = octets;
+  // Calculate 32-bit unsigned numeric value according to inet_aton rules
+  let ipInt = 0;
+  if (parsedParts.length === 1) {
+    // Single number (e.g. 2130706433 or 0x7f000001)
+    ipInt = parsedParts[0] >>> 0;
+  } else if (parsedParts.length === 2) {
+    // 2 parts (e.g. 127.1): part 0 is a, part 1 is 24-bit
+    if (parsedParts[0] > 255 || parsedParts[1] > 0xffffff) return true;
+    ipInt = ((parsedParts[0] << 24) | parsedParts[1]) >>> 0;
+  } else if (parsedParts.length === 3) {
+    // 3 parts (e.g. 127.0.1): part 0, 1 are 8-bit, part 2 is 16-bit
+    if (parsedParts[0] > 255 || parsedParts[1] > 255 || parsedParts[2] > 0xffff) return true;
+    ipInt = ((parsedParts[0] << 24) | (parsedParts[1] << 16) | parsedParts[2]) >>> 0;
+  } else if (parsedParts.length === 4) {
+    // 4 parts: each must be 8-bit
+    if (parsedParts.some(p => p > 255)) return true;
+    ipInt = ((parsedParts[0] << 24) | (parsedParts[1] << 16) | (parsedParts[2] << 8) | parsedParts[3]) >>> 0;
+  }
+
+  const a = (ipInt >>> 24) & 0xff;
+  const b = (ipInt >>> 16) & 0xff;
 
   // 0.0.0.0/8 (Current network)
   if (a === 0) return true;
@@ -237,7 +259,7 @@ function isPrivateOrReservedIpv4(host: string): boolean {
   if (a === 169 && b === 254) return true;
 
   // 100.100.100.200 (Alibaba Cloud metadata)
-  if (host === "100.100.100.200") return true;
+  if (ipInt === 0x646464c8) return true;
 
   // 224.0.0.0/4 (Multicast) & 240.0.0.0/4 (Reserved)
   if (a >= 224) return true;
@@ -246,9 +268,12 @@ function isPrivateOrReservedIpv4(host: string): boolean {
 }
 
 /**
- * Safely parses an octet handling octal representations (leading 0s)
+ * Safely parses decimal, octal (leading 0), or hexadecimal (0x) string into number
  */
-function parseOctet(str: string): number {
+function parseNumericPart(str: string): number {
+  if (str.startsWith("0x") || str.startsWith("0X")) {
+    return parseInt(str, 16);
+  }
   if (str.length > 1 && str.startsWith("0")) {
     return parseInt(str, 8);
   }
