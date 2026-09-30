@@ -126,6 +126,21 @@ export const tools: Tool[] = [
     tags: ["Robots.txt", "Crawler Control", "100% Free"],
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`,
     pubDate: "2026-09-08",
+  },
+  {
+    id: "ai-search-optimizer",
+    category: "seo",
+    slug: "ai-search-optimizer",
+    title: "AI Search Optimizer - Basic Scan Report",
+    h1Base: "AI Search",
+    h1Accent: "Optimizer.",
+    seoTitle: "AI Search Optimizer - Basic Scan Report | ToolTive",
+    seoDescription: "Audit your website for technical accessibility, security, and AI-search readiness signals with our free Basic Scan.",
+    cardTitle: "AI Search Optimizer",
+    cardExcerpt: "Run a basic scan to audit your website for AI-search readiness, technical health, and security.",
+    tags: ["AI Search", "Audit", "SEO Tool", "Free Scan"],
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`,
+    pubDate: "2026-09-25",
   }
 ];
 
