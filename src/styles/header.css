@@ -327,7 +327,7 @@
     top: var(--header-height-mobile, 65px);
     left: 0;
     right: 0;
-    width: 100vw;
+    width: 100%;
     background: rgba(var(--color-surface-rgb), 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);

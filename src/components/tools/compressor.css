@@ -14,9 +14,16 @@
   --no: #ef4444;
   color: var(--t);
   font-family: var(--font-sans, -apple-system, Segoe UI, Roboto, sans-serif);
-  max-width: 1440px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 24px 16px;
+}
+
+@media (min-width: 768px) {
+  .if-root {
+    width: 90%;
+  }
 }
 
 .if-root * { box-sizing: border-box; }
@@ -196,4 +203,20 @@
 }
 @media (max-width: 768px) {
   .if-compare, .if-single { height: 360px; }
+}
+
+@media (max-width: 640px) {
+  .if-root {
+    padding: 16px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .if-toast {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    min-width: 0;
+    max-width: calc(100% - 32px);
+  }
 }

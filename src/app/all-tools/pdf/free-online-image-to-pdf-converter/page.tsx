@@ -6,6 +6,7 @@ import FaqSection from "@/components/FaqSection";
 import ToolHeroSection from "@/components/tool-content/ToolHeroSection";
 import ToolContentLayout from "@/components/tool-content/ToolContentLayout";
 import { ToolContentConfig } from "@/components/tool-content/ToolContentTypes";
+import "@/styles/tool-content.css";
 
 export const metadata: Metadata = {
     title: "Free Online Image to PDF Converter",

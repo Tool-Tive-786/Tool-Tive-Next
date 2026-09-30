@@ -985,3 +985,11 @@
         padding: 20px;
     }
 }
+
+@media (max-width: 768px) {
+    .workspace {
+        width: 100%;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+}

@@ -1,10 +1,17 @@
 .contact-page {
-    padding: 24px 16px 80px;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1280px;
     margin: 0 auto;
+    padding: 24px 16px 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media (min-width: 768px) {
+    .contact-page {
+        width: 90%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -106,6 +113,12 @@
     box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
+}
+
+@media (max-width: 480px) {
+    .contact-form-wrapper {
+        padding: 24px 16px;
+    }
 }
 
 .contact-form-wrapper::before {

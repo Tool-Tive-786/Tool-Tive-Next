@@ -537,7 +537,7 @@
     transition: color var(--transition-fast);
 }
 
-.tc-related-card:hover h4 {
+.tc-related-card:hover h3 {
     color: var(--accent-light);
 }
 
