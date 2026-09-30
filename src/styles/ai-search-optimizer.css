@@ -404,6 +404,9 @@
   border-radius: var(--radius-full);
   color: var(--color-primary);
   margin-bottom: 28px;
+  max-width: 100%;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .ais-progress-bar-wrap {
@@ -1100,6 +1103,7 @@
 
 .ais-pages-table {
   width: 100%;
+  min-width: 520px;
   border-collapse: collapse;
   font-size: 13.5px;
   text-align: left;

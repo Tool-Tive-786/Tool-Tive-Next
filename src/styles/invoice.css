@@ -14,7 +14,8 @@
 .app-layout {
   display: flex;
   height: calc(100vh - 112px); /* 72px navbar + 40px gap */
-  width: 85%;
+  width: 90%;
+  max-width: 1280px;
   margin: 112px auto 0 auto; /* Centered with top gap */
   overflow: hidden;
   color-scheme: light;

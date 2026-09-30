@@ -5,6 +5,7 @@ import ToolHeroSection from '@/components/tool-content/ToolHeroSection';
 import ToolContentLayout from '@/components/tool-content/ToolContentLayout';
 import { ToolContentConfig } from '@/components/tool-content/ToolContentTypes';
 import { getToolBySlug } from '@/lib/tools';
+import "@/styles/tool-content.css";
 
 export const metadata: Metadata = {
     title: 'Free Profit Margin & Markup Calculator',

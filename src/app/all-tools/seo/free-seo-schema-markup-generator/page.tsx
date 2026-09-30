@@ -5,6 +5,7 @@ import ToolHeroSection from '@/components/tool-content/ToolHeroSection';
 import ToolContentLayout from '@/components/tool-content/ToolContentLayout';
 import { ToolContentConfig } from '@/components/tool-content/ToolContentTypes';
 import SchemaMarkupGeneratorNoSSR from '@/components/tools/schema-generator/SchemaMarkupGeneratorNoSSR';
+import "@/styles/tool-content.css";
 import "@/styles/schema-markup-generator.css";
 
 export const metadata: Metadata = {
