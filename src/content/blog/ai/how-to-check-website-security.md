@@ -2,7 +2,7 @@
 title: "How to Check Website Security: A Complete Checklist"
 description: "Learn how to check website security with practical checks for HTTPS, security headers, cookies, software updates, admin access, backups, and recovery."
 pubDate: "2026-10-03"
-category: "business"
+category: "ai"
 image: "/tooltive-card-images/how-to-check-website-security-tooltive.webp"
 imageAlt: "How to check website security complete checklist and audit guide"
 imageTitle: "How to Check Website Security Checklist"
