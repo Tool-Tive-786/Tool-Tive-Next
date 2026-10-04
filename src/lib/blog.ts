@@ -161,10 +161,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 
     return {
       slug,
-      category,
+      category: matterResult.data.category || category,
       title: matterResult.data.title,
       description: matterResult.data.description,
-      pubDate: matterResult.data.pubDate,
+      pubDate: matterResult.data.pubDate ? (matterResult.data.pubDate instanceof Date ? matterResult.data.pubDate.toISOString().split('T')[0] : String(matterResult.data.pubDate)) : '',
       tags: matterResult.data.tags || [],
       draft: matterResult.data.draft || false,
       image: matterResult.data.image || null,
