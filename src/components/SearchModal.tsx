@@ -29,6 +29,14 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 const BLOG_ITEMS: SearchItem[] = [
   {
+    id: 'blog-website-security',
+    name: 'How to Check Website Security: A Complete Checklist',
+    url: '/blog/business/how-to-check-website-security',
+    cat: 'Business',
+    type: 'blog',
+    tags: ['Website Security', 'Cybersecurity', 'HTTPS', 'Security Headers', 'Website Audit', 'SSL', 'Checklist', 'TLS', 'Cookies'],
+  },
+  {
     id: 'blog-profit-margin',
     name: 'How to Calculate Profit Margin: Formula, Examples, and Pricing Tips',
     url: '/blog/business/how-to-calculate-profit-margin',
