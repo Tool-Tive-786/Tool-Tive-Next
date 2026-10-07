@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: ['/api/', '/cdn-cgi/'],
     },
     sitemap: 'https://tooltive.com/sitemap.xml',
     host: 'https://tooltive.com',

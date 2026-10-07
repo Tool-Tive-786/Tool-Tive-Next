@@ -101,7 +101,27 @@ const aiSearchContentConfig: ToolContentConfig = {
                 description: 'Once complete, review the overall score and prioritized recommendations to improve your site.'
             }
         ]
-    }
+    },
+    relatedTools: [
+        {
+            href: '/all-tools/seo/free-robots-txt-generator',
+            title: 'Free Robots.txt Generator & Tester',
+            description: 'Create and test crawler directives to guide search bots effectively.',
+            icon: 'fas fa-robot'
+        },
+        {
+            href: '/all-tools/seo/free-xml-sitemap-generator',
+            title: 'Free XML Sitemap Generator',
+            description: 'Generate and validate XML sitemaps to ensure all pages are discovered.',
+            icon: 'fas fa-sitemap'
+        },
+        {
+            href: '/all-tools/seo/free-seo-schema-markup-generator',
+            title: 'Free SEO Schema Markup Generator',
+            description: 'Generate, validate, and improve Schema.org JSON-LD structured data.',
+            icon: 'fas fa-code'
+        }
+    ]
 };
 
 const aiSearchFaqs = [
